@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <head>
     </head>
     <body>
@@ -8,17 +8,18 @@
                 <a class="py-2" href="#">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="d-block mx-auto" role="img" viewBox="0 0 24 24" focusable="false"><title>Product</title><circle cx="12" cy="12" r="10"/><path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"/></svg>
                 </a>
-                <a class="py-2 d-none d-md-inline-block" href="#">Consulter Offres (Candidats)</a>
-                <a class="py-2 d-none d-md-inline-block" href="#">Deposer CV (Candidat)</a>
-                <a class="py-2 d-none d-md-inline-block" href="#">Deposer LM (Candidat)</a>
-                <a class="py-2 d-none d-md-inline-block" href="#">Infos Postulations (Candidat)</a>
-                <a class="py-2 d-none d-md-inline-block" href="#">Mon Profil (Candidat)</a>
-                <a class="py-2 d-none d-md-inline-block" href="#">Consulter Candidatures (Recruteur)</a>
-                <a class="py-2 d-none d-md-inline-block" href="#">Depot Offres (Recruteur)</a>
-                <a class="py-2 d-none d-md-inline-block" href="#">Consulter CV (Recruteur)</a>
-                <a class="py-2 d-none d-md-inline-block" href="#">Mon Profil (Recruteur)</a>
-                <a class="py-2 d-none d-md-inline-block" href="#">Employe</a>
-                <a class="py-2 d-none d-md-inline-block" href="#">Admin</a>
+                <a class="py-2 d-none d-md-inline-block" href="#" sec:authorize="hasAnyRole('ROLE_CANDIDAT')">Consulter Offres (Candidats)</a>
+                <a class="py-2 d-none d-md-inline-block" href="#" sec:authorize="hasAnyRole('ROLE_CANDIDAT')">Deposer CV (Candidat)</a>
+                <a class="py-2 d-none d-md-inline-block" href="#" sec:authorize="hasAnyRole('ROLE_CANDIDAT')">Deposer LM (Candidat)</a>
+                <a class="py-2 d-none d-md-inline-block" href="#" sec:authorize="hasAnyRole('ROLE_CANDIDAT')">Infos Postulations (Candidat)</a>
+                <a class="py-2 d-none d-md-inline-block" href="#" sec:authorize="hasAnyRole('ROLE_CANDIDAT')">Mon Profil (Candidat)</a>
+                <a class="py-2 d-none d-md-inline-block" href="#" sec:authorize="hasAnyRole('ROLE_RECRUTEUR')">Consulter Candidatures (Recruteur)</a>
+                <a class="py-2 d-none d-md-inline-block" href="#" sec:authorize="hasAnyRole('ROLE_RECRUTEUR')">Depot Offres (Recruteur)</a>
+                <a class="py-2 d-none d-md-inline-block" href="#" sec:authorize="hasAnyRole('ROLE_RECRUTEUR')">Consulter CV (Recruteur)</a>
+                <a class="py-2 d-none d-md-inline-block" href="#" sec:authorize="hasAnyRole('ROLE_RECRUTEUR')">Mon Profil (Recruteur)</a>
+                <a class="py-2 d-none d-md-inline-block" href="#" sec:authorize="hasAnyRole('ROLE_EMPLOYE')">Employe</a>
+                <a class="py-2 d-none d-md-inline-block" href="#" sec:authorize="hasAnyRole('ROLE_ADMIN')">Admin</a>
+                <a class="py-2 d-none d-md-inline-block" href="/logout" th:action="@{/logout}">Deconnexion</a>
             </div>
         </nav>
     </body>
