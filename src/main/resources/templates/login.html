@@ -23,22 +23,7 @@
     </head>
 <body>
 
-    <div th:insert="layout/navbarNotSignin :: navbarNotSignin">
-        <nav class="site-header sticky-top py-1">
-            <div class="container d-flex flex-column flex-md-row justify-content-between">
-                <a class="py-2" href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="d-block mx-auto" role="img" viewBox="0 0 24 24" focusable="false"><title>Product</title><circle cx="12" cy="12" r="10"/><path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"/></svg>
-                </a>
-                <form th:action="@{/registration}" method="get">
-                    <a class="py-2 d-none d-md-inline-block" href="/registration">Inscription</a>
-                </form>
-
-            </div>
-        </nav>
-    </div>
-<!--    <form th:action="@{/registration}" method="get">
-        <button class="btn btn-md btn-warning btn-block" type="Submit">Go To Registration Page</button>
-    </form>-->
+    <div th:insert="layout/navbarNotSignin :: navbarNotSignin"></div>
 
     <div class="container">
         <img th:src="@{/images/login.jpg}" class="img-responsive center-block" width="300" height="300" alt="Logo"/>
@@ -46,10 +31,8 @@
             <h3 class="form-signin-heading" th:text="Welcome"></h3>
             <br/>
 
-            <input type="text" id="user_name" name="user_name" placeholder="User Name"
-                   class="form-control"/> <br/>
-            <input type="password" th:placeholder="Password"
-                   id="password" name="password" class="form-control"/> <br/>
+            <input type="text" id="user_name" name="user_name" placeholder="User Name" class="form-control"/> <br/>
+            <input type="password" th:placeholder="Password" id="password" name="password" class="form-control"/> <br/>
 
             <div align="center" th:if="${param.error}">
                 <p style="font-size: 20; color: #FF1C19;">User Name or Password invalid, please verify</p>

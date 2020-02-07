@@ -13,6 +13,7 @@ public class OffreEmploi {
     private LocalDateTime dateOffreEmploi;
     private String poste;
     private String description;
+    private String typeOffre;
     private String qualiteRequise;
     private String connaissanceTechnique;
     private String region;
@@ -21,6 +22,14 @@ public class OffreEmploi {
 
     public OffreEmploi() {
 
+    }
+
+    public String getTypeOffre() {
+        return typeOffre;
+    }
+
+    public void setTypeOffre(String typeOffre) {
+        this.typeOffre = typeOffre;
     }
 
     public Long getId() {
