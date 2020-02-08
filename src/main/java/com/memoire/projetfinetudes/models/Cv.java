@@ -11,7 +11,7 @@ public class Cv {
     private LocalDateTime dateCv;
     private String objectif;
     @ManyToOne
-    private Candidat candidat;
+    private User user;
     @ManyToOne
     private ConnaissanceLinguistique connaissanceLinguistique;
     @ManyToOne
@@ -67,11 +67,11 @@ public class Cv {
         this.objectif = objectif;
     }
 
-    public Candidat getCandidat() {
-        return candidat;
+    public User getCandidat() {
+        return user;
     }
 
-    public void setCandidat(Candidat candidat) {
-        this.candidat = candidat;
+    public void setCandidat(User candidat) {
+        this.user = candidat;
     }
 }

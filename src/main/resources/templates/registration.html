@@ -21,6 +21,11 @@
     </style>
     <link rel="stylesheet" type="text/css" href="../static/css/page.css" th:href="@{/css/page.css}"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script>
+        function ajoutChamp() {
+            alert('Ndigue SENE');
+        }
+    </script>
 </head>
 <body>
 <div>
@@ -29,8 +34,8 @@
             <a class="py-2" href="#">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="d-block mx-auto" role="img" viewBox="0 0 24 24" focusable="false"><title>Product</title><circle cx="12" cy="12" r="10"/><path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"/></svg>
             </a>
-            <form th:action="@{/}" method="get">
-                <a class="py-2 d-none d-md-inline-block" href="/">Se Connecter</a>
+            <form th:action="@{/}" method="GET">
+                <a class="py-2 d-none d-md-inline-block" href="/">Connexion</a>
             </form>
 
         </div>
@@ -44,11 +49,10 @@
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <form autocomplete="off" action="#" th:action="@{/registration}" th:object="${user}" method="POST" class="form-horizontal" role="form">
-                <h2>Registration Form</h2>
+                <h2>Inscription</h2>
                 <div class="form-group">
                     <div class="col-sm-9">
-                        <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
-                               class="validation-message"></label>
+                        <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="validation-message"></label>
                         <input type="text" th:field="*{name}" placeholder="Name"
                                class="form-control"/>
                     </div>
@@ -56,45 +60,66 @@
 
                 <div class="form-group">
                     <div class="col-sm-9">
-                        <label th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
-                               class="validation-message"></label>
+                        <label th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="validation-message"></label>
                         <input type="text" th:field="*{lastName}"
                                placeholder="Last Name" class="form-control"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-9">
-                        <input type="text" th:field="*{email}" placeholder="Email"
-                               class="form-control"/> <label
+                        <input type="text" th:field="*{email}" placeholder="Email" class="form-control"/> <label
                             th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
                             class="validation-message"></label>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-9">
-                        <input type="text" th:field="*{userName}" placeholder="User Name"
-                               class="form-control"/> <label
+                        <input type="text" th:field="*{userName}" placeholder="User Name" class="form-control"/> <label
                             th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"
                             class="validation-message"></label>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-9">
-                        <input type="password" th:field="*{password}"
-                               placeholder="Password" class="form-control"/> <label
+                        <input type="password" th:field="*{password}" placeholder="Password" class="form-control"/> <label
                             th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
                             class="validation-message"></label>
                     </div>
                 </div>
-
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <input type="text" th:field="*{pays}" placeholder="Pays" class="form-control"/> <label
+                            th:if="${#fields.hasErrors('pays')}" th:errors="*{pays}"
+                            class="validation-message"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <input type="text" th:field="*{ville}" placeholder="Ville" class="form-control"/> <label
+                            th:if="${#fields.hasErrors('ville')}" th:errors="*{ville}"
+                            class="validation-message"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <input type="text" th:field="*{titre_fonction}" placeholder="Titre Fonction" class="form-control"/> <label
+                            th:if="${#fields.hasErrors('titre_fonction')}" th:errors="*{titre_fonction}" class="validation-message"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <input type="text" th:field="*{secteurActivite}" placeholder="Secteur d'activités" class="form-control"/> <label
+                            th:if="${#fields.hasErrors('secteurActivite')}" th:errors="*{secteurActivite}" class="validation-message"></label>
+                    </div>
+                </div>
                 <div class="form-group">
                     <div class="col-sm-9">
                         <label th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}" class="validation-message"></label>
-                        <select class="form-control" th:field="*{roles}">
+                        <select class="form-control" th:field="*{roles}" onchange="ajoutChamp()">
                             <option th:value="NULL">Type utilisateur</option>
                             <option th:each="role: ${roleAll}"
                                     th:value="${role.id}"
-                                    th:text="${role.role}">
+                                    th:text="${role.role.substring(5)}">
                             </option>
                         </select>
                     </div>

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -37,13 +38,11 @@ public class LoginController {
 
     @RequestMapping(value="/home", method = RequestMethod.GET)
     public String home(Model model){
-        ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserName(auth.getName());
         model.addAttribute("userName", "Welcome " + user.getUserName() + "/" + user.getEmail() + " " + user.getLastName() + " (" + user.getRoles() + ")");
         model.addAttribute("adminMessage","Content Available Only for Users with Admin Role");
         model.addAttribute("user", user);
-        // modelAndView.setViewName("home");
         return "home";
     }
 
@@ -54,6 +53,11 @@ public class LoginController {
         modelAndView.addObject("user", user);
         List<Role> roleAll = roleService.getRoles();
         modelAndView.addObject("roleAll", roleAll);
+        List<String> pays = new ArrayList<>();
+        pays.add("SENEGAL");
+        pays.add("MALI");
+        pays.add("FRANCE");
+        pays.add("USA");
         modelAndView.setViewName("registration");
         return modelAndView;
     }

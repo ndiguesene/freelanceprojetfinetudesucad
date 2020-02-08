@@ -1,9 +1,11 @@
 package com.memoire.projetfinetudes.models;
 
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -12,26 +14,50 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
     private Long id;
+
     @Column(name = "user_name")
     @Length(min = 5, message = "*Your user name must have at least 5 characters")
     @NotEmpty(message = "*Please provide a user name")
+    @UniqueElements
     private String userName;
+
+    @Column(name = "titre_fonction")
+    @NotEmpty(message = "*Please provide a user name")
+    private String titre_fonction;
+
     @Column(name = "email")
     @Email(message = "*Please provide a valid Email")
     @NotEmpty(message = "*Please provide an email")
     private String email;
+
     @Column(name = "password")
-    @Length(min = 5, message = "*Your password must have at least 5 characters")
+    @Length(min = 4, message = "*Your password must have at least 4 characters")
     @NotEmpty(message = "*Please provide your password")
     private String password;
+
     @Column(name = "name")
     @NotEmpty(message = "*Please provide your name")
     private String name;
+
     @Column(name = "last_name")
     @NotEmpty(message = "*Please provide your last name")
     private String lastName;
+
     @Column(name = "active")
     private Boolean active;
+
+    @Column(name = "pays")
+    @NotEmpty(message = "*Please provide your country")
+    private String pays;
+
+    @Column(name = "ville")
+    @NotEmpty(message = "*Please provide your town")
+    private String ville;
+
+    @Column(name = "secteur_activite")
+    @NotEmpty(message = "*Please provide your activities sector")
+    private String secteurActivite;
+
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
@@ -44,8 +70,54 @@ public class User {
         this.id = id;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", titre_fonction='" + titre_fonction + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", active=" + active +
+                ", pays='" + pays + '\'' +
+                ", ville='" + ville + '\'' +
+                ", secteurActivite='" + secteurActivite + '\'' +
+                ", roles=" + roles +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return getId().equals(user.getId()) &&
+                getUserName().equals(user.getUserName()) &&
+                getTitre_fonction().equals(user.getTitre_fonction()) &&
+                getEmail().equals(user.getEmail()) &&
+                getPassword().equals(user.getPassword()) &&
+                getName().equals(user.getName()) &&
+                getLastName().equals(user.getLastName()) &&
+                getActive().equals(user.getActive()) &&
+                getPays().equals(user.getPays()) &&
+                getVille().equals(user.getVille()) &&
+                getSecteurActivite().equals(user.getSecteurActivite()) &&
+                getRoles().equals(user.getRoles());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getUserName(), getTitre_fonction(), getEmail(), getPassword(), getName(), getLastName(), getActive(), getPays(), getVille(), getSecteurActivite(), getRoles());
+    }
+
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUserName() {
@@ -54,6 +126,14 @@ public class User {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getTitre_fonction() {
+        return titre_fonction;
+    }
+
+    public void setTitre_fonction(String titre_fonction) {
+        this.titre_fonction = titre_fonction;
     }
 
     public String getEmail() {
@@ -96,25 +176,35 @@ public class User {
         this.active = active;
     }
 
+    public String getPays() {
+        return pays;
+    }
+
+    public void setPays(String pays) {
+        this.pays = pays;
+    }
+
+    public String getVille() {
+        return ville;
+    }
+
+    public void setVille(String ville) {
+        this.ville = ville;
+    }
+
+    public String getSecteurActivite() {
+        return secteurActivite;
+    }
+
+    public void setSecteurActivite(String secteurActivite) {
+        this.secteurActivite = secteurActivite;
+    }
+
     public Set<Role> getRoles() {
         return roles;
     }
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", userName='" + userName + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", name='" + name + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", active=" + active +
-                ", roles=" + roles +
-                '}';
     }
 }

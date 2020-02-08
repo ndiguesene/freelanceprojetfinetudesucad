@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <title>Consulter Offres</title>
     <link rel="stylesheet" type="text/css" href="../static/css/page.css" th:href="@{/css/page.css}"/>
@@ -8,19 +8,43 @@
 <body>
 
 <div th:insert="layout/navbar :: navbar"></div>
+<br>
+<br>
 <div class="container">
-    Consulter Offres
-    <div class="card">
-        <div class="card-header">
-            Quote
-        </div>
-        <div class="card-body">
-            <div class="card w-100" th:each="offre, index : ${offres}">
+    <div class="row">
+        <div class="col-4">
+            <strong>Welcome Back, <span th:text="${currentUser.getName()}"></span> - <span th:text="${currentUser.getLastName()}"></span></strong>
+            <br>
+            <div class="card" style="width: 18rem;">
                 <div class="card-body">
-                    <h5 class="card-title" th:text="${offre.getPoste()}"></h5>
-                    <p class="card-text" th:text="${offre.getDescription()}"></p>
-                    <a href="#" class="btn btn-primary">Postuler</a>
-                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    <h5 class="card-title" sec:authorize="isAuthenticated()">
+                        <span th:text="${currentUser.getName()}"></span> - <span th:text="${currentUser.getLastName()}"></span>
+                    </h5>
+                    <br>
+                    <br>
+                    <h6 class="card-subtitle mb-2 text-muted"><span th:text="${currentUser.getTitre_fonction()}"></span></h6>
+                    <br/>
+                    <h6 class="card-subtitle mb-2 text-muted"><span th:text="${currentUser.getPays()}"></span> - <span th:text="${currentUser.getVille()}"></span></h6>
+                    <a href="#" class="card-link">Card link</a>
+                    <a href="#" class="card-link">Another link</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="card">
+                <div class="card-header">
+                    Offres recommandés pour vous
+                </div>
+                <div class="card-body">
+                    <div class="card w-100" th:each="offre, index : ${offres}">
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${offre.getPoste()}"></h5>
+                            <p class="card-text" th:text="${offre.getDescription()}"></p>
+                            <a href="#" class="btn btn-primary float-right">Postuler</a>
+                            <span class="card-text" th:text="${offre.getRegion()}"></span> - <span class="card-text" th:text="${offre.getTypeOffre()}"></span>
+                            <p class="card-text"><small class="text-muted" th:text="${offre.getDateOffreEmploi()}"></small></p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

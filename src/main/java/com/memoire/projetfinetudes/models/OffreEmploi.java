@@ -17,8 +17,8 @@ public class OffreEmploi {
     private String qualiteRequise;
     private String connaissanceTechnique;
     private String region;
-    @ManyToOne
-    private Recruteur recruteur;
+    @OneToOne
+    private User user;
 
     public OffreEmploi() {
 
@@ -84,12 +84,12 @@ public class OffreEmploi {
         this.region = region;
     }
 
-    public Recruteur getRecruteur() {
-        return recruteur;
+    public User getRecruteur() {
+        return user;
     }
 
-    public void setRecruteur(Recruteur recruteur) {
-        this.recruteur = recruteur;
+    public void setRecruteur(User recruteur) {
+        this.user = recruteur;
     }
 
     @Override
