@@ -54,46 +54,55 @@
                         </form>
                     </div>
                     <div class="tab-pane fade" id="v-pills-experience" role="tabpanel" aria-labelledby="v-pills-experience-tab">
-                        <h2>Expérience</h2>
-                        <br>
-                        <form class="form-horizontal" autocomplete="off" action="#" th:action="@{/candidat/postuler/experience}" th:object="${experienceProfessionnelle}" method="POST" role="form">
-                            <div class="form-group">
-                                <div class="col-sm-9">
-                                    <label th:if="${#fields.hasErrors('competence')}" th:errors="*{competence}" class="validation-message"></label>
-                                    <input type="text" th:field="*{competence}" placeholder="Compétence" class="form-control"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-9">
-                                    <label th:if="${#fields.hasErrors('secteurActivite')}" th:errors="*{secteurActivite}" class="validation-message"></label>
-                                    <input type="text" th:field="*{secteurActivite}" placeholder="Secteur d'activité" class="form-control"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-9">
-                                    <label th:if="${#fields.hasErrors('nomEntreprise')}" th:errors="*{nomEntreprise}" class="validation-message"></label>
-                                    <input type="text" th:field="*{nomEntreprise}" placeholder="Nom entreprise" class="form-control"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-9">
-                                    <label th:if="${#fields.hasErrors('region')}" th:errors="*{region}" class="validation-message"></label>
-                                    <input type="text" th:field="*{region}" placeholder="Région" class="form-control"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-9">
-                                    <label th:if="${#fields.hasErrors('poste')}" th:errors="*{poste}" class="validation-message"></label>
-                                    <input type="text" th:field="*{poste}" placeholder="Poste" class="form-control"/>
-                                </div>
-                            </div>
+                        <div class="row">
+                            <div class="col-md-7">
+                                <h2>Expériences</h2>
+                                <br>
+                                <form class="form-horizontal" autocomplete="off" action="#" th:action="@{/candidat/postuler/experience}" th:object="${experienceProfessionnelle}" method="POST" role="form">
+                                    <div class="form-group">
+                                        <div class="col-sm-9">
+                                            <label th:if="${#fields.hasErrors('competence')}" th:errors="*{competence}" class="validation-message"></label>
+                                            <input type="text" th:field="*{competence}" placeholder="Compétence" class="form-control"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-9">
+                                            <label th:if="${#fields.hasErrors('secteurActivite')}" th:errors="*{secteurActivite}" class="validation-message"></label>
+                                            <input type="text" th:field="*{secteurActivite}" placeholder="Secteur d'activité" class="form-control"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-9">
+                                            <label th:if="${#fields.hasErrors('nomEntreprise')}" th:errors="*{nomEntreprise}" class="validation-message"></label>
+                                            <input type="text" th:field="*{nomEntreprise}" placeholder="Nom entreprise" class="form-control"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-9">
+                                            <label th:if="${#fields.hasErrors('region')}" th:errors="*{region}" class="validation-message"></label>
+                                            <input type="text" th:field="*{region}" placeholder="Région" class="form-control"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-9">
+                                            <label th:if="${#fields.hasErrors('poste')}" th:errors="*{poste}" class="validation-message"></label>
+                                            <input type="text" th:field="*{poste}" placeholder="Poste" class="form-control"/>
+                                        </div>
+                                    </div>
 
-                            <div class="form-group">
-                                <div class="col-sm-9">
-                                    <button type="submit" class="btn btn-primary btn-block">Enregistrer Modifications</button>
-                                </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-9">
+                                            <button type="submit" class="btn btn-primary btn-block">Enregistrer Modifications</button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
-                        </form>
+                            <div class="col-md-5">
+                                <ul class="list-group list-group-flush" th:field="*{experienceProfessionnelles.orElse(null)}">
+                                    <li class="list-group-item" th:each="exp: ${experienceProfessionnelles.orElse(null)}" th:value="${exp.id}" th:text="${exp.poste}"></li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                     <div class="tab-pane fade" id="v-pills-formation" role="tabpanel" aria-labelledby="v-pills-formation-tab">
                         <h2>Formations</h2>
@@ -109,6 +118,12 @@
                                 <div class="col-sm-9">
                                     <label th:if="${#fields.hasErrors('nomDiplome')}" th:errors="*{nomDiplome}" class="validation-message"></label>
                                     <input type="text" th:field="*{nomDiplome}" placeholder="Nom diplome" class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-9">
+                                    <label th:if="${#fields.hasErrors('duree')}" th:errors="*{duree}" class="validation-message"></label>
+                                    <input type="number" th:field="*{duree}" placeholder="Durée Formation" class="form-control"/>
                                 </div>
                             </div>
 

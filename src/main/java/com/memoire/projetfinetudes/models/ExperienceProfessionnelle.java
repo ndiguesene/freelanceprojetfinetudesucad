@@ -18,6 +18,7 @@ public class ExperienceProfessionnelle {
     private User user;
 
     public ExperienceProfessionnelle() {
+
     }
 
     @Override

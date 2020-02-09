@@ -2,7 +2,7 @@ package com.memoire.projetfinetudes.models;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Objects;
+import java.util.List;
 
 @Entity
 public class Cv {
@@ -11,13 +11,13 @@ public class Cv {
     private Long id;
     private LocalDateTime dateCv;
     private String objectif;
-    @ManyToOne
-    private ConnaissanceLinguistique connaissanceLinguistique;
-    @ManyToOne
-    private ExperienceProfessionnelle experienceProfessionnelle;
-    @ManyToOne
-    private Formation formation;
-    @ManyToOne
+    @OneToMany(cascade = {CascadeType.ALL})
+    private List<ConnaissanceLinguistique> connaissanceLinguistique;
+    @OneToMany(cascade = {CascadeType.ALL})
+    private List<ExperienceProfessionnelle> experienceProfessionnelle;
+    @OneToMany(cascade = {CascadeType.ALL})
+    private List<Formation> formation;
+    @ManyToOne(cascade = {CascadeType.ALL})
     private User user;
 
     public User getUser() {
@@ -34,29 +34,35 @@ public class Cv {
                 "id=" + id +
                 ", dateCv=" + dateCv +
                 ", objectif='" + objectif + '\'' +
-                ", connaissanceLinguistique=" + connaissanceLinguistique.toString() +
-                ", experienceProfessionnelle=" + experienceProfessionnelle.toString() +
-                ", formation=" + formation.toString() +
-                ", formation=" + user.toString() +
+                ", connaissanceLinguistique=" + connaissanceLinguistique +
+                ", experienceProfessionnelle=" + experienceProfessionnelle +
+                ", formation=" + formation +
+                ", formation=" + user +
                 '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Cv)) return false;
-        Cv cv = (Cv) o;
-        return getId().equals(cv.getId()) &&
-                getDateCv().equals(cv.getDateCv()) &&
-                getObjectif().equals(cv.getObjectif()) &&
-                getConnaissanceLinguistique().equals(cv.getConnaissanceLinguistique()) &&
-                getExperienceProfessionnelle().equals(cv.getExperienceProfessionnelle()) &&
-                getFormation().equals(cv.getFormation());
+    public List<ConnaissanceLinguistique> getConnaissanceLinguistique() {
+        return connaissanceLinguistique;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getDateCv(), getObjectif(), getConnaissanceLinguistique(), getExperienceProfessionnelle(), getFormation());
+    public void setConnaissanceLinguistique(List<ConnaissanceLinguistique> connaissanceLinguistique) {
+        this.connaissanceLinguistique = connaissanceLinguistique;
+    }
+
+    public List<ExperienceProfessionnelle> getExperienceProfessionnelle() {
+        return experienceProfessionnelle;
+    }
+
+    public void setExperienceProfessionnelle(List<ExperienceProfessionnelle> experienceProfessionnelle) {
+        this.experienceProfessionnelle = experienceProfessionnelle;
+    }
+
+    public List<Formation> getFormation() {
+        return formation;
+    }
+
+    public void setFormation(List<Formation> formation) {
+        this.formation = formation;
     }
 
     public Long getId() {
@@ -83,27 +89,5 @@ public class Cv {
         this.objectif = objectif;
     }
 
-    public ConnaissanceLinguistique getConnaissanceLinguistique() {
-        return connaissanceLinguistique;
-    }
 
-    public void setConnaissanceLinguistique(ConnaissanceLinguistique connaissanceLinguistique) {
-        this.connaissanceLinguistique = connaissanceLinguistique;
-    }
-
-    public ExperienceProfessionnelle getExperienceProfessionnelle() {
-        return experienceProfessionnelle;
-    }
-
-    public void setExperienceProfessionnelle(ExperienceProfessionnelle experienceProfessionnelle) {
-        this.experienceProfessionnelle = experienceProfessionnelle;
-    }
-
-    public Formation getFormation() {
-        return formation;
-    }
-
-    public void setFormation(Formation formation) {
-        this.formation = formation;
-    }
 }
