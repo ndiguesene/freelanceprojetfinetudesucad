@@ -25,8 +25,8 @@
                     <h6 class="card-subtitle mb-2 text-muted"><span th:text="${currentUser.getTitre_fonction()}"></span></h6>
                     <br/>
                     <h6 class="card-subtitle mb-2 text-muted"><span th:text="${currentUser.getPays()}"></span> - <span th:text="${currentUser.getVille()}"></span></h6>
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
+                 <!--   <a href="#" class="card-link">Card link</a>
+                    <a href="#" class="card-link">Another link</a>-->
                 </div>
             </div>
         </div>
@@ -40,7 +40,7 @@
                         <div class="card-body">
                             <h5 class="card-title" th:text="${offre.getPoste()}"></h5>
                             <p class="card-text" th:text="${offre.getDescription()}"></p>
-                            <a href="#" class="btn btn-primary float-right">Postuler</a>
+                            <a href="/candidat/postuler" th:href="@{/candidat/postuler(offre=${offre.id})}" class="btn btn-primary float-right">Postuler</a>
                             <span class="card-text" th:text="${offre.getRegion()}"></span> - <span class="card-text" th:text="${offre.getTypeOffre()}"></span>
                             <p class="card-text"><small class="text-muted" th:text="${offre.getDateOffreEmploi()}"></small></p>
                         </div>

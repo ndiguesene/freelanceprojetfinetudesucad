@@ -1,9 +1,6 @@
 package com.memoire.projetfinetudes.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class ConnaissanceLinguistique {
@@ -12,10 +9,31 @@ public class ConnaissanceLinguistique {
     private Long id;
     private String nomLangue;
     private String niveauLangue;
+    @ManyToOne
+    private User user;
 
     public ConnaissanceLinguistique() {
 
     }
+
+    @Override
+    public String toString() {
+        return "ConnaissanceLinguistique{" +
+                "id=" + id +
+                ", nomLangue='" + nomLangue + '\'' +
+                ", niveauLangue='" + niveauLangue + '\'' +
+                ", user=" + user.toString() +
+                '}';
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public Long getId() {
         return id;
     }

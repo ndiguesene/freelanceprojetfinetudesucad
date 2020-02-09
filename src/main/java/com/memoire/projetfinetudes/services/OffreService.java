@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OffreService {
@@ -14,5 +15,15 @@ public class OffreService {
 
     public List<OffreEmploi> getAllOffres() {
         return offreRepository.findAll();
+    }
+    public List<OffreEmploi> getOffresByUser(Long id) {
+        return offreRepository.findOffreEmploisByUser(id);
+    }
+    public OffreEmploi saveOffreEmploi(OffreEmploi offreEmploi) {
+        return offreRepository.saveAndFlush(offreEmploi);
+    }
+
+    public Optional<OffreEmploi> findOffreById(Long id) {
+        return offreRepository.findById(id);
     }
 }

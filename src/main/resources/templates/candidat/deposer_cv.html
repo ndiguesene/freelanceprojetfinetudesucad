@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Déposer CV</title>
+    <title>CV et Lettre de Motivation</title>
     <link rel="stylesheet" type="text/css" href="../static/css/page.css" th:href="@{/css/page.css}"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
@@ -9,11 +9,226 @@
 
 <div th:insert="layout/navbar :: navbar"></div>
 <div class="container">
-    Deposer CV
+   <!-- Deposer CV
     Remplir votre CV pour:
      - Etre visible aupres des recruteurs
-     - Postuler aux offres d’emploi en quelques clics
-</div>
+     - Postuler aux offres d’emploi en quelques clics-->
+
+    <h1>Cv et Lettre de Motivation</h1>
+    <br>
+    <nav>
+        <div class="nav nav-tabs nav-justified" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">CV</a>
+            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Lettre</a>
+        </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            <br>
+            <h2>Formulaire de CV</h2>
+            <hr>
+            <br>
+            <div class="row">
+                <div class="nav flex-column nav-pills col-md-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Objectif</a>
+                    <a class="nav-link" id="v-pills-experience-tab" data-toggle="pill" href="#v-pills-experience" role="tab" aria-controls="v-pills-experience" aria-selected="false">Expériences</a>
+                    <a class="nav-link" id="v-pills-formation-tab" data-toggle="pill" href="#v-pills-formation" role="tab" aria-controls="v-pills-formation" aria-selected="false">Formations</a>
+                    <a class="nav-link" id="v-pills-linguistique-tab" data-toggle="pill" href="#v-pills-linguistique" role="tab" aria-controls="v-pills-linguistique" aria-selected="false">Linguistiques</a>
+                </div>
+                <div class="tab-content col-md-9" id="v-pills-tabContent">
+                    <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                        <h2>Objectifs</h2>
+                        <br>
+                        <form autocomplete="off" action="#" th:action="@{/candidat/postuler/resume}" th:object="${cv}" method="POST" class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <div class="col-sm-9">
+                                    <label th:if="${#fields.hasErrors('objectif')}" th:errors="*{objectif}" class="validation-message"></label>
+                                    <textarea type="text" th:field="*{objectif}" rows="4" placeholder="Objectif" class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-9">
+                                    <button type="submit" class="btn btn-primary btn-block">Enregistrer Modifications</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-experience" role="tabpanel" aria-labelledby="v-pills-experience-tab">
+                        <h2>Expérience</h2>
+                        <br>
+                        <form class="form-horizontal" autocomplete="off" action="#" th:action="@{/candidat/postuler/experience}" th:object="${experienceProfessionnelle}" method="POST" role="form">
+                            <div class="form-group">
+                                <div class="col-sm-9">
+                                    <label th:if="${#fields.hasErrors('competence')}" th:errors="*{competence}" class="validation-message"></label>
+                                    <input type="text" th:field="*{competence}" placeholder="Compétence" class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-9">
+                                    <label th:if="${#fields.hasErrors('secteurActivite')}" th:errors="*{secteurActivite}" class="validation-message"></label>
+                                    <input type="text" th:field="*{secteurActivite}" placeholder="Secteur d'activité" class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-9">
+                                    <label th:if="${#fields.hasErrors('nomEntreprise')}" th:errors="*{nomEntreprise}" class="validation-message"></label>
+                                    <input type="text" th:field="*{nomEntreprise}" placeholder="Nom entreprise" class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-9">
+                                    <label th:if="${#fields.hasErrors('region')}" th:errors="*{region}" class="validation-message"></label>
+                                    <input type="text" th:field="*{region}" placeholder="Région" class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-9">
+                                    <label th:if="${#fields.hasErrors('poste')}" th:errors="*{poste}" class="validation-message"></label>
+                                    <input type="text" th:field="*{poste}" placeholder="Poste" class="form-control"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-9">
+                                    <button type="submit" class="btn btn-primary btn-block">Enregistrer Modifications</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-formation" role="tabpanel" aria-labelledby="v-pills-formation-tab">
+                        <h2>Formations</h2>
+                        <br>
+                        <form autocomplete="off" action="#" th:action="@{/candidat/postuler/formation}" th:object="${formation}" method="POST" class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <div class="col-sm-9">
+                                    <label th:if="${#fields.hasErrors('etablissement')}" th:errors="*{etablissement}" class="validation-message"></label>
+                                    <input type="text" th:field="*{etablissement}" placeholder="Etablissement" class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-9">
+                                    <label th:if="${#fields.hasErrors('nomDiplome')}" th:errors="*{nomDiplome}" class="validation-message"></label>
+                                    <input type="text" th:field="*{nomDiplome}" placeholder="Nom diplome" class="form-control"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-9">
+                                    <button type="submit" class="btn btn-primary btn-block">Enregistrer Modifications</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-linguistique" role="tabpanel" aria-labelledby="v-pills-linguistique-tab">
+                        <h2>Linguistiques</h2>
+                        <br>
+                        <form autocomplete="off" action="#" th:action="@{/candidat/postuler/linguistiques}" th:object="${connaissanceLinguistique}" method="POST" class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <div class="col-sm-9">
+                                    <label th:if="${#fields.hasErrors('nomLangue')}" th:errors="*{nomLangue}" class="validation-message"></label>
+                                    <input type="text" th:field="*{nomLangue}" placeholder="Nom Langue" class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-9">
+                                    <label th:if="${#fields.hasErrors('niveauLangue')}" th:errors="*{niveauLangue}" class="validation-message"></label>
+                                    <input type="text" th:field="*{niveauLangue}" placeholder="Niveau" class="form-control"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-9">
+                                    <button type="submit" class="btn btn-primary btn-block">Enregistrer Modifications</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+            Lettre de Motivation
+        </div>
+    </div>
+
+    <!--<div class="row">
+        <div class="col-md-12 col-md-offset-6">
+            <form autocomplete="off" action="#" th:action="@{/candidat/postuler}" th:object="${cv}" method="POST" class="form-horizontal" role="form">
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <label th:if="${#fields.hasErrors('objectif')}" th:errors="*{objectif}" class="validation-message"></label>
+                        <input type="text" th:field="*{objectif}" placeholder="Objectif" class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <form th:action="@{/candidat/addConnaissanceLinguistique}" th:object="${cv.getConnaissanceLinguistique()}" method="POST" class="form-horizontal" role="form">
+                        <div class="row col-sm-9">
+                            <div class="col">
+                                <label th:if="${#fields.hasErrors('cv.connaissanceLinguistique')}" th:errors="*{cv.connaissanceLinguistique}" class="validation-message"></label>
+                                <input type="text" th:field="*{cv.connaissanceLinguistique}" placeholder="Langue" class="form-control"/>
+                            </div>
+                            <div class="col">
+                                <label th:if="${#fields.hasErrors('cv.connaissanceLinguistique')}" th:errors="*{cv.connaissanceLinguistique}" class="validation-message"></label>
+                                <input type="text" th:field="*{cv.connaissanceLinguistique}" placeholder="Niveau" class="form-control"/>
+                            </div>
+                            <div class="col">
+                                <button type="submit" class="btn btn-primary btn-block">Engegistrer</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>-->
+                <!--<div class="form-group">
+                    <form th:action="@{/candidat/exxperience}" th:object="${experienceProfessionnelle}" method="POST" class="form-horizontal" role="form">
+                        <div class="row col-sm-9">
+                            <div class="col">
+                                <label th:if="${#fields.hasErrors('experienceProfessionnelle.poste')}" th:errors="*{experienceProfessionnelle.poste}" class="validation-message"></label>
+                                <input type="text" th:field="*{experienceProfessionnelle.poste}" placeholder="Poste" class="form-control"/>
+                            </div>
+                            <div class="col">
+                                <label th:if="${#fields.hasErrors('experienceProfessionnelle.competence')}" th:errors="*{experienceProfessionnelle.competence}" class="validation-message"></label>
+                                <input type="text" th:field="*{experienceProfessionnelle.competence}" placeholder="Compétence" class="form-control"/>
+                            </div>
+                            <div class="col">
+                                <label th:if="${#fields.hasErrors('experienceProfessionnelle.nomEntrprise')}" th:errors="*{experienceProfessionnelle.nomEntrprise}" class="validation-message"></label>
+                                <input type="text" th:field="*{experienceProfessionnelle.nomEntrprise}" placeholder="Nom Entreprise" class="form-control"/>
+                            </div>
+                            <div class="col">
+                                <label th:if="${#fields.hasErrors('experienceProfessionnelle.region')}" th:errors="*{experienceProfessionnelle.region}" class="validation-message"></label>
+                                <input type="text" th:field="*{experienceProfessionnelle.region}" placeholder="Région" class="form-control"/>
+                            </div>
+                            <div class="col">
+                                <label th:if="${#fields.hasErrors('experienceProfessionnelle.secteurActivite')}" th:errors="*{experienceProfessionnelle.secteurActivite}" class="validation-message"></label>
+                                <input type="text" th:field="*{experienceProfessionnelle.secteurActivite}" placeholder="Secteur Activité" class="form-control"/>
+                            </div>
+                            <div class="col">
+                                <label th:if="${#fields.hasErrors('experienceProfessionnelle.debutTravail')}" th:errors="*{experienceProfessionnelle.debutTravail}" class="validation-message"></label>
+                                <input type="text" th:field="*{experienceProfessionnelle.debutTravail}" placeholder="Debut Travvail" class="form-control"/>
+                            </div>
+                            <div class="col">
+                                <button type="submit" class="btn btn-primary btn-block">Engegistrer</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>-->
+
+
+               <!-- <div class="form-group">
+                    <div class="col-sm-9">
+                        <input type="text" th:field="*{formation}" placeholder="Formation" class="form-control"/>
+                        <label th:if="${#fields.hasErrors('formation')}" th:errors="*{formation}" class="validation-message"></label>
+                    </div>
+                </div>-->
+
+                <!--<div class="form-group">
+                    <div class="col-sm-9">
+                        <button type="submit" class="btn btn-primary btn-block">Engegistrer</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>-->
 <div th:insert="layout/footer :: footer">&copy; 2016 The Static Templates</div>
 
 

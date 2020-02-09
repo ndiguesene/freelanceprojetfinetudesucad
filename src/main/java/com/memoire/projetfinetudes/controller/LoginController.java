@@ -10,12 +10,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -53,11 +53,6 @@ public class LoginController {
         modelAndView.addObject("user", user);
         List<Role> roleAll = roleService.getRoles();
         modelAndView.addObject("roleAll", roleAll);
-        List<String> pays = new ArrayList<>();
-        pays.add("SENEGAL");
-        pays.add("MALI");
-        pays.add("FRANCE");
-        pays.add("USA");
         modelAndView.setViewName("registration");
         return modelAndView;
     }
@@ -75,10 +70,16 @@ public class LoginController {
             modelAndView.setViewName("registration");
         } else {
             userService.saveUser(user);
-            modelAndView.addObject("successMessage", "User has been registered successfully");
+            modelAndView.addObject("successMessage", "Votre compte a été créé avec success, Connectez - vous à votre nouveau compte.");
             modelAndView.addObject("user", user);
-            modelAndView.setViewName("home");
+            List<Role> roleAll = roleService.getRoles();
+            modelAndView.addObject("roleAll", roleAll);
+            modelAndView.setViewName("login");
         }
         return modelAndView;
+    }
+    @GetMapping("/access-denied")
+    public String accessDenied() {
+        return "/error/access-denied";
     }
 }

@@ -1,6 +1,10 @@
 package com.memoire.projetfinetudes.models;
 
+import org.hibernate.validator.constraints.Length;
+import org.springframework.data.annotation.CreatedDate;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -9,15 +13,31 @@ public class OffreEmploi {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
-
+    @CreatedDate
+    @Column(name = "date_offre_emploi")
     private LocalDateTime dateOffreEmploi;
+    @Column(name = "poste")
+    @NotEmpty(message = "*Please provide poste")
     private String poste;
+    @Column(name = "description")
+    @Length(min = 4, message = "*Describe your poste")
+    @NotEmpty(message = "*")
     private String description;
+    @Column(name = "type_offre")
+    @Length(message = "*")
+    @NotEmpty(message = "*")
     private String typeOffre;
+    @Column(name = "qualite_requise")
+    @NotEmpty(message = "*")
     private String qualiteRequise;
+    @Column(name = "connaissance_technique")
+    @NotEmpty(message = "*")
     private String connaissanceTechnique;
+    @Column(name = "region")
+    @NotEmpty(message = "*")
     private String region;
-    @OneToOne
+
+    @ManyToOne
     private User user;
 
     public OffreEmploi() {
@@ -110,5 +130,20 @@ public class OffreEmploi {
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getDateOffreEmploi(), getPoste(), getDescription(), getQualiteRequise(), getConnaissanceTechnique(), getRegion(), getRecruteur());
+    }
+
+    @Override
+    public String toString() {
+        return "OffreEmploi{" +
+                "id=" + id +
+                ", dateOffreEmploi=" + dateOffreEmploi +
+                ", poste='" + poste + '\'' +
+                ", description='" + description + '\'' +
+                ", typeOffre='" + typeOffre + '\'' +
+                ", qualiteRequise='" + qualiteRequise + '\'' +
+                ", connaissanceTechnique='" + connaissanceTechnique + '\'' +
+                ", region='" + region + '\'' +
+                ", user=" + user.getEmail() +
+                '}';
     }
 }

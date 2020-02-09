@@ -1,7 +1,6 @@
 package com.memoire.projetfinetudes.models;
 
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -18,11 +17,10 @@ public class User {
     @Column(name = "user_name")
     @Length(min = 5, message = "*Your user name must have at least 5 characters")
     @NotEmpty(message = "*Please provide a user name")
-    @UniqueElements
     private String userName;
 
     @Column(name = "titre_fonction")
-    @NotEmpty(message = "*Please provide a user name")
+    @NotEmpty(message = "*Please provide a function title")
     private String titre_fonction;
 
     @Column(name = "email")

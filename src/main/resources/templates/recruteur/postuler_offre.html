@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Consulter Offres</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/page.css" th:href="@{/css/page.css}"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+<div th:insert="layout/navbar :: navbar"></div>
+<br>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-4">
+            <h1>Liste de vos offres</h1>
+            <ul class="list-group list-group-flush" th:field="*{offres}">
+                <li class="list-group-item" th:each="offr: ${offres}" th:value="${offr.id}">
+                    <a href=""> <span th:text="${offr.getPoste()}"></span> - <span th:text="${offr.getDateOffreEmploi()}"></span></a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-8">
+            <form autocomplete="off" action="#" th:action="@{/recruteur/offre}" th:object="${offre}" method="POST" class="form-horizontal" role="form">
+                <h2>Postuler Offre</h2>
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <label th:if="${#fields.hasErrors('poste')}" th:errors="*{poste}" class="validation-message"></label>
+                        <input type="text" th:field="*{poste}" placeholder="Poste" class="form-control"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <label th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="validation-message"></label>
+                        <textarea class="form-control" th:field="*{description}" rows="8" placeholder="Description de l'offre"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <input type="text" th:field="*{typeOffre}" placeholder="Type Offre" class="form-control"/> <label
+                            th:if="${#fields.hasErrors('typeOffre')}" th:errors="*{typeOffre}"
+                            class="validation-message"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <input type="text" th:field="*{qualiteRequise}" placeholder="Qualité Requise" class="form-control"/> <label
+                            th:if="${#fields.hasErrors('qualiteRequise')}" th:errors="*{qualiteRequise}"
+                            class="validation-message"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <input type="text" th:field="*{connaissanceTechnique}" placeholder="Connaissances Techniques" class="form-control"/> <label
+                            th:if="${#fields.hasErrors('connaissanceTechnique')}" th:errors="*{connaissanceTechnique}"
+                            class="validation-message"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <input type="text" th:field="*{region}" placeholder="Région de l'offre" class="form-control"/> <label
+                            th:if="${#fields.hasErrors('region')}" th:errors="*{region}" class="validation-message"></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <button type="submit" class="btn btn-primary btn-block">Postuler Offre</button>
+                    </div>
+                </div>
+
+                <!--<h2><span class="text-success" th:utext="${successMessage}"></span></h2>-->
+
+            </form>
+        </div>
+    </div>
+</div>
+<div th:insert="layout/footer :: footer">&copy; 2016 The Static Templates</div>
+
+</body>
+</html>

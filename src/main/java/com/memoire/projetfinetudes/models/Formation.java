@@ -1,10 +1,6 @@
 package com.memoire.projetfinetudes.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.util.Objects;
+import javax.persistence.*;
 
 @Entity
 public class Formation {
@@ -14,9 +10,34 @@ public class Formation {
     private String etablissement;
     private int duree;
     private String nomDiplome;
+    @ManyToOne
+    private User user;
 
     public Formation() {
 
+    }
+
+    @Override
+    public String toString() {
+        return "Formation{" +
+                "id=" + id +
+                ", etablissement='" + etablissement + '\'' +
+                ", duree=" + duree +
+                ", nomDiplome='" + nomDiplome + '\'' +
+                ", user=" + user.toString() +
+                '}';
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Long getId() {
@@ -45,31 +66,5 @@ public class Formation {
 
     public void setNomDiplome(String nomDiplome) {
         this.nomDiplome = nomDiplome;
-    }
-
-    @Override
-    public String toString() {
-        return "Formation{" +
-                "id=" + id +
-                ", etablissement='" + etablissement + '\'' +
-                ", duree=" + duree +
-                ", nomDiplome='" + nomDiplome + '\'' +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Formation)) return false;
-        Formation formation = (Formation) o;
-        return getDuree() == formation.getDuree() &&
-                getId().equals(formation.getId()) &&
-                getEtablissement().equals(formation.getEtablissement()) &&
-                getNomDiplome().equals(formation.getNomDiplome());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getEtablissement(), getDuree(), getNomDiplome());
     }
 }

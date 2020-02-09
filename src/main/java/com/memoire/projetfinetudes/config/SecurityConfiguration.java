@@ -37,16 +37,22 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 authorizeRequests()
                 .antMatchers("/**").permitAll().anyRequest()
                 .authenticated().and().csrf().disable().formLogin()
-                .loginPage("/login").failureUrl("/login?error=true")
+                .loginPage("/login")
+                .failureUrl("/login?error=true")
                 .defaultSuccessUrl("/home")
                 .usernameParameter("user_name")
                 .passwordParameter("password")
                 .and().logout()
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
+                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/login")
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login").and().exceptionHandling()
+                .deleteCookies("JSESSIONID")
+                .logoutSuccessUrl("/login")
+                .and().exceptionHandling()
                 .accessDeniedPage("/access-denied");
+
+        http.headers().frameOptions().disable();
     }
 
     @Override

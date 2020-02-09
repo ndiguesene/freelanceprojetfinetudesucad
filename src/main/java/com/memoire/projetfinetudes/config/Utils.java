@@ -1,4 +1,4 @@
-package com.memoire.projetfinetudes.utils;
+package com.memoire.projetfinetudes.config;
 
 import com.memoire.projetfinetudes.models.User;
 import com.memoire.projetfinetudes.services.UserService;
@@ -7,15 +7,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 public class Utils {
-    static
     @Autowired
-    UserService userService;
+    static
+    private UserService userService;
 
-    public static User getCurrentUser() {
+    private static User getCurrentUser() {
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-        String userName = loggedInUser.getName();
-        User user = userService.findUserByUserName(userName);
-        System.out.println(user.toString());
-        return user;
+        User currentUser = userService.findUserByUserName(loggedInUser.getName());
+        return currentUser;
     }
 }

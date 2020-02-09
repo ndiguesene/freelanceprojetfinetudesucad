@@ -1,23 +1,21 @@
 package com.memoire.projetfinetudes.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.util.Objects;
+import javax.persistence.*;
 
 @Entity
 public class ExperienceProfessionnelle {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
-    private String nomEntrprise;
+    private String nomEntreprise;
     private String secteurActivite;
     private String poste;
     private String region;
     private String debutTravail;
     private String competence;
 
+    @ManyToOne
+    private User user;
 
     public ExperienceProfessionnelle() {
     }
@@ -26,32 +24,14 @@ public class ExperienceProfessionnelle {
     public String toString() {
         return "ExperienceProfessionnelle{" +
                 "id=" + id +
-                ", nomEntrprise='" + nomEntrprise + '\'' +
+                ", nomEntreprise='" + nomEntreprise + '\'' +
                 ", secteurActivite='" + secteurActivite + '\'' +
                 ", poste='" + poste + '\'' +
                 ", region='" + region + '\'' +
                 ", debutTravail='" + debutTravail + '\'' +
                 ", competence='" + competence + '\'' +
+                ", user=" + user.toString() +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ExperienceProfessionnelle)) return false;
-        ExperienceProfessionnelle that = (ExperienceProfessionnelle) o;
-        return getId().equals(that.getId()) &&
-                getNomEntrprise().equals(that.getNomEntrprise()) &&
-                getSecteurActivite().equals(that.getSecteurActivite()) &&
-                getPoste().equals(that.getPoste()) &&
-                getRegion().equals(that.getRegion()) &&
-                getDebutTravail().equals(that.getDebutTravail()) &&
-                getCompetence().equals(that.getCompetence());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getNomEntrprise(), getSecteurActivite(), getPoste(), getRegion(), getDebutTravail(), getCompetence());
     }
 
     public Long getId() {
@@ -62,12 +42,12 @@ public class ExperienceProfessionnelle {
         this.id = id;
     }
 
-    public String getNomEntrprise() {
-        return nomEntrprise;
+    public String getNomEntreprise() {
+        return nomEntreprise;
     }
 
-    public void setNomEntrprise(String nomEntrprise) {
-        this.nomEntrprise = nomEntrprise;
+    public void setNomEntreprise(String nomEntreprise) {
+        this.nomEntreprise = nomEntreprise;
     }
 
     public String getSecteurActivite() {
@@ -108,5 +88,13 @@ public class ExperienceProfessionnelle {
 
     public void setCompetence(String competence) {
         this.competence = competence;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

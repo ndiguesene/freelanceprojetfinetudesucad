@@ -12,7 +12,6 @@ import java.util.HashSet;
 
 @Service
 public class UserService {
-
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;

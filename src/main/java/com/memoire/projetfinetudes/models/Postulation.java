@@ -10,13 +10,13 @@ public class Postulation {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     private LocalDateTime datePostulation;
-    @OneToOne
+    @ManyToOne
     private Cv cv;
-    @OneToOne
+    @ManyToOne
     private OffreEmploi offreEmploi;
-    @OneToOne
+    @ManyToOne
     private LettreMotivation lettreMotivation;
-    @OneToOne
+    @ManyToOne
     private User user;
 
     @Override
