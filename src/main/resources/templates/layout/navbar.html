@@ -7,16 +7,15 @@
         <nav class="site-header sticky-top py-1" th:fragment="navbar">
             <div class="container d-flex flex-column flex-md-row justify-content-between">
                 <a class="py-2" href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="d-block mx-auto" role="img" viewBox="0 0 24 24" focusable="false"><title>Product</title><circle cx="12" cy="12" r="10"/><path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="d-block mx-auto" role="img" viewBox="0 0 24 24" focusable="false"><title>Recrutement</title><circle cx="12" cy="12" r="10"/><path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"/></svg>
                 </a>
                 <a class="py-2 d-none d-md-inline-block" href="/candidat/consulter_offre" th:action="@{/candidat/consulter_offre}" sec:authorize="hasAnyRole('ROLE_CANDIDAT')">Consulter Offres</a>
                 <a class="py-2 d-none d-md-inline-block" href="/candidat/deposer_cv" th:action="@{/candidat/deposer_cv}" sec:authorize="hasAnyRole('ROLE_CANDIDAT')">Deposer CV</a>
-<!--                <a class="py-2 d-none d-md-inline-block" href="/candidat/deposer_lm" th:action="@{/candidat/deposer_lm}" sec:authorize="hasAnyRole('ROLE_CANDIDAT')">Deposer LM</a>-->
                 <a class="py-2 d-none d-md-inline-block" href="/candidat/infos_postulation" th:action="@{/candidat/infos_postulation}" sec:authorize="hasAnyRole('ROLE_CANDIDAT')">Infos Postulations</a>
                 <a class="py-2 d-none d-md-inline-block" href="/candidat/mon_profil" th:action="@{/candidat/mon_profil}" sec:authorize="hasAnyRole('ROLE_CANDIDAT')">Mon Profil</a>
-                <a class="py-2 d-none d-md-inline-block" href="#" sec:authorize="hasAnyRole('ROLE_RECRUTEUR')">Consulter Candidatures</a>
+                <a class="py-2 d-none d-md-inline-block" href="/recruteur/consulter_candidature" th:href="@{/recruteur/consulter_candidatures}" sec:authorize="hasAnyRole('ROLE_RECRUTEUR')">Consulter Candidatures</a>
                 <a class="py-2 d-none d-md-inline-block" href="/recruteur/postuler_offre" th:action="@{/recruteur/postuler_offre}" sec:authorize="hasAnyRole('ROLE_RECRUTEUR')">Depot Offres</a>
-                <a class="py-2 d-none d-md-inline-block" href="#" sec:authorize="hasAnyRole('ROLE_RECRUTEUR')">Consulter CV</a>
+<!--                <a class="py-2 d-none d-md-inline-block" href="#" sec:authorize="hasAnyRole('ROLE_RECRUTEUR')">Consulter CV</a>-->
                 <a class="py-2 d-none d-md-inline-block" href="#" sec:authorize="hasAnyRole('ROLE_RECRUTEUR')">Mon Profil</a>
                 <a class="py-2 d-none d-md-inline-block" href="#" sec:authorize="hasAnyRole('ROLE_EMPLOYE')">Employe</a>
                 <a class="py-2 d-none d-md-inline-block" href="#" sec:authorize="hasAnyRole('ROLE_ADMIN')">Admin</a>

@@ -2,158 +2,199 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>CV et Lettre de Motivation</title>
-    <link rel="stylesheet" type="text/css" href="../static/css/page.css" th:href="@{/css/page.css}"/>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="../static/css/page.css" rel="stylesheet" th:href="@{/css/page.css}" type="text/css"/>
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
 </head>
 <body>
 
 <div th:insert="layout/navbar :: navbar"></div>
 <div class="container">
-   <!-- Deposer CV
-    Remplir votre CV pour:
-     - Etre visible aupres des recruteurs
-     - Postuler aux offres d’emploi en quelques clics-->
+    <!-- Deposer CV
+     Remplir votre CV pour:
+      - Etre visible aupres des recruteurs
+      - Postuler aux offres d’emploi en quelques clics-->
 
     <h1>Cv et Lettre de Motivation</h1>
     <br>
     <nav>
         <div class="nav nav-tabs nav-justified" id="nav-tab" role="tablist">
-            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">CV</a>
-            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Lettre</a>
+            <a aria-controls="nav-home" aria-selected="true" class="nav-item nav-link active" data-toggle="tab" href="#nav-home"
+               id="nav-home-tab" role="tab">CV</a>
+            <a aria-controls="nav-profile" aria-selected="false" class="nav-item nav-link" data-toggle="tab" href="#nav-profile"
+               id="nav-profile-tab" role="tab">Lettre</a>
         </div>
     </nav>
     <div class="tab-content" id="nav-tabContent">
-        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+        <div aria-labelledby="nav-home-tab" class="tab-pane fade show active" id="nav-home" role="tabpanel">
             <br>
             <h2>Formulaire de CV</h2>
             <hr>
             <br>
             <div class="row">
-                <div class="nav flex-column nav-pills col-md-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                    <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Objectif</a>
-                    <a class="nav-link" id="v-pills-experience-tab" data-toggle="pill" href="#v-pills-experience" role="tab" aria-controls="v-pills-experience" aria-selected="false">Expériences</a>
-                    <a class="nav-link" id="v-pills-formation-tab" data-toggle="pill" href="#v-pills-formation" role="tab" aria-controls="v-pills-formation" aria-selected="false">Formations</a>
-                    <a class="nav-link" id="v-pills-linguistique-tab" data-toggle="pill" href="#v-pills-linguistique" role="tab" aria-controls="v-pills-linguistique" aria-selected="false">Linguistiques</a>
+                <div aria-orientation="vertical" class="nav flex-column nav-pills col-md-3" id="v-pills-tab"
+                     role="tablist">
+                    <a aria-controls="v-pills-home" aria-selected="true" class="nav-link active" data-toggle="pill" href="#v-pills-home"
+                       id="v-pills-home-tab" role="tab">Objectif</a>
+                    <a aria-controls="v-pills-experience" aria-selected="false" class="nav-link" data-toggle="pill"
+                       href="#v-pills-experience" id="v-pills-experience-tab" role="tab">Expériences</a>
+                    <a aria-controls="v-pills-formation" aria-selected="false" class="nav-link" data-toggle="pill"
+                       href="#v-pills-formation" id="v-pills-formation-tab" role="tab">Formations</a>
+                    <a aria-controls="v-pills-linguistique" aria-selected="false" class="nav-link" data-toggle="pill"
+                       href="#v-pills-linguistique" id="v-pills-linguistique-tab" role="tab">Linguistiques</a>
                 </div>
                 <div class="tab-content col-md-9" id="v-pills-tabContent">
-                    <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                    <div aria-labelledby="v-pills-home-tab" class="tab-pane fade show active" id="v-pills-home"
+                         role="tabpanel">
                         <h2>Objectifs</h2>
                         <br>
-                        <form autocomplete="off" action="#" th:action="@{/candidat/postuler/resume}" th:object="${cv}" method="POST" class="form-horizontal" role="form">
+                        <form action="#" autocomplete="off" class="form-horizontal" method="POST"
+                              role="form" th:action="@{/candidat/postuler/resume}" th:object="${cv}">
                             <div class="form-group">
                                 <div class="col-sm-9">
-                                    <label th:if="${#fields.hasErrors('objectif')}" th:errors="*{objectif}" class="validation-message"></label>
-                                    <textarea type="text" th:field="*{objectif}" rows="4" placeholder="Objectif" class="form-control"/>
+                                    <label class="validation-message" th:errors="*{objectif}"
+                                           th:if="${#fields.hasErrors('objectif')}"></label>
+                                    <textarea class="form-control" placeholder="Objectif" rows="4" th:field="*{objectif}" type="text"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-9">
-                                    <button type="submit" class="btn btn-primary btn-block">Enregistrer Modifications</button>
+                                    <button class="btn btn-primary btn-block" type="submit">Enregistrer</button>
                                 </div>
                             </div>
                         </form>
                     </div>
-                    <div class="tab-pane fade" id="v-pills-experience" role="tabpanel" aria-labelledby="v-pills-experience-tab">
+                    <div aria-labelledby="v-pills-experience-tab" class="tab-pane fade" id="v-pills-experience"
+                         role="tabpanel">
                         <div class="row">
                             <div class="col-md-7">
                                 <h2>Expériences</h2>
                                 <br>
-                                <form class="form-horizontal" autocomplete="off" action="#" th:action="@{/candidat/postuler/experience}" th:object="${experienceProfessionnelle}" method="POST" role="form">
+                                <form action="#" autocomplete="off" class="form-horizontal"
+                                      method="POST"
+                                      role="form" th:action="@{/candidat/postuler/experience}" th:object="${experienceProfessionnelle}">
                                     <div class="form-group">
                                         <div class="col-sm-9">
-                                            <label th:if="${#fields.hasErrors('competence')}" th:errors="*{competence}" class="validation-message"></label>
-                                            <input type="text" th:field="*{competence}" placeholder="Compétence" class="form-control"/>
+                                            <label class="validation-message" th:errors="*{competence}"
+                                                   th:if="${#fields.hasErrors('competence')}"></label>
+                                            <input class="form-control" placeholder="Compétence" th:field="*{competence}"
+                                                   type="text"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-9">
-                                            <label th:if="${#fields.hasErrors('secteurActivite')}" th:errors="*{secteurActivite}" class="validation-message"></label>
-                                            <input type="text" th:field="*{secteurActivite}" placeholder="Secteur d'activité" class="form-control"/>
+                                            <label class="validation-message"
+                                                   th:errors="*{secteurActivite}" th:if="${#fields.hasErrors('secteurActivite')}"></label>
+                                            <input class="form-control" placeholder="Secteur d'activité"
+                                                   th:field="*{secteurActivite}" type="text"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-9">
-                                            <label th:if="${#fields.hasErrors('nomEntreprise')}" th:errors="*{nomEntreprise}" class="validation-message"></label>
-                                            <input type="text" th:field="*{nomEntreprise}" placeholder="Nom entreprise" class="form-control"/>
+                                            <label class="validation-message"
+                                                   th:errors="*{nomEntreprise}" th:if="${#fields.hasErrors('nomEntreprise')}"></label>
+                                            <input class="form-control" placeholder="Nom entreprise" th:field="*{nomEntreprise}"
+                                                   type="text"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-9">
-                                            <label th:if="${#fields.hasErrors('region')}" th:errors="*{region}" class="validation-message"></label>
-                                            <input type="text" th:field="*{region}" placeholder="Région" class="form-control"/>
+                                            <label class="validation-message" th:errors="*{region}"
+                                                   th:if="${#fields.hasErrors('region')}"></label>
+                                            <input class="form-control" placeholder="Région" th:field="*{region}"
+                                                   type="text"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-9">
-                                            <label th:if="${#fields.hasErrors('poste')}" th:errors="*{poste}" class="validation-message"></label>
-                                            <input type="text" th:field="*{poste}" placeholder="Poste" class="form-control"/>
+                                            <label class="validation-message" th:errors="*{poste}"
+                                                   th:if="${#fields.hasErrors('poste')}"></label>
+                                            <input class="form-control" placeholder="Poste" th:field="*{poste}"
+                                                   type="text"/>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <div class="col-sm-9">
-                                            <button type="submit" class="btn btn-primary btn-block">Enregistrer Modifications</button>
+                                            <button class="btn btn-primary btn-block" type="submit">Enregistrer</button>
                                         </div>
                                     </div>
                                 </form>
                             </div>
                             <div class="col-md-5">
-                                <ul class="list-group list-group-flush" th:field="*{experienceProfessionnelles.orElse(null)}">
-                                    <li class="list-group-item" th:each="exp: ${experienceProfessionnelles.orElse(null)}" th:value="${exp.id}" th:text="${exp.poste}"></li>
+                                <ul class="list-group list-group-flush"
+                                    th:field="*{experienceProfessionnelles.orElse(null)}">
+                                    <li class="list-group-item"
+                                        th:each="exp: ${experienceProfessionnelles.orElse(null)}" th:text="${exp.poste}"
+                                        th:value="${exp.id}"></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="v-pills-formation" role="tabpanel" aria-labelledby="v-pills-formation-tab">
+                    <div aria-labelledby="v-pills-formation-tab" class="tab-pane fade" id="v-pills-formation"
+                         role="tabpanel">
                         <h2>Formations</h2>
                         <br>
-                        <form autocomplete="off" action="#" th:action="@{/candidat/postuler/formation}" th:object="${formation}" method="POST" class="form-horizontal" role="form">
+                        <form action="#" autocomplete="off" class="form-horizontal"
+                              method="POST" role="form" th:action="@{/candidat/postuler/formation}" th:object="${formation}">
                             <div class="form-group">
                                 <div class="col-sm-9">
-                                    <label th:if="${#fields.hasErrors('etablissement')}" th:errors="*{etablissement}" class="validation-message"></label>
-                                    <input type="text" th:field="*{etablissement}" placeholder="Etablissement" class="form-control"/>
+                                    <label class="validation-message" th:errors="*{etablissement}"
+                                           th:if="${#fields.hasErrors('etablissement')}"></label>
+                                    <input class="form-control" placeholder="Etablissement" th:field="*{etablissement}"
+                                           type="text"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-9">
-                                    <label th:if="${#fields.hasErrors('nomDiplome')}" th:errors="*{nomDiplome}" class="validation-message"></label>
-                                    <input type="text" th:field="*{nomDiplome}" placeholder="Nom diplome" class="form-control"/>
+                                    <label class="validation-message" th:errors="*{nomDiplome}"
+                                           th:if="${#fields.hasErrors('nomDiplome')}"></label>
+                                    <input class="form-control" placeholder="Nom diplome" th:field="*{nomDiplome}"
+                                           type="text"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-9">
-                                    <label th:if="${#fields.hasErrors('duree')}" th:errors="*{duree}" class="validation-message"></label>
-                                    <input type="number" th:field="*{duree}" placeholder="Durée Formation" class="form-control"/>
+                                    <label class="validation-message" th:errors="*{duree}"
+                                           th:if="${#fields.hasErrors('duree')}"></label>
+                                    <input class="form-control" placeholder="Durée Formation" th:field="*{duree}"
+                                           type="number"/>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <div class="col-sm-9">
-                                    <button type="submit" class="btn btn-primary btn-block">Enregistrer Modifications</button>
+                                    <button class="btn btn-primary btn-block" type="submit">Enregistrer</button>
                                 </div>
                             </div>
                         </form>
                     </div>
-                    <div class="tab-pane fade" id="v-pills-linguistique" role="tabpanel" aria-labelledby="v-pills-linguistique-tab">
+                    <div aria-labelledby="v-pills-linguistique-tab" class="tab-pane fade" id="v-pills-linguistique"
+                         role="tabpanel">
                         <h2>Linguistiques</h2>
                         <br>
-                        <form autocomplete="off" action="#" th:action="@{/candidat/postuler/linguistiques}" th:object="${connaissanceLinguistique}" method="POST" class="form-horizontal" role="form">
+                        <form action="#" autocomplete="off" class="form-horizontal"
+                              method="POST" role="form" th:action="@{/candidat/postuler/linguistiques}" th:object="${connaissanceLinguistique}">
                             <div class="form-group">
                                 <div class="col-sm-9">
-                                    <label th:if="${#fields.hasErrors('nomLangue')}" th:errors="*{nomLangue}" class="validation-message"></label>
-                                    <input type="text" th:field="*{nomLangue}" placeholder="Nom Langue" class="form-control"/>
+                                    <label class="validation-message" th:errors="*{nomLangue}"
+                                           th:if="${#fields.hasErrors('nomLangue')}"></label>
+                                    <input class="form-control" placeholder="Nom Langue" th:field="*{nomLangue}"
+                                           type="text"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-9">
-                                    <label th:if="${#fields.hasErrors('niveauLangue')}" th:errors="*{niveauLangue}" class="validation-message"></label>
-                                    <input type="text" th:field="*{niveauLangue}" placeholder="Niveau" class="form-control"/>
+                                    <label class="validation-message" th:errors="*{niveauLangue}"
+                                           th:if="${#fields.hasErrors('niveauLangue')}"></label>
+                                    <input class="form-control" placeholder="Niveau" th:field="*{niveauLangue}"
+                                           type="text"/>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <div class="col-sm-9">
-                                    <button type="submit" class="btn btn-primary btn-block">Enregistrer Modifications</button>
+                                    <button class="btn btn-primary btn-block" type="submit">Enregistrer</button>
                                 </div>
                             </div>
                         </form>
@@ -161,8 +202,24 @@
                 </div>
             </div>
         </div>
-        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-            Lettre de Motivation
+        <div aria-labelledby="nav-profile-tab" class="tab-pane fade" id="nav-profile" role="tabpanel">
+            <h2>Lettre de Motivation</h2>
+            <br>
+            <form action="#" autocomplete="off" class="form-horizontal" method="POST"
+                  role="form" th:action="@{/candidat/postuler/lettreMotivation}" th:object="${lettreMotivation}">
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <label class="validation-message" th:errors="*{texte}"
+                               th:if="${#fields.hasErrors('texte')}"></label>
+                        <textarea class="form-control" placeholder="Lettre de Motivation" rows="8" th:field="*{texte}" type="text"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <button class="btn btn-primary btn-block" type="submit">Enregistrer</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -192,63 +249,66 @@
                         </div>
                     </form>
                 </div>-->
-                <!--<div class="form-group">
-                    <form th:action="@{/candidat/exxperience}" th:object="${experienceProfessionnelle}" method="POST" class="form-horizontal" role="form">
-                        <div class="row col-sm-9">
-                            <div class="col">
-                                <label th:if="${#fields.hasErrors('experienceProfessionnelle.poste')}" th:errors="*{experienceProfessionnelle.poste}" class="validation-message"></label>
-                                <input type="text" th:field="*{experienceProfessionnelle.poste}" placeholder="Poste" class="form-control"/>
-                            </div>
-                            <div class="col">
-                                <label th:if="${#fields.hasErrors('experienceProfessionnelle.competence')}" th:errors="*{experienceProfessionnelle.competence}" class="validation-message"></label>
-                                <input type="text" th:field="*{experienceProfessionnelle.competence}" placeholder="Compétence" class="form-control"/>
-                            </div>
-                            <div class="col">
-                                <label th:if="${#fields.hasErrors('experienceProfessionnelle.nomEntrprise')}" th:errors="*{experienceProfessionnelle.nomEntrprise}" class="validation-message"></label>
-                                <input type="text" th:field="*{experienceProfessionnelle.nomEntrprise}" placeholder="Nom Entreprise" class="form-control"/>
-                            </div>
-                            <div class="col">
-                                <label th:if="${#fields.hasErrors('experienceProfessionnelle.region')}" th:errors="*{experienceProfessionnelle.region}" class="validation-message"></label>
-                                <input type="text" th:field="*{experienceProfessionnelle.region}" placeholder="Région" class="form-control"/>
-                            </div>
-                            <div class="col">
-                                <label th:if="${#fields.hasErrors('experienceProfessionnelle.secteurActivite')}" th:errors="*{experienceProfessionnelle.secteurActivite}" class="validation-message"></label>
-                                <input type="text" th:field="*{experienceProfessionnelle.secteurActivite}" placeholder="Secteur Activité" class="form-control"/>
-                            </div>
-                            <div class="col">
-                                <label th:if="${#fields.hasErrors('experienceProfessionnelle.debutTravail')}" th:errors="*{experienceProfessionnelle.debutTravail}" class="validation-message"></label>
-                                <input type="text" th:field="*{experienceProfessionnelle.debutTravail}" placeholder="Debut Travvail" class="form-control"/>
-                            </div>
-                            <div class="col">
-                                <button type="submit" class="btn btn-primary btn-block">Engegistrer</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>-->
-
-
-               <!-- <div class="form-group">
-                    <div class="col-sm-9">
-                        <input type="text" th:field="*{formation}" placeholder="Formation" class="form-control"/>
-                        <label th:if="${#fields.hasErrors('formation')}" th:errors="*{formation}" class="validation-message"></label>
-                    </div>
-                </div>-->
-
-                <!--<div class="form-group">
-                    <div class="col-sm-9">
-                        <button type="submit" class="btn btn-primary btn-block">Engegistrer</button>
-                    </div>
+    <!--<div class="form-group">
+        <form th:action="@{/candidat/exxperience}" th:object="${experienceProfessionnelle}" method="POST" class="form-horizontal" role="form">
+            <div class="row col-sm-9">
+                <div class="col">
+                    <label th:if="${#fields.hasErrors('experienceProfessionnelle.poste')}" th:errors="*{experienceProfessionnelle.poste}" class="validation-message"></label>
+                    <input type="text" th:field="*{experienceProfessionnelle.poste}" placeholder="Poste" class="form-control"/>
                 </div>
+                <div class="col">
+                    <label th:if="${#fields.hasErrors('experienceProfessionnelle.competence')}" th:errors="*{experienceProfessionnelle.competence}" class="validation-message"></label>
+                    <input type="text" th:field="*{experienceProfessionnelle.competence}" placeholder="Compétence" class="form-control"/>
+                </div>
+                <div class="col">
+                    <label th:if="${#fields.hasErrors('experienceProfessionnelle.nomEntrprise')}" th:errors="*{experienceProfessionnelle.nomEntrprise}" class="validation-message"></label>
+                    <input type="text" th:field="*{experienceProfessionnelle.nomEntrprise}" placeholder="Nom Entreprise" class="form-control"/>
+                </div>
+                <div class="col">
+                    <label th:if="${#fields.hasErrors('experienceProfessionnelle.region')}" th:errors="*{experienceProfessionnelle.region}" class="validation-message"></label>
+                    <input type="text" th:field="*{experienceProfessionnelle.region}" placeholder="Région" class="form-control"/>
+                </div>
+                <div class="col">
+                    <label th:if="${#fields.hasErrors('experienceProfessionnelle.secteurActivite')}" th:errors="*{experienceProfessionnelle.secteurActivite}" class="validation-message"></label>
+                    <input type="text" th:field="*{experienceProfessionnelle.secteurActivite}" placeholder="Secteur Activité" class="form-control"/>
+                </div>
+                <div class="col">
+                    <label th:if="${#fields.hasErrors('experienceProfessionnelle.debutTravail')}" th:errors="*{experienceProfessionnelle.debutTravail}" class="validation-message"></label>
+                    <input type="text" th:field="*{experienceProfessionnelle.debutTravail}" placeholder="Debut Travvail" class="form-control"/>
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-primary btn-block">Engegistrer</button>
+                </div>
+            </div>
+        </form>
+    </div>-->
+    <!-- <div class="form-group">
+         <div class="col-sm-9">
+             <input type="text" th:field="*{formation}" placeholder="Formation" class="form-control"/>
+             <label th:if="${#fields.hasErrors('formation')}" th:errors="*{formation}" class="validation-message"></label>
+         </div>
+     </div>-->
 
-            </form>
+    <!--<div class="form-group">
+        <div class="col-sm-9">
+            <button type="submit" class="btn btn-primary btn-block">Engegistrer</button>
         </div>
     </div>
+
+</form>
+</div>
+</div>
 </div>-->
-<div th:insert="layout/footer :: footer">&copy; 2016 The Static Templates</div>
+    <div th:insert="layout/footer :: footer">&copy; 2016 The Static Templates</div>
 
-
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script crossorigin="anonymous"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script crossorigin="anonymous"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script crossorigin="anonymous"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>

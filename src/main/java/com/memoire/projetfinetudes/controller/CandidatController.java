@@ -45,14 +45,13 @@ public class CandidatController {
     }
     @GetMapping(value = "/candidat/postuler")
     public String postulerOffre(@RequestParam("offre") Long offreId) {
-        User currentUser = getCurrentUser();
         Postulation postulation = new Postulation();
 
         postulation.setDatePostulation(LocalDateTime.now());
         postulation.setOffreEmploi(offreService.findOffreById(offreId).orElseGet(null));
-        postulation.setUser(currentUser);
-        postulation.setLettreMotivation(lettreMotivationService.findLettreMotivationByUserId(currentUser.getId()));
-        postulation.setCv(cvService.findCvByUserId(currentUser.getId()).orElse(new Cv()));
+        postulation.setUser(getCurrentUser());
+        postulation.setLettreMotivation(lettreMotivationService.findLettreMotivationByUserId(getCurrentUser().getId()).orElse(null));
+        postulation.setCv(cvService.findCvByUserId(getCurrentUser().getId()).orElse(new Cv()));
 
         postulationService.savePostulation(postulation);
 
@@ -61,15 +60,16 @@ public class CandidatController {
     public User getCurrentUser() {
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         String userName = loggedInUser.getName();
-        User user = userService.findUserByUserName(userName);
-        return user;
+        return userService.findUserByUserName(userName);
     }
     @GetMapping(value = "/candidat/deposer_cv")
     public String deposerCv(final Model model) {
         Long id = getCurrentUser().getId();
-        Optional<List<ExperienceProfessionnelle>> experienceProfessionnelles = experienceProfessionnelleService.findForfindExperienceProfessionnellesByUserIdmationsById(id);
+        Optional<List<ExperienceProfessionnelle>> experienceProfessionnelles = experienceProfessionnelleService.findExperienceProfessionnellesByUserId(id);
         Optional<List<Formation>> formations = formationServicce.findFormationsById(id);
         Optional<List<ConnaissanceLinguistique>> connaissanceLinguistiques = connaissanceLinguistiqueService.findCompetenceLinguistiquesByUserId(id);
+
+        LettreMotivation lettreMotivation = new LettreMotivation();
 
         ExperienceProfessionnelle experienceProfessionnelle = new ExperienceProfessionnelle();
         Formation formation = new Formation();
@@ -80,6 +80,7 @@ public class CandidatController {
         model.addAttribute("formation", formation);
         model.addAttribute("connaissanceLinguistique", connaissanceLinguistique);
         model.addAttribute("cv", cv);
+        model.addAttribute("lettreMotivation", lettreMotivation);
 
         model.addAttribute("experienceProfessionnelles", experienceProfessionnelles);
         model.addAttribute("formations", formations);
@@ -96,7 +97,6 @@ public class CandidatController {
        cvUpdate.setDateCv(LocalDateTime.now());
        cvUpdate.setUser(getCurrentUser());
 
-       System.out.println(cvUpdate.toString());
        cvService.saveCv(cvUpdate);
        return "redirect:/candidat/deposer_cv";
     }
@@ -132,6 +132,16 @@ public class CandidatController {
         cvUpdate.setConnaissanceLinguistique(connaiList);
 
         cvService.saveCv(cvUpdate);
+        return "redirect:/candidat/deposer_cv";
+    }
+
+    @PostMapping(value = "/candidat/postuler/lettreMotivation")
+    public String deposerCvFormation(@Valid LettreMotivation lettreMotivation) {
+        LettreMotivation lettre = lettreMotivationService.findLettreMotivationByUserId(getCurrentUser().getId()).orElse(new LettreMotivation());
+        lettre.setTexte(lettreMotivation.getTexte());
+        lettre.setUser(getCurrentUser());
+
+        lettreMotivationService.saveLettre(lettre);
         return "redirect:/candidat/deposer_cv";
     }
 

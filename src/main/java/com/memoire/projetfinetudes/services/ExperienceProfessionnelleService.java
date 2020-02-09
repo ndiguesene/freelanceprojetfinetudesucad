@@ -13,7 +13,7 @@ public class ExperienceProfessionnelleService {
     @Autowired
     private ExperienceRepository experienceRepository;
 
-    public Optional<List<ExperienceProfessionnelle>> findForfindExperienceProfessionnellesByUserIdmationsById(Long id) {
+    public Optional<List<ExperienceProfessionnelle>> findExperienceProfessionnellesByUserId(Long id) {
         return experienceRepository.findExperienceProfessionnellesByUserId(id);
     }
 }

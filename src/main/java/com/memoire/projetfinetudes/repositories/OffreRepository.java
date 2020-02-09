@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-
 @Repository
 public interface OffreRepository extends JpaRepository<OffreEmploi, Long> {
     @Query("SELECT offre FROM OffreEmploi offre WHERE offre.user.id = :id")

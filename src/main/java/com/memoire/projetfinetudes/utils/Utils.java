@@ -11,11 +11,10 @@ public class Utils {
     @Autowired
     UserService userService;
 
-    public static User getCurrentUser() {
+    public static User getCurrentUsers() {
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         String userName = loggedInUser.getName();
         User user = userService.findUserByUserName(userName);
-        System.out.println(user.toString());
         return user;
     }
 }
