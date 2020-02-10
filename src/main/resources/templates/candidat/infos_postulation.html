@@ -9,7 +9,27 @@
 
 <div th:insert="layout/navbar :: navbar"></div>
 <div class="container">
-    Liste des offres déposé (Postulation)
+    <div class="card" th:if="${postulations != null}">
+        <ul th:field="*{postulations}">
+            <li class="list-group-item" th:each="postulation: ${postulations}" th:value="${postulation.id}">
+                <div><u>Région : </u><span th:text="${postulation.offreEmploi.getRegion()}"></span></div>
+                <div><u>Poste : </u><span th:text="${postulation.offreEmploi.getPoste()}"></span></div>
+                <div><u>Type Offre : </u><span th:text="${postulation.offreEmploi.getTypeOffre()}"></span></div>
+                <div><u>Description : </u><span th:text="${postulation.offreEmploi.getDescription()}"></span></div>
+                <div>
+                    <u>Recruteur :</u>
+                    <ul>
+                        <li>Pays / Ville :  <span th:text="${postulation.offreEmploi.getRecruteur().getPays()}"></span> - <span th:text="${postulation.offreEmploi.getRecruteur().getVille()}"></span> </li>
+                        <li>Secteur d'activités : <span th:text="${postulation.offreEmploi.getRecruteur().getSecteurActivite()}"></span></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="card" th:if="${postulations == null}">
+        Vous n'avez pas postulé à aucun offre pour l'instant.
+    </div>
 </div>
 <div th:insert="layout/footer :: footer">&copy; 2016 The Static Templates</div>
 

@@ -44,18 +44,27 @@ public class CandidatController {
         return "candidat/consulter_offre";
     }
     @GetMapping(value = "/candidat/postuler")
-    public String postulerOffre(@RequestParam("offre") Long offreId) {
+    public String postulerOffre(@RequestParam("offre") Long offreId, Model model) {
         Postulation postulation = new Postulation();
 
         postulation.setDatePostulation(LocalDateTime.now());
         postulation.setOffreEmploi(offreService.findOffreById(offreId).orElseGet(null));
         postulation.setUser(getCurrentUser());
-        postulation.setLettreMotivation(lettreMotivationService.findLettreMotivationByUserId(getCurrentUser().getId()).orElse(null));
-        postulation.setCv(cvService.findCvByUserId(getCurrentUser().getId()).orElse(new Cv()));
+        LettreMotivation lettreMotivation = lettreMotivationService.findLettreMotivationByUserId(getCurrentUser().getId()).orElse(null);
+        Cv cv = cvService.findCvByUserId(getCurrentUser().getId()).orElse(null);
+        if (cv == null) {
+            model.addAttribute("cvIsNull", true);
+            model.addAttribute("currentUser", userService.findUserByUserName(getCurrentUser().getName()));
+            model.addAttribute("offres", offreService.getAllOffres());
+            return "/candidat/consulter_offre";
+        }
+        postulation.setLettreMotivation(lettreMotivation);
+        postulation.setCv(cv);
 
         postulationService.savePostulation(postulation);
+        model.addAttribute("successMessage", "Offre postulé avec succes.");
 
-        return "redirect:/candidat/consulter_offre";
+        return "/candidat/consulter_offre";
     }
     public User getCurrentUser() {
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
@@ -147,14 +156,16 @@ public class CandidatController {
 
     @PostMapping(value = "/candidat/deposer_cv")
     public String deposerCv(@Valid Cv cv) {
-        return "candidat/deposer_cv";
+        return "/candidat/deposer_cv";
     }
     @GetMapping(value = "/candidat/infos_postulation")
-    public String infosPostulation() {
-        return "candidat/infos_postulation";
+    public String infosPostulation(Model model) {
+        Optional<List<Postulation>> postulations = postulationService.findPostulationsByUser_Id(getCurrentUser().getId());
+        model.addAttribute("postulations", postulations.orElse(null));
+        return "/candidat/infos_postulation";
     }
     @GetMapping(value = "/candidat/mon_profil")
     public String monProfil() {
-        return "candidat/mon_profil";
+        return "/candidat/mon_profil";
     }
 }

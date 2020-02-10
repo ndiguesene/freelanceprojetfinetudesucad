@@ -13,16 +13,16 @@
 <div class="container">
     <div class="row">
         <div class="col-4">
-            <h1>Liste de vos offres</h1>
+            <h3>Liste de vos offres publié</h3>
             <ul class="list-group list-group-flush" th:field="*{offres}">
                 <li class="list-group-item" th:each="offr: ${offres}" th:value="${offr.id}">
-                    <a href=""> <span th:text="${offr.getPoste()}"></span> - <span th:text="${offr.getDateOffreEmploi()}"></span></a>
+                    <a href=""> <span th:text="${offr.getPoste()}"></span> </a> - <span th:text="${offr.getTypeOffre()}"></span> / <span th:text="${offr.getRegion()}"></span>
                 </li>
             </ul>
         </div>
         <div class="col-8">
             <form autocomplete="off" action="#" th:action="@{/recruteur/offre}" th:object="${offre}" method="POST" class="form-horizontal" role="form">
-                <h2>Postuler Offre</h2>
+                <h3>Postuler nouveau offre</h3>
                 <div class="form-group">
                     <div class="col-sm-9">
                         <label th:if="${#fields.hasErrors('poste')}" th:errors="*{poste}" class="validation-message"></label>
@@ -70,7 +70,7 @@
                     </div>
                 </div>
 
-                <!--<h2><span class="text-success" th:utext="${successMessage}"></span></h2>-->
+<!--                <h2><span class="text-success" th:utext="${successMessage}"></span></h2>-->
 
             </form>
         </div>

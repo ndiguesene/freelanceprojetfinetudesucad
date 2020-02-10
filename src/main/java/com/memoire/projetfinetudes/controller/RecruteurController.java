@@ -57,8 +57,9 @@ public class RecruteurController {
 
     @GetMapping(value = "/recruteur/consulter_candidatures")
     public String consulterCandidature(final Model model, @RequestParam(value = "postulation", defaultValue = "0") String id) {
+        Optional<Postulation> postulation;
         if (!id.equals("0")) {
-            Optional<Postulation> postulation = this.postulationService.findPostulationById(Long.parseLong(id));
+            postulation = this.postulationService.findPostulationById(Long.parseLong(id));
             model.addAttribute("postulation", postulation.orElse(null));
         }
         Optional<List<Postulation>> postulations = this.postulationService.findPostulationsByOffreEmploiAndUserId(getCurrentUser().getId());

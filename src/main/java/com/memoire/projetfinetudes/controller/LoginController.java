@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -46,7 +47,7 @@ public class LoginController {
         return "home";
     }
 
-    @RequestMapping(value="/registration", method = RequestMethod.GET)
+    @GetMapping(value="/registration")
     public ModelAndView registration(){
         ModelAndView modelAndView = new ModelAndView();
         User user = new User();
@@ -57,16 +58,18 @@ public class LoginController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/registration", method = RequestMethod.POST)
+    @PostMapping(value = "/registration")
     public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
         User userExists = userService.findUserByUserName(user.getUserName());
         if (userExists != null) {
+            System.out.println("Error 1 " + user.toString());
             bindingResult.rejectValue("userName", "error.user", "There is already a user registered with the user name provided");
         }
         if (bindingResult.hasErrors()) {
             List<Role> roleAll = roleService.getRoles();
             modelAndView.addObject("roleAll", roleAll);
+            System.out.println("Error 2 " + user.toString());
             modelAndView.setViewName("registration");
         } else {
             userService.saveUser(user);

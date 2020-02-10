@@ -3,6 +3,7 @@
 <head>
     <title>Consulter Offres</title>
     <link rel="stylesheet" type="text/css" href="../static/css/page.css" th:href="@{/css/page.css}"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
@@ -25,8 +26,30 @@
 
         <div class="col-md-8">
             <h2>Détails sur le candidat</h2>
-
-            <div id="accordion">
+            <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${postulation == null}">
+                <strong>Hello !!! </strong> Veuillez sélectionner un candidat pour voir son CV et Lettre de motivation.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="card" th:if="${postulation != null}">
+                <div class="card-body">
+                    <h5 class="list-group-item">
+                        <i class='far fa-address-card'></i> <span th:text="${postulation.cv.user.name}"></span>
+                        <span th:text="${postulation.getCv().getUser().lastName}"></span> -
+                        <span th:text="${postulation.getCv().getUser().titre_fonction}"></span>
+                    </h5>
+                    <h5 class="list-group-item">
+                        <i class="fas fa-mobile-alt"></i> Email: <span th:text="${postulation.getCv().getUser().getEmail()}"></span> -
+                        Mobile : <span th:text="${postulation.getCv().getUser().getTelephone()}"></span>
+                    </h5>
+                    <h5 class="list-group-item">
+                        <i class="fas fa-city"></i> <span th:text="${postulation.getCv().getUser().getPays()}"></span> -
+                        <span th:text="${postulation.getCv().getUser().getVille()}"></span>
+                    </h5>
+                </div>
+            </div>
+            <div id="accordion" th:if="${postulation != null}">
                 <div class="card">
                     <div class="card-header" id="headingOne">
                         <h5 class="mb-0">
@@ -37,7 +60,7 @@
                     </div>
                     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                         <div class="card-body">
-                            <strong th:text="${postulation.getCv().getObjectif()}"></strong> - <strong th:field="*{postulation.getCv().getUser().getTitre_fonction()}"></strong>
+                            <strong th:text="${postulation.getCv().getObjectif()}"></strong> - <strong th:text="*{postulation.getCv().getUser().getTitre_fonction()}"></strong>
                         </div>
                     </div>
                 </div>

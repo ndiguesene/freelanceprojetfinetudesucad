@@ -23,4 +23,7 @@ public class PostulationService {
     public Optional<Postulation> findPostulationById(Long id) {
         return postulationRepository.findById(id);
     }
+    public Optional<List<Postulation>> findPostulationsByUser_Id(Long id) {
+        return postulationRepository.findPostulationsByUser_Id(id);
+    }
 }

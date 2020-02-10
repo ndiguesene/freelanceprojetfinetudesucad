@@ -11,11 +11,20 @@
 <br>
 <br>
 <div class="container">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${cvIsNull}">
+        <strong>Ouppss !!! </strong> Nous n'avez pas saisi votre CV ni lettre de modivation pour postuler à cet offre. Veuillez les mettre à jour.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
     <div class="row">
-        <div class="col-4">
+        <!--<h3 th:if="${successMessage}">
+            <span th:text="${successMessage}"></span>
+        </h3>-->
+        <div class="col-4" th:if="${currentUser != null}">
             <strong>Welcome Back, <span th:text="${currentUser.getName()}"></span> - <span th:text="${currentUser.getLastName()}"></span></strong>
             <br>
-            <div class="card" style="width: 18rem;">
+            <div class="card" style="width: 18rem;" >
                 <div class="card-body">
                     <h5 class="card-title" sec:authorize="isAuthenticated()">
                         <span th:text="${currentUser.getName()}"></span> - <span th:text="${currentUser.getLastName()}"></span>
@@ -25,21 +34,20 @@
                     <h6 class="card-subtitle mb-2 text-muted"><span th:text="${currentUser.getTitre_fonction()}"></span></h6>
                     <br/>
                     <h6 class="card-subtitle mb-2 text-muted"><span th:text="${currentUser.getPays()}"></span> - <span th:text="${currentUser.getVille()}"></span></h6>
-                 <!--   <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>-->
                 </div>
             </div>
         </div>
         <div class="col-8">
             <div class="card">
                 <div class="card-header">
-                    Offres recommandés pour vous
+                    <h3>Offres recommandés pour vous</h3>
                 </div>
                 <div class="card-body">
                     <div class="card w-100" th:each="offre, index : ${offres}">
                         <div class="card-body">
                             <h5 class="card-title" th:text="${offre.getPoste()}"></h5>
-                            <p class="card-text" th:text="${offre.getDescription()}"></p>
+                            <p class="card-text float-right" th:text="${offre.getDescription()}"></p>
+                            <p th:text="${offre.getRecruteur().getSecteurActivite()}"></p>
                             <a href="/candidat/postuler" th:href="@{/candidat/postuler(offre=${offre.id})}" class="btn btn-primary float-right">Postuler</a>
                             <span class="card-text" th:text="${offre.getRegion()}"></span> - <span class="card-text" th:text="${offre.getTypeOffre()}"></span>
                             <p class="card-text"><small class="text-muted" th:text="${offre.getDateOffreEmploi()}"></small></p>
@@ -51,7 +59,6 @@
     </div>
 </div>
 <div th:insert="layout/footer :: footer">&copy; 2016 The Static Templates</div>
-
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

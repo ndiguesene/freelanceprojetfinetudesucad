@@ -4,7 +4,6 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -15,7 +14,7 @@ public class User {
     private Long id;
 
     @Column(name = "user_name")
-    @Length(min = 5, message = "*Your user name must have at least 5 characters")
+    @Length(min = 4, message = "*Your user name must have at least 5 characters")
     @NotEmpty(message = "*Please provide a user name")
     private String userName;
 
@@ -36,6 +35,10 @@ public class User {
     @Column(name = "name")
     @NotEmpty(message = "*Please provide your name")
     private String name;
+
+    @Column(name = "telephone")
+    @NotEmpty(message = "*Please provide your telephone")
+    private String telephone;
 
     @Column(name = "last_name")
     @NotEmpty(message = "*Please provide your last name")
@@ -68,6 +71,14 @@ public class User {
         this.id = id;
     }
 
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -77,6 +88,7 @@ public class User {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
+                ", telephone='" + telephone + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", active=" + active +
                 ", pays='" + pays + '\'' +
@@ -84,30 +96,6 @@ public class User {
                 ", secteurActivite='" + secteurActivite + '\'' +
                 ", roles=" + roles +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
-        User user = (User) o;
-        return getId().equals(user.getId()) &&
-                getUserName().equals(user.getUserName()) &&
-                getTitre_fonction().equals(user.getTitre_fonction()) &&
-                getEmail().equals(user.getEmail()) &&
-                getPassword().equals(user.getPassword()) &&
-                getName().equals(user.getName()) &&
-                getLastName().equals(user.getLastName()) &&
-                getActive().equals(user.getActive()) &&
-                getPays().equals(user.getPays()) &&
-                getVille().equals(user.getVille()) &&
-                getSecteurActivite().equals(user.getSecteurActivite()) &&
-                getRoles().equals(user.getRoles());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getUserName(), getTitre_fonction(), getEmail(), getPassword(), getName(), getLastName(), getActive(), getPays(), getVille(), getSecteurActivite(), getRoles());
     }
 
     public Long getId() {
