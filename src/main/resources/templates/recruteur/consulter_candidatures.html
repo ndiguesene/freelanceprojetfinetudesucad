@@ -17,9 +17,12 @@
             <h2>Candidatures</h2>
             <ul class="list-group list-group-flush" th:field="*{postulations}">
                 <li class="list-group-item" th:each="post: ${postulations}" th:value="${post.id}">
-                    <a href="/recruteur/consulter_candidatures" th:href="@{/recruteur/consulter_candidatures(postulation=${post.id})}">
-                        <span th:text="${post.user.name}"></span> <span th:text="${post.user.lastName}"></span>
-                    </a>
+                    <div><b><u>Offres </u></b>:<span th:text="${post.offreEmploi.getPoste()}"></span></div>
+                    <div><b><u>Postulant : </u></b>
+                        <a href="/recruteur/consulter_candidatures" th:href="@{/recruteur/consulter_candidatures(postulation=${post.id})}">
+                            <span th:text="${post.user.name}"></span> <span th:text="${post.user.lastName}"></span>
+                        </a>
+                    </div>
                 </li>
             </ul>
         </div>

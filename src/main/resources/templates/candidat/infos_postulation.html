@@ -9,6 +9,8 @@
 
 <div th:insert="layout/navbar :: navbar"></div>
 <div class="container">
+    <h3>Liste offre postulée</h3>
+    <br>
     <div class="card" th:if="${postulations != null}">
         <ul th:field="*{postulations}">
             <li class="list-group-item" th:each="postulation: ${postulations}" th:value="${postulation.id}">
@@ -19,8 +21,10 @@
                 <div>
                     <u>Recruteur :</u>
                     <ul>
-                        <li>Pays / Ville :  <span th:text="${postulation.offreEmploi.getRecruteur().getPays()}"></span> - <span th:text="${postulation.offreEmploi.getRecruteur().getVille()}"></span> </li>
-                        <li>Secteur d'activités : <span th:text="${postulation.offreEmploi.getRecruteur().getSecteurActivite()}"></span></li>
+                        <li th:if="${postulation.offreEmploi.getRecruteur() != null}">Pays / Ville :  <span th:text="${postulation.offreEmploi.getRecruteur().getPays()}"></span> - <span th:text="${postulation.offreEmploi.getRecruteur().getVille()}"></span> </li>
+                        <li th:if="${postulation.offreEmploi.getRecruteur() != null}">Secteur d'activités : <span th:text="${postulation.offreEmploi.getRecruteur().getSecteurActivite()}"></span></li>
+                        <li th:if="${postulation.offreEmploi.getRecruteur() != null}">Societé : <span th:text="${postulation.offreEmploi.getRecruteur().getSocieteDescription()}"></span></li>
+                        <li th:if="${postulation.offreEmploi.getRecruteur() != null}">URL Societé : <span th:text="${postulation.offreEmploi.getRecruteur().getSocieteUrl)}"></span></li>
                     </ul>
                 </div>
             </li>

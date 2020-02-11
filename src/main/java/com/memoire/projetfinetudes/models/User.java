@@ -36,6 +36,10 @@ public class User {
     @NotEmpty(message = "*Please provide your name")
     private String name;
 
+    @Column(name = "sexe")
+    @NotEmpty(message = "*Please provide your sexe")
+    private String sexe;
+
     @Column(name = "telephone")
     @NotEmpty(message = "*Please provide your telephone")
     private String telephone;
@@ -79,6 +83,14 @@ public class User {
         this.telephone = telephone;
     }
 
+    public String getSexe() {
+        return sexe;
+    }
+
+    public void setSexe(String sexe) {
+        this.sexe = sexe;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -88,6 +100,7 @@ public class User {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
+                ", sexe='" + sexe + '\'' +
                 ", telephone='" + telephone + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", active=" + active +

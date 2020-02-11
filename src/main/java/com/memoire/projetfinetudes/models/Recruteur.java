@@ -1,7 +1,6 @@
 package com.memoire.projetfinetudes.models;
 
 import javax.persistence.Entity;
-import java.util.Objects;
 
 @Entity
 public class Recruteur extends User {

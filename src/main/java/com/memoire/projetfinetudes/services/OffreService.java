@@ -16,10 +16,6 @@ public class OffreService {
     public List<OffreEmploi> getAllOffres() {
         return offreRepository.findAll();
     }
-    public List<OffreEmploi> getOffreEmploiNonPostuler() {
-        return null;
-        // offreRepository.getOffreEmploiNonPostuler(id);
-    }
     public List<OffreEmploi> getOffresByUser(Long id) {
         return offreRepository.findOffreEmploisByUser(id);
     }

@@ -15,10 +15,10 @@
                 height: 100%;
                 background-color: #000;
                 overflow-x: hidden;
-                padding-top: 20px;
+                padding-top: 10px;
             }
             .main {
-                padding: 0px 10px;
+                padding: 0px 0px;
             }
 
             @media screen and (max-height: 450px) {
@@ -37,7 +37,7 @@
 
             @media screen and (min-width: 768px){
                 .main{
-                    margin-left: 40%;
+                    margin-left: 50%;
                 }
 
                 .sidenav{
@@ -49,7 +49,7 @@
                 }
 
                 .login-form{
-                    margin-top: 80%;
+                    margin-top: 30%;
                 }
 
                 .register-form{
@@ -57,9 +57,8 @@
                 }
             }
 
-
             .login-main-text{
-                margin-top: 20%;
+                margin-top: 10%;
                 padding: 60px;
                 color: #fff;
             }
@@ -104,13 +103,15 @@
             </div>
         </div>
         <div class="main">
-            <div class="col-md-8 col-sm-12">
+            <div class="col-md-12 col-sm-12">
 <!--                <h3 class="form-signin-heading" th:text="Bienvenue"></h3>-->
                 <div class="login-form">
+                    <h2>Connectez - vous</h2>
+                    <hr>
                     <h4 th:if="${successMessage}">
                         <span th:text="${successMessage}"></span>
                     </h4>
-                    <form th:action="@{/login}" method="POST">
+                    <form th:action="@{/login}" method="POST" class="card-body">
                         <div class="form-group">
                             <label>Nom d'utilisateur</label>
 <!--                            <input type="text" class="form-control" placeholder="User Name">-->
@@ -124,7 +125,7 @@
                         <div align="center" th:if="${param.error}">
                             <p style="font-size: 20; color: #FF1C19;">Nom utilisateur ou mot de passse incorrect.</p>
                         </div>
-                        <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Login" type="Submit" th:text="Login"></button>
+                        <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Connexion" type="Submit" th:text="Login"></button>
                         <!--<button type="submit" class="btn btn-black">Connexion</button>
                         <button type="submit" class="btn btn-secondary">Inscription</button>-->
                     </form>

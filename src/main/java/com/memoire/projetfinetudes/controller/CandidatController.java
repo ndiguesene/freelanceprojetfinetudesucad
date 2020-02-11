@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 public class CandidatController {
@@ -37,10 +39,24 @@ public class CandidatController {
 
     @GetMapping(value = "/candidat/consulter_offre")
     public String consulterOffres(final Model model) {
-        model.addAttribute("offres", offreService.getAllOffres());
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         String userName = loggedInUser.getName();
-        model.addAttribute("currentUser", userService.findUserByUserName(userName));
+        User user = userService.findUserByUserName(userName);
+        List<Postulation> postulations = postulationService.findPostulationsByUser_Id(user.getId()).orElse(null);
+
+        List<OffreEmploi> offreEmplois = offreService.getAllOffres();
+        List<OffreEmploi> offres = new ArrayList<>();
+
+        if (postulations == null) {
+            offres = offreEmplois;
+        } else {
+            List<OffreEmploi> offrePostuler = postulations.stream()
+                    .map(p -> p.getOffreEmploi())
+                    .distinct().collect(Collectors.toList());
+            offres = offreEmplois.stream().filter(it -> !offrePostuler.contains(it)).collect(Collectors.toList());
+        }
+        model.addAttribute("offres", offres);
+        model.addAttribute("currentUser", user);
         return "candidat/consulter_offre";
     }
     @GetMapping(value = "/candidat/postuler")
