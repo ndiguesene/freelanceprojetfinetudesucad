@@ -1,57 +1,67 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <title>Consulter Offres</title>
     <link rel="stylesheet" type="text/css" href="../static/css/page.css" th:href="@{/css/page.css}"/>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
 
 <div th:insert="layout/navbar :: navbar"></div>
 <br>
 <br>
-<div class="container">
+<div class="container" id="forSearch">
     <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${cvIsNull}">
-        <strong>Ouppss !!! </strong> Nous n'avez pas saisi votre CV ni lettre de modivation pour postuler à cet offre. Veuillez les mettre à jour.
+        <strong>Ouppss !!! </strong> Nous n'avez pas saisi votre CV ni lettre de modivation pour postuler à cet offre.
+        Veuillez les mettre à jour.
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
-    <div class="row">
+    <div class="row" id="inList">
         <div class="col-4" th:if="${currentUser != null}">
-            <strong>Welcome Back, <span th:text="${currentUser.getName()}"></span> - <span th:text="${currentUser.getLastName()}"></span></strong>
+            <strong>Welcome Back, <span th:text="${currentUser.getName()}"></span> - <span
+                    th:text="${currentUser.getLastName()}"></span></strong>
             <br>
-            <div class="card" style="width: 18rem;" >
+            <div class="card" style="width: 18rem;">
                 <div class="card-body">
                     <h5 class="card-title" sec:authorize="isAuthenticated()">
-                        <span th:text="${currentUser.getName()}"></span> - <span th:text="${currentUser.getLastName()}"></span>
+                        <span th:text="${currentUser.getName()}"></span> - <span
+                            th:text="${currentUser.getLastName()}"></span>
                     </h5>
                     <br>
                     <br>
-                    <h6 class="card-subtitle mb-2 text-muted"><span th:text="${currentUser.getTitre_fonction()}"></span></h6>
+                    <h6 class="card-subtitle mb-2 text-muted"><span th:text="${currentUser.getTitre_fonction()}"></span>
+                    </h6>
                     <br/>
-                    <h6 class="card-subtitle mb-2 text-muted"><span th:text="${currentUser.getPays()}"></span> - <span th:text="${currentUser.getVille()}"></span></h6>
+                    <h6 class="card-subtitle mb-2 text-muted"><span th:text="${currentUser.getPays()}"></span> - <span
+                            th:text="${currentUser.getVille()}"></span></h6>
                 </div>
             </div>
         </div>
-        <div class="col-8">
+        <div class="col-8" id="inList1">
             <div class="card">
                 <div class="card-header">
-                    <h3>Offres recommandés pour vous</h3>
+                    <h3 style="align-content: center">Offres recommandés pour vous</h3>
+                    <input class="form-control" id="myInput" type="text" placeholder="Rechercher un offre ...">
                 </div>
-                <div class="card-body" th:if="${offres
-                 == null}">
+                <div class="card-body" th:if="${offres == null}">
                     Vous avez postulé à tous les offres disponibles.
                 </div>
-                <div class="card-body">
-                    <div class="card w-100" th:each="offre, index : ${offres}">
+                <div class="card-body" id="inList2">
+                    <div class="card w-100" th:each="offre, index : ${offres}" id="inList3">
                         <div class="card-body">
                             <h5 class="card-title" th:text="${offre.getPoste()}"></h5>
                             <p class="card-text float-right" th:text="${offre.getDescription()}"></p>
                             <p th:text="${offre.getRecruteur().getSecteurActivite()}"></p>
-                            <a href="/candidat/postuler" th:href="@{/candidat/postuler(offre=${offre.id})}" class="btn btn-primary float-right">Postuler</a>
-                            <span class="card-text" th:text="${offre.getRegion()}"></span> - <span class="card-text" th:text="${offre.getTypeOffre()}"></span>
-                            <p class="card-text"><small class="text-muted" th:text="${offre.getDateOffreEmploi()}"></small></p>
+                            <a href="/candidat/postuler" th:href="@{/candidat/postuler(offre=${offre.id})}"
+                               class="btn btn-primary float-right">Postuler</a>
+                            <span class="card-text" th:text="${offre.getRegion()}"></span> - <span class="card-text"
+                                                                                                   th:text="${offre.getTypeOffre()}"></span>
+                            <p class="card-text"><small class="text-muted"
+                                                        th:text="${offre.getDateOffreEmploi()}"></small></p>
                         </div>
                     </div>
                 </div>
@@ -61,8 +71,24 @@
 </div>
 <div th:insert="layout/footer :: footer">&copy; 2016 The Static Templates</div>
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function(){
+        $("#myInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#forSearch #inList #inList1 #inList2 #inList3").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
 </body>
 </html>

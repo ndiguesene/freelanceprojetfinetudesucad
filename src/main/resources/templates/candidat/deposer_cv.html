@@ -3,6 +3,8 @@
 <head>
     <title>CV et Lettre de Motivation</title>
     <link href="../static/css/page.css" rel="stylesheet" th:href="@{/css/page.css}" type="text/css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
 </head>
@@ -21,9 +23,11 @@
     <br>
     <nav>
         <div class="nav nav-tabs nav-justified" id="nav-tab" role="tablist">
-            <a aria-controls="nav-home" aria-selected="true" class="nav-item nav-link active" data-toggle="tab" href="#nav-home"
+            <a aria-controls="nav-home" aria-selected="true" class="nav-item nav-link active" data-toggle="tab"
+               href="#nav-home"
                id="nav-home-tab" role="tab">CV</a>
-            <a aria-controls="nav-profile" aria-selected="false" class="nav-item nav-link" data-toggle="tab" href="#nav-profile"
+            <a aria-controls="nav-profile" aria-selected="false" class="nav-item nav-link" data-toggle="tab"
+               href="#nav-profile"
                id="nav-profile-tab" role="tab">Lettre</a>
         </div>
     </nav>
@@ -36,7 +40,8 @@
             <div class="row">
                 <div aria-orientation="vertical" class="nav flex-column nav-pills col-md-3" id="v-pills-tab"
                      role="tablist">
-                    <a aria-controls="v-pills-home" aria-selected="true" class="nav-link active" data-toggle="pill" href="#v-pills-home"
+                    <a aria-controls="v-pills-home" aria-selected="true" class="nav-link active" data-toggle="pill"
+                       href="#v-pills-home"
                        id="v-pills-home-tab" role="tab">Objectif</a>
                     <a aria-controls="v-pills-experience" aria-selected="false" class="nav-link" data-toggle="pill"
                        href="#v-pills-experience" id="v-pills-experience-tab" role="tab">Expériences</a>
@@ -48,45 +53,64 @@
                 <div class="tab-content col-md-9" id="v-pills-tabContent">
                     <div aria-labelledby="v-pills-home-tab" class="tab-pane fade show active" id="v-pills-home"
                          role="tabpanel">
-                        <h2>Objectifs</h2>
-                        <br>
-                        <form action="#" autocomplete="off" class="form-horizontal" method="POST"
-                              role="form" th:action="@{/candidat/postuler/resume}" th:object="${cv}">
-                            <div class="form-group">
-                                <div class="col-sm-9">
-                                    <label class="validation-message" th:errors="*{objectif}"
-                                           th:if="${#fields.hasErrors('objectif')}"></label>
-                                    <textarea class="form-control" placeholder="Objectif" rows="4" th:field="*{objectif}" type="text"/>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h2>Objectifs</h2>
+                                <br>
+                                <form action="#" autocomplete="off" class="form-horizontal" method="POST"
+                                      role="form" th:action="@{/candidat/postuler/resume}" th:object="${cv}">
+                                    <div class="form-group">
+                                        <div class="col-sm-9">
+                                            <label class="validation-message" th:errors="*{objectif}"
+                                                   th:if="${#fields.hasErrors('objectif')}"></label>
+                                            <textarea class="form-control" placeholder="Objectif" rows="4"
+                                                      th:field="*{objectif}" type="text"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-9">
+                                            <button class="btn btn-primary btn-block" type="submit">Enregistrer</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-body" th:text="${cv.objectif}"></div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="col-sm-9">
-                                    <button class="btn btn-primary btn-block" type="submit">Enregistrer</button>
-                                </div>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                     <div aria-labelledby="v-pills-experience-tab" class="tab-pane fade" id="v-pills-experience"
                          role="tabpanel">
                         <div class="row">
-                            <div class="col-md-7">
+                            <div class="col-md-8">
                                 <h2>Expériences</h2>
                                 <br>
                                 <form action="#" autocomplete="off" class="form-horizontal"
                                       method="POST"
-                                      role="form" th:action="@{/candidat/postuler/experience}" th:object="${experienceProfessionnelle}">
+                                      role="form" th:action="@{/candidat/postuler/experience}"
+                                      th:object="${experienceProfessionnelle}">
+                                    <div class="form-group">
+                                        <div class="col-sm-9" style="display: none;">
+                                            <input type="text" name="id" value="id" th:value="${experienceProfessionnelle.id}" />
+                                        </div>
+                                    </div>
                                     <div class="form-group">
                                         <div class="col-sm-9">
                                             <label class="validation-message" th:errors="*{competence}"
                                                    th:if="${#fields.hasErrors('competence')}"></label>
-                                            <input class="form-control" placeholder="Compétence" th:field="*{competence}"
+                                            <input class="form-control" placeholder="Compétence"
+                                                   th:field="*{competence}"
                                                    type="text"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-9">
                                             <label class="validation-message"
-                                                   th:errors="*{secteurActivite}" th:if="${#fields.hasErrors('secteurActivite')}"></label>
+                                                   th:errors="*{secteurActivite}"
+                                                   th:if="${#fields.hasErrors('secteurActivite')}"></label>
                                             <input class="form-control" placeholder="Secteur d'activité"
                                                    th:field="*{secteurActivite}" type="text"/>
                                         </div>
@@ -94,8 +118,10 @@
                                     <div class="form-group">
                                         <div class="col-sm-9">
                                             <label class="validation-message"
-                                                   th:errors="*{nomEntreprise}" th:if="${#fields.hasErrors('nomEntreprise')}"></label>
-                                            <input class="form-control" placeholder="Nom entreprise" th:field="*{nomEntreprise}"
+                                                   th:errors="*{nomEntreprise}"
+                                                   th:if="${#fields.hasErrors('nomEntreprise')}"></label>
+                                            <input class="form-control" placeholder="Nom entreprise"
+                                                   th:field="*{nomEntreprise}"
                                                    type="text"/>
                                         </div>
                                     </div>
@@ -123,13 +149,19 @@
                                     </div>
                                 </form>
                             </div>
-                            <div class="col-md-5">
-                                <ul class="list-group list-group-flush"
-                                    th:field="*{experienceProfessionnelles.orElse(null)}">
-                                    <li class="list-group-item"
-                                        th:each="exp: ${experienceProfessionnelles.orElse(null)}" th:text="${exp.poste}"
-                                        th:value="${exp.id}"></li>
-                                </ul>
+                            <div class="col-md-4">
+                                <div class="card"
+                                     th:field="*{experienceProfessionnelles}">
+                                    <div class="card"
+                                         th:each="exp: ${experienceProfessionnelles}"
+                                         th:value="${exp.id}">
+<!--                                        <form action="#" class="form-horizontal" method="GET" role="form" th:action="@{/candidat/deposer_cv(experience=${exp.id})}">-->
+                                            <a href="/candidat/deposer_cv" role="button" th:href="@{/candidat/deposer_cv(experience=${exp.id})}">
+                                                <i class="far fa-edit"></i> <span th:text="${exp.nomEntreprise}"></span> - <span th:text="${exp.poste}"></span>
+                                            </a>
+<!--                                        </form>-->
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -138,7 +170,8 @@
                         <h2>Formations</h2>
                         <br>
                         <form action="#" autocomplete="off" class="form-horizontal"
-                              method="POST" role="form" th:action="@{/candidat/postuler/formation}" th:object="${formation}">
+                              method="POST" role="form" th:action="@{/candidat/postuler/formation}"
+                              th:object="${formation}">
                             <div class="form-group">
                                 <div class="col-sm-9">
                                     <label class="validation-message" th:errors="*{etablissement}"
@@ -176,7 +209,8 @@
                         <h2>Linguistiques</h2>
                         <br>
                         <form action="#" autocomplete="off" class="form-horizontal"
-                              method="POST" role="form" th:action="@{/candidat/postuler/linguistiques}" th:object="${connaissanceLinguistique}">
+                              method="POST" role="form" th:action="@{/candidat/postuler/linguistiques}"
+                              th:object="${connaissanceLinguistique}">
                             <div class="form-group">
                                 <div class="col-sm-9">
                                     <label class="validation-message" th:errors="*{nomLangue}"
@@ -213,7 +247,8 @@
                     <div class="col-sm-9">
                         <label class="validation-message" th:errors="*{texte}"
                                th:if="${#fields.hasErrors('texte')}"></label>
-                        <textarea class="form-control" placeholder="Lettre de Motivation" rows="8" th:field="*{texte}" type="text"/>
+                        <textarea class="form-control" placeholder="Lettre de Motivation" rows="8" th:field="*{texte}"
+                                  type="text"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -224,85 +259,7 @@
             </form>
         </div>
     </div>
-
-    <!--<div class="row">
-        <div class="col-md-12 col-md-offset-6">
-            <form autocomplete="off" action="#" th:action="@{/candidat/postuler}" th:object="${cv}" method="POST" class="form-horizontal" role="form">
-                <div class="form-group">
-                    <div class="col-sm-9">
-                        <label th:if="${#fields.hasErrors('objectif')}" th:errors="*{objectif}" class="validation-message"></label>
-                        <input type="text" th:field="*{objectif}" placeholder="Objectif" class="form-control"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <form th:action="@{/candidat/addConnaissanceLinguistique}" th:object="${cv.getConnaissanceLinguistique()}" method="POST" class="form-horizontal" role="form">
-                        <div class="row col-sm-9">
-                            <div class="col">
-                                <label th:if="${#fields.hasErrors('cv.connaissanceLinguistique')}" th:errors="*{cv.connaissanceLinguistique}" class="validation-message"></label>
-                                <input type="text" th:field="*{cv.connaissanceLinguistique}" placeholder="Langue" class="form-control"/>
-                            </div>
-                            <div class="col">
-                                <label th:if="${#fields.hasErrors('cv.connaissanceLinguistique')}" th:errors="*{cv.connaissanceLinguistique}" class="validation-message"></label>
-                                <input type="text" th:field="*{cv.connaissanceLinguistique}" placeholder="Niveau" class="form-control"/>
-                            </div>
-                            <div class="col">
-                                <button type="submit" class="btn btn-primary btn-block">Engegistrer</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>-->
-    <!--<div class="form-group">
-        <form th:action="@{/candidat/exxperience}" th:object="${experienceProfessionnelle}" method="POST" class="form-horizontal" role="form">
-            <div class="row col-sm-9">
-                <div class="col">
-                    <label th:if="${#fields.hasErrors('experienceProfessionnelle.poste')}" th:errors="*{experienceProfessionnelle.poste}" class="validation-message"></label>
-                    <input type="text" th:field="*{experienceProfessionnelle.poste}" placeholder="Poste" class="form-control"/>
-                </div>
-                <div class="col">
-                    <label th:if="${#fields.hasErrors('experienceProfessionnelle.competence')}" th:errors="*{experienceProfessionnelle.competence}" class="validation-message"></label>
-                    <input type="text" th:field="*{experienceProfessionnelle.competence}" placeholder="Compétence" class="form-control"/>
-                </div>
-                <div class="col">
-                    <label th:if="${#fields.hasErrors('experienceProfessionnelle.nomEntrprise')}" th:errors="*{experienceProfessionnelle.nomEntrprise}" class="validation-message"></label>
-                    <input type="text" th:field="*{experienceProfessionnelle.nomEntrprise}" placeholder="Nom Entreprise" class="form-control"/>
-                </div>
-                <div class="col">
-                    <label th:if="${#fields.hasErrors('experienceProfessionnelle.region')}" th:errors="*{experienceProfessionnelle.region}" class="validation-message"></label>
-                    <input type="text" th:field="*{experienceProfessionnelle.region}" placeholder="Région" class="form-control"/>
-                </div>
-                <div class="col">
-                    <label th:if="${#fields.hasErrors('experienceProfessionnelle.secteurActivite')}" th:errors="*{experienceProfessionnelle.secteurActivite}" class="validation-message"></label>
-                    <input type="text" th:field="*{experienceProfessionnelle.secteurActivite}" placeholder="Secteur Activité" class="form-control"/>
-                </div>
-                <div class="col">
-                    <label th:if="${#fields.hasErrors('experienceProfessionnelle.debutTravail')}" th:errors="*{experienceProfessionnelle.debutTravail}" class="validation-message"></label>
-                    <input type="text" th:field="*{experienceProfessionnelle.debutTravail}" placeholder="Debut Travvail" class="form-control"/>
-                </div>
-                <div class="col">
-                    <button type="submit" class="btn btn-primary btn-block">Engegistrer</button>
-                </div>
-            </div>
-        </form>
-    </div>-->
-    <!-- <div class="form-group">
-         <div class="col-sm-9">
-             <input type="text" th:field="*{formation}" placeholder="Formation" class="form-control"/>
-             <label th:if="${#fields.hasErrors('formation')}" th:errors="*{formation}" class="validation-message"></label>
-         </div>
-     </div>-->
-
-    <!--<div class="form-group">
-        <div class="col-sm-9">
-            <button type="submit" class="btn btn-primary btn-block">Engegistrer</button>
-        </div>
-    </div>
-
-</form>
-</div>
-</div>
-</div>-->
     <div th:insert="layout/footer :: footer">&copy; 2016 The Static Templates</div>
-
     <script crossorigin="anonymous"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
             src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>

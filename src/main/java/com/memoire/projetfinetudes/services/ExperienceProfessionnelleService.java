@@ -16,4 +16,7 @@ public class ExperienceProfessionnelleService {
     public Optional<List<ExperienceProfessionnelle>> findExperienceProfessionnellesByUserId(Long id) {
         return experienceRepository.findExperienceProfessionnellesByUserId(id);
     }
+    public ExperienceProfessionnelle saveExperience(ExperienceProfessionnelle experienceProfessionnelle) {
+        return experienceRepository.saveAndFlush(experienceProfessionnelle);
+    }
 }

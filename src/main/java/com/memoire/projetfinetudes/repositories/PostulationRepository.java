@@ -13,5 +13,5 @@ public interface PostulationRepository extends JpaRepository<Postulation, Long> 
     @Query("SELECT postulation FROM OffreEmploi offre, Postulation postulation WHERE offre.id = postulation.offreEmploi.id and offre.user.id = ?1")
     Optional<List<Postulation>> findPostulationsByOffreEmploiAndUserId(Long id);
     Optional<Postulation> findById(Long id);
-    Optional<List<Postulation>> findPostulationsByUser_Id(Long id);
+    List<Postulation> findAllByUser_Id(Long id);
 }

@@ -13,18 +13,21 @@
 <br>
 <div class="container">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-4" th:if="postulations != null">
             <h2>Candidatures</h2>
             <ul class="list-group list-group-flush" th:field="*{postulations}">
                 <li class="list-group-item" th:each="post: ${postulations}" th:value="${post.id}">
-                    <div><b><u>Offres </u></b>:<span th:text="${post.offreEmploi.getPoste()}"></span></div>
+                    <div><b><u>Offres </u></b>:<span th:text="${post.offreEmploi.getPoste()}"></span> / <span th:text="${post.offreEmploi.getTypeOffre()}"></span> / <span th:text="${post.offreEmploi.getRegion()}"></span></div>
                     <div><b><u>Postulant : </u></b>
-                        <a href="/recruteur/consulter_candidatures" th:href="@{/recruteur/consulter_candidatures(postulation=${post.id})}">
+                        <a class="active" href="/recruteur/consulter_candidatures" th:href="@{/recruteur/consulter_candidatures(postulation=${post.id})}">
                             <span th:text="${post.user.name}"></span> <span th:text="${post.user.lastName}"></span>
                         </a>
                     </div>
                 </li>
             </ul>
+        </div>
+        <div class="col-md-4" th:if="postulations == null">
+            <h3>Y a pas encore d'offre à ce jour.</h3>
         </div>
 
         <div class="col-md-8">

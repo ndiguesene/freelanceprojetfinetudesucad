@@ -16,9 +16,11 @@ public class OffreService {
     public List<OffreEmploi> getAllOffres() {
         return offreRepository.findAll();
     }
+
     public List<OffreEmploi> getOffresByUser(Long id) {
         return offreRepository.findOffreEmploisByUser(id);
     }
+
     public OffreEmploi saveOffreEmploi(OffreEmploi offreEmploi) {
         return offreRepository.saveAndFlush(offreEmploi);
     }

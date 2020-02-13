@@ -15,6 +15,7 @@ public class CvService {
     public Optional<Cv> findCvByUserId(Long id) {
         return cvRepository.findCvByUserId(id);
     }
+
     public Cv saveCv(Cv cv) {
         return cvRepository.save(cv);
     }

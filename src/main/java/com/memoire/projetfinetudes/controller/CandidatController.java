@@ -3,6 +3,7 @@ package com.memoire.projetfinetudes.controller;
 import com.memoire.projetfinetudes.models.*;
 import com.memoire.projetfinetudes.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -10,13 +11,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Controller
 public class CandidatController {
@@ -39,103 +43,148 @@ public class CandidatController {
 
     @GetMapping(value = "/candidat/consulter_offre")
     public String consulterOffres(final Model model) {
-        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-        String userName = loggedInUser.getName();
-        User user = userService.findUserByUserName(userName);
-        List<Postulation> postulations = postulationService.findPostulationsByUser_Id(user.getId()).orElse(null);
+        try {
+            Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+            String userName = loggedInUser.getName();
+            User user = userService.findUserByUserName(userName);
+            Optional<List<Postulation>> postulations = Optional.ofNullable(postulationService.findPostulationsByUser_Id(user.getId()));
 
-        List<OffreEmploi> offreEmplois = offreService.getAllOffres();
-        List<OffreEmploi> offres = new ArrayList<>();
+            List<OffreEmploi> offreEmplois = offreService.getAllOffres();
+            List<OffreEmploi> offres = null;
 
-        if (postulations == null) {
-            offres = offreEmplois;
-        } else {
-            List<OffreEmploi> offrePostuler = postulations.stream()
-                    .map(p -> p.getOffreEmploi())
-                    .distinct().collect(Collectors.toList());
-            offres = offreEmplois.stream().filter(it -> !offrePostuler.contains(it)).collect(Collectors.toList());
+            if (!postulations.isPresent()) {
+                offres = offreEmplois;
+            } else {
+                List<OffreEmploi> offrePostuler = postulations.orElse(null).stream()
+                        .map(p -> p.getOffreEmploi())
+                        .distinct().collect(Collectors.toList());
+                offres = offreEmplois.stream().filter(it -> !offrePostuler.contains(it)).collect(Collectors.toList());
+            }
+            model.addAttribute("offres", offres);
+            model.addAttribute("currentUser", user);
+            return "candidat/consulter_offre";
+        } catch (Exception e) {
+            return "/login";
         }
-        model.addAttribute("offres", offres);
-        model.addAttribute("currentUser", user);
-        return "candidat/consulter_offre";
     }
+
     @GetMapping(value = "/candidat/postuler")
     public String postulerOffre(@RequestParam("offre") Long offreId, Model model) {
-        Postulation postulation = new Postulation();
+        try {
+            Postulation postulation = new Postulation();
 
-        postulation.setDatePostulation(LocalDateTime.now());
-        postulation.setOffreEmploi(offreService.findOffreById(offreId).orElseGet(null));
-        postulation.setUser(getCurrentUser());
-        LettreMotivation lettreMotivation = lettreMotivationService.findLettreMotivationByUserId(getCurrentUser().getId()).orElse(null);
-        Cv cv = cvService.findCvByUserId(getCurrentUser().getId()).orElse(null);
-        if (cv == null) {
-            model.addAttribute("cvIsNull", true);
-            model.addAttribute("currentUser", userService.findUserByUserName(getCurrentUser().getName()));
-            model.addAttribute("offres", offreService.getAllOffres());
+            postulation.setDatePostulation(LocalDateTime.now());
+            postulation.setOffreEmploi(offreService.findOffreById(offreId).orElseGet(null));
+            postulation.setUser(getCurrentUser());
+            LettreMotivation lettreMotivation = lettreMotivationService.findLettreMotivationByUserId(getCurrentUser().getId()).orElse(null);
+            Cv cv = cvService.findCvByUserId(getCurrentUser().getId()).orElse(null);
+            if (cv == null) {
+                model.addAttribute("cvIsNull", true);
+                model.addAttribute("currentUser", userService.findUserByUserName(getCurrentUser().getName()));
+                model.addAttribute("offres", offreService.getAllOffres());
+                return "/candidat/consulter_offre";
+            }
+            postulation.setLettreMotivation(lettreMotivation);
+            postulation.setCv(cv);
+
+            postulationService.savePostulation(postulation);
+            model.addAttribute("successMessage", "Offre postulé avec succes.");
+
             return "/candidat/consulter_offre";
+        } catch (Exception e) {
+            return "/login";
         }
-        postulation.setLettreMotivation(lettreMotivation);
-        postulation.setCv(cv);
-
-        postulationService.savePostulation(postulation);
-        model.addAttribute("successMessage", "Offre postulé avec succes.");
-
-        return "/candidat/consulter_offre";
     }
+
     public User getCurrentUser() {
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         String userName = loggedInUser.getName();
         return userService.findUserByUserName(userName);
     }
+
     @GetMapping(value = "/candidat/deposer_cv")
-    public String deposerCv(final Model model) {
-        Long id = getCurrentUser().getId();
-        Optional<List<ExperienceProfessionnelle>> experienceProfessionnelles = experienceProfessionnelleService.findExperienceProfessionnellesByUserId(id);
-        Optional<List<Formation>> formations = formationServicce.findFormationsById(id);
-        Optional<List<ConnaissanceLinguistique>> connaissanceLinguistiques = connaissanceLinguistiqueService.findCompetenceLinguistiquesByUserId(id);
+    public String deposerCv(final Model model, HttpServletRequest request) {
+        try {
+            Long id = getCurrentUser().getId();
 
-        LettreMotivation lettreMotivation = new LettreMotivation();
+            Long experience = 0L;
+            if (request.getParameter("experience") != null && !request.getParameter("experience").isEmpty()) {
+                experience = Long.parseLong(request.getParameter("experience"));
+            }
+            ExperienceProfessionnelle experienceProfessionnelle = new ExperienceProfessionnelle();
+            Formation formation = new Formation();
+            ConnaissanceLinguistique connaissanceLinguistique = new ConnaissanceLinguistique();
 
-        ExperienceProfessionnelle experienceProfessionnelle = new ExperienceProfessionnelle();
-        Formation formation = new Formation();
-        ConnaissanceLinguistique connaissanceLinguistique = new ConnaissanceLinguistique();
-        Cv cv = new Cv();
+            List<ExperienceProfessionnelle> experienceProfessionnelles = experienceProfessionnelleService.findExperienceProfessionnellesByUserId(id).orElse(null);
+            Long finalExperience = experience;
+            Optional<ExperienceProfessionnelle> exPro = experienceProfessionnelles
+                    .stream()
+                    .filter(ex -> ex.getId() == finalExperience)
+                    .findFirst();
 
-        model.addAttribute("experienceProfessionnelle", experienceProfessionnelle);
-        model.addAttribute("formation", formation);
-        model.addAttribute("connaissanceLinguistique", connaissanceLinguistique);
-        model.addAttribute("cv", cv);
-        model.addAttribute("lettreMotivation", lettreMotivation);
+            if (exPro.isPresent()) {
+                experienceProfessionnelle = exPro.orElse(new ExperienceProfessionnelle());
+            }
 
-        model.addAttribute("experienceProfessionnelles", experienceProfessionnelles);
-        model.addAttribute("formations", formations);
-        model.addAttribute("connaissanceLinguistiques", connaissanceLinguistiques);
+            Optional<List<Formation>> formations = formationServicce.findFormationsById(id);
+            Optional<List<ConnaissanceLinguistique>> connaissanceLinguistiques = connaissanceLinguistiqueService.findCompetenceLinguistiquesByUserId(id);
+            Optional<Cv> cv = cvService.findCvByUserId(id);
 
-        return "candidat/deposer_cv";
+            LettreMotivation lettreMotivation = new LettreMotivation();
+
+            model.addAttribute("experienceProfessionnelle", experienceProfessionnelle);
+            model.addAttribute("formation", formation);
+            model.addAttribute("connaissanceLinguistique", connaissanceLinguistique);
+            model.addAttribute("cv", cv.orElse(new Cv()));
+            model.addAttribute("lettreMotivation", lettreMotivation);
+
+            model.addAttribute("experienceProfessionnelles", experienceProfessionnelles);
+            model.addAttribute("formations", formations);
+            model.addAttribute("connaissanceLinguistiques", connaissanceLinguistiques);
+
+            return "/candidat/deposer_cv";
+        } catch (Exception e) {
+            return "/login";
+        }
     }
 
     @PostMapping(value = "/candidat/postuler/resume")
     public String deposerCvResume(@Valid Cv cv) {
-       Cv cvUpdate = cvService.findCvByUserId(getCurrentUser().getId()).orElse(new Cv());
+        try {
+            Cv cvUpdate = cvService.findCvByUserId(getCurrentUser().getId()).orElse(new Cv());
 
-       cvUpdate.setObjectif(cv.getObjectif());
-       cvUpdate.setDateCv(LocalDateTime.now());
-       cvUpdate.setUser(getCurrentUser());
+            cvUpdate.setObjectif(cv.getObjectif());
+            cvUpdate.setDateCv(LocalDateTime.now());
+            cvUpdate.setUser(getCurrentUser());
 
-       cvService.saveCv(cvUpdate);
-       return "redirect:/candidat/deposer_cv";
+            cvService.saveCv(cvUpdate);
+            return "redirect:/candidat/deposer_cv";
+        } catch (Exception e) {
+            return "/login";
+        }
     }
+
     @PostMapping(value = "/candidat/postuler/experience")
     public String deposerCvExperience(@Valid ExperienceProfessionnelle experienceProfessionnelle) {
-        Cv cvUpdate = cvService.findCvByUserId(getCurrentUser().getId()).orElse(new Cv());
-        experienceProfessionnelle.setUser(getCurrentUser());
-        List<ExperienceProfessionnelle> experList = cvUpdate.getExperienceProfessionnelle();
-        experList.add(experienceProfessionnelle);
-        cvUpdate.setExperienceProfessionnelle(experList);
+        try {
+            Cv cvUpdate = cvService.findCvByUserId(getCurrentUser().getId()).orElse(new Cv());
+            experienceProfessionnelle.setUser(getCurrentUser());
+            List<ExperienceProfessionnelle> experList = cvUpdate.getExperienceProfessionnelle();
 
-        cvService.saveCv(cvUpdate);
-        return "redirect:/candidat/deposer_cv";
+            if (experienceProfessionnelle.getId() != null) {
+                experienceProfessionnelleService.saveExperience(experienceProfessionnelle);
+            } else {
+                experList.add(experienceProfessionnelle);
+            }
+            cvUpdate.setExperienceProfessionnelle(experList);
+
+            cvService.saveCv(cvUpdate);
+            return "redirect:/candidat/deposer_cv";
+        } catch (Exception z) {
+            return "/login";
+        }
     }
+
     @PostMapping(value = "/candidat/postuler/formation")
     public String deposerCvFormation(@Valid Formation formation) {
         Cv cvUpdate = cvService.findCvByUserId(getCurrentUser().getId()).orElse(new Cv());
@@ -147,6 +196,7 @@ public class CandidatController {
         cvService.saveCv(cvUpdate);
         return "redirect:/candidat/deposer_cv";
     }
+
     @PostMapping(value = "/candidat/postuler/linguistiques")
     public String deposerCvFormation(@Valid ConnaissanceLinguistique connaissanceLinguistique) {
         connaissanceLinguistique.setUser(getCurrentUser());
@@ -174,12 +224,14 @@ public class CandidatController {
     public String deposerCv(@Valid Cv cv) {
         return "/candidat/deposer_cv";
     }
+
     @GetMapping(value = "/candidat/infos_postulation")
     public String infosPostulation(Model model) {
-        Optional<List<Postulation>> postulations = postulationService.findPostulationsByUser_Id(getCurrentUser().getId());
-        model.addAttribute("postulations", postulations.orElse(null));
+        List<Postulation> postulations = postulationService.findPostulationsByUser_Id(getCurrentUser().getId());
+        model.addAttribute("postulations", postulations);
         return "/candidat/infos_postulation";
     }
+
     @GetMapping(value = "/candidat/mon_profil")
     public String monProfil() {
         return "/candidat/mon_profil";

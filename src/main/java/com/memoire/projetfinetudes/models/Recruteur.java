@@ -7,10 +7,7 @@ public class Recruteur extends User {
     private String societeUrl;
     private String societeDescription;
 
-    public Recruteur() {
-
-    }
-
+    public Recruteur() { }
 
     public String getSocieteUrl() {
         return societeUrl;

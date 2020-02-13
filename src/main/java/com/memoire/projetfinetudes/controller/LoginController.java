@@ -26,29 +26,29 @@ public class LoginController {
     @Autowired
     private RoleService roleService;
 
-    @RequestMapping(value={"/", "/login"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/", "/login"}, method = RequestMethod.GET)
     public String login(Model model) {
         model.addAttribute("user", new User(0L));
         return "login";
     }
 
-    @RequestMapping(value={"/", "/login"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/", "/login"}, method = RequestMethod.POST)
     public String loginPost() {
         return "home";
     }
 
-    @RequestMapping(value="/home", method = RequestMethod.GET)
-    public String home(Model model){
+    @RequestMapping(value = "/home", method = RequestMethod.GET)
+    public String home(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserName(auth.getName());
         model.addAttribute("userName", "Welcome " + user.getUserName() + "/" + user.getEmail() + " " + user.getLastName() + " (" + user.getRoles() + ")");
-        model.addAttribute("adminMessage","Content Available Only for Users with Admin Role");
+        model.addAttribute("adminMessage", "Content Available Only for Users with Admin Role");
         model.addAttribute("user", user);
         return "home";
     }
 
-    @GetMapping(value="/registration")
-    public ModelAndView registration(){
+    @GetMapping(value = "/registration")
+    public ModelAndView registration() {
         ModelAndView modelAndView = new ModelAndView();
         User user = new User();
         modelAndView.addObject("user", user);
@@ -81,6 +81,7 @@ public class LoginController {
         }
         return modelAndView;
     }
+
     @GetMapping("/access-denied")
     public String accessDenied() {
         return "/error/access-denied";
