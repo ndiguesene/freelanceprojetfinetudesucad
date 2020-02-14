@@ -4,6 +4,8 @@
 <head>
     <title>Consulter Offres</title>
     <link rel="stylesheet" type="text/css" href="../static/css/page.css" th:href="@{/css/page.css}"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
@@ -21,27 +23,23 @@
         </button>
     </div>
     <div class="row" id="inList">
-        <div class="col-4" th:if="${currentUser != null}">
-            <strong>Welcome Back, <span th:text="${currentUser.getName()}"></span> - <span
-                    th:text="${currentUser.getLastName()}"></span></strong>
-            <br>
-            <div class="card" style="width: 18rem;">
+        <div class="col-md-3" th:if="${currentUser != null}">
+            <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title" sec:authorize="isAuthenticated()">
-                        <span th:text="${currentUser.getName()}"></span> - <span
+                    <h6 class="card-title" sec:authorize="isAuthenticated()">
+                        <i class="fas fa-user-alt"></i> </i><span th:text="${currentUser.getName()}"></span> - <span
                             th:text="${currentUser.getLastName()}"></span>
-                    </h5>
-                    <br>
-                    <br>
-                    <h6 class="card-subtitle mb-2 text-muted"><span th:text="${currentUser.getTitre_fonction()}"></span>
                     </h6>
-                    <br/>
-                    <h6 class="card-subtitle mb-2 text-muted"><span th:text="${currentUser.getPays()}"></span> - <span
+                    <hr/>
+                    <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-id-card"></i> <span
+                            th:text="${currentUser.getTitre_fonction()}"></span></h6>
+                    <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-location-arrow"></i> <span
+                            th:text="${currentUser.getPays()}"></span> - <span
                             th:text="${currentUser.getVille()}"></span></h6>
                 </div>
             </div>
         </div>
-        <div class="col-8" id="inList1">
+        <div class="col-md-9" id="inList1">
             <div class="card">
                 <div class="card-header">
                     <h3 style="align-content: center">Offres recommandés pour vous</h3>
@@ -51,9 +49,14 @@
                     Vous avez postulé à tous les offres disponibles.
                 </div>
                 <div class="card-body" id="inList2">
+                    <h5 th:if="${successMessage != ''}">
+                        <span th:text="${successMessage}"></span>
+                    </h5>
                     <div class="card w-100" th:each="offre, index : ${offres}" id="inList3">
                         <div class="card-body">
-                            <h5 class="card-title" th:text="${offre.getPoste()}"></h5>
+                            <h5 class="card-title">
+                                <i class="fas fa-user-circle"></i> <span th:text="${offre.getPoste()}"></span>
+                            </h5>
                             <p class="card-text float-right" th:text="${offre.getDescription()}"></p>
                             <p th:text="${offre.getRecruteur().getSecteurActivite()}"></p>
                             <a href="/candidat/postuler" th:href="@{/candidat/postuler(offre=${offre.id})}"
@@ -80,15 +83,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-<script>
-    $(document).ready(function(){
-        $("#myInput").on("keyup", function() {
-            var value = $(this).val().toLowerCase();
-            $("#forSearch #inList #inList1 #inList2 #inList3").filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        });
-    });
-</script>
+
 </body>
 </html>

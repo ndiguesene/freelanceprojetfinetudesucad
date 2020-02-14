@@ -7,7 +7,7 @@ import java.util.List;
 @Entity
 public class Cv {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
     private LocalDateTime dateCv;
     private String objectif;

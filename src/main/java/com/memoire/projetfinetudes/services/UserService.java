@@ -25,17 +25,17 @@ public class UserService {
     }
 
     public User findUserByEmail(String email) {
-        return userRepository.findByEmail(email);
+        return userRepository.findByEmailAndActiveIsTrue(email);
     }
 
     public User findUserByUserName(String userName) {
-        return userRepository.findByUserName(userName);
+        return userRepository.findByUserNameAndActiveIsTrue(userName);
     }
 
     public User saveUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(true);
-        Role userRole = roleRepository.findByRole(user.getRoles().iterator().next().getRole());
+        Role userRole = roleRepository.findByRole(user.getRoles().iterator().next().getRole()).orElse(null);
         user.setRoles(new HashSet(Arrays.asList(userRole)));
         return userRepository.saveAndFlush(user);
     }

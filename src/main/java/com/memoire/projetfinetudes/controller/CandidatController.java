@@ -3,7 +3,6 @@ package com.memoire.projetfinetudes.controller;
 import com.memoire.projetfinetudes.models.*;
 import com.memoire.projetfinetudes.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -11,8 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -20,7 +17,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Controller
 public class CandidatController {
@@ -62,6 +58,7 @@ public class CandidatController {
             }
             model.addAttribute("offres", offres);
             model.addAttribute("currentUser", user);
+            model.addAttribute("successMessage", "");
             return "candidat/consulter_offre";
         } catch (Exception e) {
             return "/login";
@@ -88,9 +85,9 @@ public class CandidatController {
             postulation.setCv(cv);
 
             postulationService.savePostulation(postulation);
-            model.addAttribute("successMessage", "Offre postulé avec succes.");
+            model.addAttribute("successMessage", "Offre " + postulation.getOffreEmploi().getPoste()+ " postulé avec succes.");
 
-            return "/candidat/consulter_offre";
+            return "redirect:/candidat/consulter_offre";
         } catch (Exception e) {
             return "/login";
         }
@@ -114,13 +111,17 @@ public class CandidatController {
             ExperienceProfessionnelle experienceProfessionnelle = new ExperienceProfessionnelle();
             Formation formation = new Formation();
             ConnaissanceLinguistique connaissanceLinguistique = new ConnaissanceLinguistique();
+            LettreMotivation lettreMotivation = new LettreMotivation();
 
             List<ExperienceProfessionnelle> experienceProfessionnelles = experienceProfessionnelleService.findExperienceProfessionnellesByUserId(id).orElse(null);
             Long finalExperience = experience;
-            Optional<ExperienceProfessionnelle> exPro = experienceProfessionnelles
-                    .stream()
-                    .filter(ex -> ex.getId() == finalExperience)
-                    .findFirst();
+            Optional<ExperienceProfessionnelle> exPro = Optional.of(new ExperienceProfessionnelle());
+            if (experienceProfessionnelles != null) {
+                 exPro = experienceProfessionnelles
+                        .stream()
+                        .filter(ex -> ex.getId() == finalExperience)
+                        .findFirst();
+            }
 
             if (exPro.isPresent()) {
                 experienceProfessionnelle = exPro.orElse(new ExperienceProfessionnelle());
@@ -129,8 +130,6 @@ public class CandidatController {
             Optional<List<Formation>> formations = formationServicce.findFormationsById(id);
             Optional<List<ConnaissanceLinguistique>> connaissanceLinguistiques = connaissanceLinguistiqueService.findCompetenceLinguistiquesByUserId(id);
             Optional<Cv> cv = cvService.findCvByUserId(id);
-
-            LettreMotivation lettreMotivation = new LettreMotivation();
 
             model.addAttribute("experienceProfessionnelle", experienceProfessionnelle);
             model.addAttribute("formation", formation);
@@ -144,6 +143,8 @@ public class CandidatController {
 
             return "/candidat/deposer_cv";
         } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
             return "/login";
         }
     }

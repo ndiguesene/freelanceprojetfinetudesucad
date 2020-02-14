@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -27,9 +29,12 @@ public class LoginController {
     private RoleService roleService;
 
     @RequestMapping(value = {"/", "/login"}, method = RequestMethod.GET)
-    public String login(Model model) {
+    public String login(Model model, HttpServletRequest request) {
+        SecurityContextHolder.getContext().setAuthentication(null);
+        HttpSession httpSession = request.getSession();
+        httpSession.invalidate();
         model.addAttribute("user", new User(0L));
-        return "login";
+        return "/login";
     }
 
     @RequestMapping(value = {"/", "/login"}, method = RequestMethod.POST)

@@ -62,7 +62,6 @@ public class RecruteurController {
             model.addAttribute("postulation", postulation.orElse(null));
         }
         Optional<List<Postulation>> postulations = this.postulationService.findPostulationsByOffreEmploiAndUserId(getCurrentUser().getId());
-        // postulations.orElse(null).stream().forEach(p -> System.out.println("=======> P = " + p.toString()));
         model.addAttribute("postulations", postulations.orElse(null));
         return "recruteur/consulter_candidatures";
     }

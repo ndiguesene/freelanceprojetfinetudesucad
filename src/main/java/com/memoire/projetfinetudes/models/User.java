@@ -1,6 +1,7 @@
 package com.memoire.projetfinetudes.models;
 
 import org.hibernate.validator.constraints.Length;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -65,6 +66,7 @@ public class User {
 
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @Value("${spring.security.user.role}")
     private Set<Role> roles;
 
     public User() {

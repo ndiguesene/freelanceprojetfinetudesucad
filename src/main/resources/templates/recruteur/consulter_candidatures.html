@@ -13,7 +13,7 @@
 <br>
 <div class="container">
     <div class="row">
-        <div class="col-md-4" th:if="postulations != null">
+        <div class="col-md-4 card" th:if="${postulations != null}">
             <h2>Candidatures</h2>
             <ul class="list-group list-group-flush" th:field="*{postulations}">
                 <li class="list-group-item" th:each="post: ${postulations}" th:value="${post.id}">
@@ -26,8 +26,14 @@
                 </li>
             </ul>
         </div>
-        <div class="col-md-4" th:if="postulations == null">
-            <h3>Y a pas encore d'offre à ce jour.</h3>
+        <div class="col-md-4" th:if="${postulations == null}">
+            <h2>Candidatures</h2>
+            <div class="alert alert-warning alert-dismissible fade show" role="alert" th:if="${postulation == null}">
+                <strong><i class="far fa-frown"></i> </strong> Pas encore d'offre à ce jour.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
         </div>
 
         <div class="col-md-8">

@@ -11,7 +11,7 @@ import java.util.Objects;
 @Entity
 public class OffreEmploi {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
     @CreatedDate
     @Column(name = "date_offre_emploi")
