@@ -234,7 +234,25 @@ public class CandidatController {
     }
 
     @GetMapping(value = "/candidat/mon_profil")
-    public String monProfil() {
+    public String monProfil(Model model) {
+        model.addAttribute("user", getCurrentUser());
         return "/candidat/mon_profil";
+    }
+
+    @PostMapping(value = "/candidat/mon_profil")
+    public String monProfilPost(User user) {
+        User u = getCurrentUser();
+
+        u.setName(user.getName());
+        u.setLastName(user.getLastName());
+        u.setSexe(user.getSexe());
+        u.setPays(user.getPays());
+        u.setVille(user.getVille());
+        u.setSecteurActivite(user.getSecteurActivite());
+        u.setTitre_fonction(user.getTitre_fonction());
+        u.setTelephone(user.getTelephone());
+
+        userService.saveUser(u);
+        return "redirect:/candidat/mon_profil";
     }
 }

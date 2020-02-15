@@ -2,21 +2,198 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Mon Profil</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" type="text/css" href="../static/css/page.css" th:href="@{/css/page.css}"/>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>$body{
+        margin-top:20px;
+        background:#F0F8FF;
+    }
+    .card {
+        margin-bottom: 1.5rem;
+        box-shadow: 0 1px 15px 1px rgba(52,40,104,.08);
+    }
+    .card {
+        position: relative;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 1px solid #e5e9f2;
+        border-radius: .2rem;
+    }
+    .card-header:first-child {
+        border-radius: calc(.2rem - 1px) calc(.2rem - 1px) 0 0;
+    }
+    .card-header {
+        border-bottom-width: 1px;
+    }
+    .card-header {
+        padding: .75rem 1.25rem;
+        margin-bottom: 0;
+        color: inherit;
+        background-color: #fff;
+        border-bottom: 1px solid #e5e9f2;
+    }</style>
 </head>
 <body>
 
 <div th:insert="layout/navbar :: navbar"></div>
-<div class="container">
-    Mon Profil
+<div class="container p-0">
+    <br>
+    <h1 class="h3 mb-3">Parametres</h1>
+    <div class="row">
+        <div class="col-md-5 col-xl-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Profil</h5>
+                </div>
+                <div class="list-group list-group-flush" role="tablist">
+                    <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account" role="tab">
+                        Compte
+                    </a>
+                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#password" role="tab">
+                        Mot de passe
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-7 col-xl-8">
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="account" role="tabpanel">
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Informations</h5>
+                        </div>
+                        <div class="card-body">
+                            <form autocomplete="off" action="#" th:action="@{/candidat/mon_profil}" th:object="${user}" method="POST" class="form-horizontal" role="form">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputPrenom">Prénom </label>
+                                        <label class="validation-message" th:errors="*{name}" th:if="${#fields.hasErrors('name')}"></label>
+                                        <input type="text" th:value="${user.name}" th:field="*{name}" class="form-control" id="inputPrenom" placeholder="Prénom">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="inputNom">Nom </label>
+                                        <label class="validation-message" th:errors="*{lastName}" th:if="${#fields.hasErrors('lastName')}"></label>
+                                        <input type="text" th:value="*{lastName}" th:field="*{lastName}" class="form-control" id="inputNom" placeholder="Nom">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputUsername">Username</label>
+                                    <label class="validation-message" th:errors="*{userName}" th:if="${#fields.hasErrors('userName')}"></label>
+                                    <input type="text" th:value="*{userName}" th:field="*{userName}" disabled class="form-control" id="inputUsername" placeholder="username">
+                                </div>
+                                <div class="form-group">
+                                    <label class="validation-message" th:errors="*{email}" th:if="${#fields.hasErrors('email')}"></label>
+                                    <label for="inputEmailEmails">Email</label>
+                                    <input type="email" th:value="*{email}" th:field="*{email}" disabled class="form-control" id="inputEmailEmails" placeholder="Email">
+                                </div>
+                                <div class="form-group" style="display: none;">
+                                    <label for="inputEmailEmails">password</label>
+                                    <input type="email" th:value="*{password}" th:field="*{password}" disabled class="form-control" id="inputPassword" placeholder="Password">
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <label>Sexe</label>
+                                    <div class="form-group">
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" id="option1" name="option1" class="custom-control-input"
+                                                   value="Masculin" th:field="*{sexe}">
+                                            <label class="custom-control-label" for="option1">Masculin</label>
+                                        </div>
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" id="option2" name="option2" class="custom-control-input"
+                                                   value="Feminin" th:field="*{sexe}">
+                                            <label class="custom-control-label" for="option2">Féminin</label>
+                                        </div>
+                                    </div>
+                                    <label th:if="${#fields.hasErrors('sexe')}" th:errors="*{sexe}" class="validation-message"></label>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputPays">Pays</label>
+                                        <label class="validation-message" th:errors="*{pays}" th:if="${#fields.hasErrors('pays')}"></label>
+                                        <input type="text" th:value="*{pays}" th:field="*{pays}" class="form-control" id="inputPays" placeholder="Pays">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="validation-message" th:errors="*{ville}" th:if="${#fields.hasErrors('ville')}"></label>
+                                        <label for="inputVille">Ville</label>
+                                        <input type="text" th:value="*{ville}" th:field="*{ville}" class="form-control" id="inputVille" placeholder="Ville">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="validation-message" th:errors="*{secteurActivite}" th:if="${#fields.hasErrors('secteurActivite')}"></label>
+                                    <label for="inputSecteurActivite">Secteur d'activité</label>
+                                    <input type="text" th:value="*{secteurActivite}" th:field="*{secteurActivite}" class="form-control" id="inputSecteurActivite" placeholder="Secteur d'activité">
+                                </div>
+                                <div class="form-group">
+                                    <label class="validation-message" th:errors="*{titre_fonction}"
+                                           th:if="${#fields.hasErrors('titre_fonction')}"></label>
+                                    <label for="inputFonction">Titre Fonction</label>
+                                    <input type="text" th:value="*{titre_fonction}" th:field="*{titre_fonction}" class="form-control" id="inputFonction" placeholder="Titre Fonction">
+                                </div>
+                                <div class="form-group">
+                                    <label class="validation-message" th:errors="*{telephone}"
+                                           th:if="${#fields.hasErrors('telephone')}"></label>
+                                    <label for="inputTelephone">Numéro de Téléphone</label>
+                                    <input type="text" th:value="*{telephone}" th:field="*{telephone}" class="form-control" id="inputTelephone" placeholder="Téléphone">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Enregistrer</button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="tab-pane fade" id="password" role="tabpanel">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Mot de passe</h5>
+                            <form>
+                                <div class="form-group">
+                                    <label for="inputPasswordCurrent">Mot de passe courant</label>
+                                    <input type="password" class="form-control" id="inputPasswordCurrent">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPasswordNew">Nouveau Mot de passe</label>
+                                    <input type="password" class="form-control" id="inputPasswordNew">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPasswordNew2">Confirmé Mot de passe</label>
+                                    <input type="password" class="form-control" id="inputPasswordNew2">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Enregistrer</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 <div th:insert="layout/footer :: footer">&copy; 2016 The Static Templates</div>
 
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
 </body>
 </html>

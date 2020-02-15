@@ -3,6 +3,10 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Inscription</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -23,41 +27,46 @@
         body {
             font-family: "Lato", sans-serif;
         }
-        .main-head{
+
+        .main-head {
             height: 150px;
             background: #FFF;
 
         }
+
         .sidenav {
             height: 100%;
             background-color: #000;
             overflow-x: hidden;
             padding-top: 20px;
         }
+
         .main {
             padding: 0px 10px;
         }
 
         @media screen and (max-height: 450px) {
-            .sidenav {padding-top: 5px;}
+            .sidenav {
+                padding-top: 5px;
+            }
         }
 
         @media screen and (max-width: 450px) {
-            .login-form{
+            .login-form {
                 margin-top: 5%;
             }
 
-            .register-form{
+            .register-form {
                 margin-top: 10%;
             }
         }
 
-        @media screen and (min-width: 768px){
-            .main{
+        @media screen and (min-width: 768px) {
+            .main {
                 margin-left: 60%;
             }
 
-            .sidenav{
+            .sidenav {
                 width: 40%;
                 position: fixed;
                 z-index: 1;
@@ -65,27 +74,27 @@
                 left: 0;
             }
 
-            .login-form{
+            .login-form {
                 margin-top: 20%;
             }
 
-            .register-form{
+            .register-form {
                 margin-top: 20%;
             }
         }
 
 
-        .login-main-text{
+        .login-main-text {
             margin-top: 20%;
             padding: 60px;
             color: #fff;
         }
 
-        .login-main-text h2{
+        .login-main-text h2 {
             font-weight: 300;
         }
 
-        .btn-black{
+        .btn-black {
             background-color: #000 !important;
             color: #fff;
         }
@@ -126,7 +135,8 @@
                 <h4 th:if="${successMessage}">
                     <span th:text="${successMessage}"></span>
                 </h4>
-                <form autocomplete="off" action="#" th:action="@{/registration}" th:object="${user}" method="POST" class="form-horizontal" role="form">
+                <form autocomplete="off" action="#" th:action="@{/registration}" th:object="${user}" method="POST"
+                      class="form-horizontal" role="form">
                     <h2>Inscription</h2>
                     <hr>
                     <div class="form-group">
@@ -155,31 +165,36 @@
                     </div>
                     <div class="form-group">
                         <div class="col-sm-12">
-                            <input type="text" th:field="*{telephone}" placeholder="Numéro de Téléphone" class="form-control"/> <label
+                            <input type="text" th:field="*{telephone}" placeholder="Numéro de Téléphone"
+                                   class="form-control"/> <label
                                 th:if="${#fields.hasErrors('telephone')}" th:errors="*{telephone}"
                                 class="validation-message"></label>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-12">
-                            <input type="text" th:field="*{userName}" placeholder="User Name" class="form-control"/> <label
-                                th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"
-                                class="validation-message"></label>
+                            <input type="text" th:field="*{userName}" placeholder="User Name" class="form-control"/>
+                            <label
+                                    th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"
+                                    class="validation-message"></label>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" id="option1" name="option1" class="custom-control-input" value="1" th:field="*{sexe}">
+                                    <input type="radio" id="option1" name="option1" class="custom-control-input"
+                                           value="Masculin" th:field="*{sexe}">
                                     <label class="custom-control-label" for="option1">Masculin</label>
                                 </div>
                                 <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" id="option2" name="option2" class="custom-control-input" value="2" th:field="*{sexe}">
+                                    <input type="radio" id="option2" name="option2" class="custom-control-input"
+                                           value="Feminin" th:field="*{sexe}">
                                     <label class="custom-control-label" for="option2">Féminin</label>
                                 </div>
                             </div>
-                            <label th:if="${#fields.hasErrors('sexe')}" th:errors="*{sexe}" class="validation-message"></label>
+                            <label th:if="${#fields.hasErrors('sexe')}" th:errors="*{sexe}"
+                                   class="validation-message"></label>
                         </div>
                     </div>
                     <div class="form-group">
@@ -199,7 +214,8 @@
                     <div class="form-group">
                         <div class="col-sm-12">
                             <input type="text" th:field="*{ville}" placeholder="Ville" class="form-control"/>
-                            <label th:if="${#fields.hasErrors('ville')}" th:errors="*{ville}" class="validation-message"></label>
+                            <label th:if="${#fields.hasErrors('ville')}" th:errors="*{ville}"
+                                   class="validation-message"></label>
                         </div>
                     </div>
                     <div class="form-group">
@@ -244,10 +260,6 @@
             </div>
         </div>
     </div>
-
-
-
-
 
 
     <!--<div class="row">
@@ -369,15 +381,14 @@
         </div>
     </div>-->
 </div>
-
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
         crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
         crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
 </body>
 </html>

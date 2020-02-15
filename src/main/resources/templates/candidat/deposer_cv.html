@@ -2,11 +2,29 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>CV et Lettre de Motivation</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="../static/css/page.css" rel="stylesheet" th:href="@{/css/page.css}" type="text/css"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
           integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        .nav-tabs .nav-link.active {
+            font-weight: bold;
+            background-color: transparent;
+            border-bottom: 1px solid dodgerblue;
+            border-left: 6px solid dodgerblue;
+        }
+
+        .tab-content .row .nav-link.active {
+            font-weight: bold;
+            background-color: transparent;
+            border-left: 6px solid dodgerblue;
+            border-bottom: 1px solid dodgerblue;
+            color: black;
+        }
+    </style>
 </head>
 <body>
 
@@ -25,10 +43,10 @@
         <div class="nav nav-tabs nav-justified" id="nav-tab" role="tablist">
             <a aria-controls="nav-home" aria-selected="true" class="nav-item nav-link active" data-toggle="tab"
                href="#nav-home"
-               id="nav-home-tab" role="tab">CV</a>
+               id="nav-home-tab" role="tab"> <i class="far fa-file-word"></i> CV</a>
             <a aria-controls="nav-profile" aria-selected="false" class="nav-item nav-link" data-toggle="tab"
                href="#nav-profile"
-               id="nav-profile-tab" role="tab">Lettre</a>
+               id="nav-profile-tab" role="tab"><i class="far fa-file-word"></i> Lettre</a>
         </div>
     </nav>
     <div class="tab-content" id="nav-tabContent">
@@ -94,7 +112,8 @@
                                       th:object="${experienceProfessionnelle}">
                                     <div class="form-group">
                                         <div class="col-sm-9" style="display: none;">
-                                            <input type="text" name="id" value="id" th:value="${experienceProfessionnelle.id}" />
+                                            <input type="text" name="id" value="id"
+                                                   th:value="${experienceProfessionnelle.id}"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -155,11 +174,13 @@
                                     <div class="card"
                                          th:each="exp: ${experienceProfessionnelles}"
                                          th:value="${exp.id}">
-<!--                                        <form action="#" class="form-horizontal" method="GET" role="form" th:action="@{/candidat/deposer_cv(experience=${exp.id})}">-->
-                                            <a href="/candidat/deposer_cv" role="button" th:href="@{/candidat/deposer_cv(experience=${exp.id})}">
-                                                <i class="far fa-edit"></i> <span th:text="${exp.nomEntreprise}"></span> - <span th:text="${exp.poste}"></span>
-                                            </a>
-<!--                                        </form>-->
+                                        <!--                                        <form action="#" class="form-horizontal" method="GET" role="form" th:action="@{/candidat/deposer_cv(experience=${exp.id})}">-->
+                                        <a href="/candidat/deposer_cv" role="button"
+                                           th:href="@{/candidat/deposer_cv(experience=${exp.id})}">
+                                            <i class="far fa-edit"></i> <span th:text="${exp.nomEntreprise}"></span> -
+                                            <span th:text="${exp.poste}"></span>
+                                        </a>
+                                        <!--                                        </form>-->
                                     </div>
                                 </div>
                             </div>
@@ -239,6 +260,7 @@
             </div>
         </div>
         <div aria-labelledby="nav-profile-tab" class="tab-pane fade" id="nav-profile" role="tabpanel">
+            <br/>
             <h2>Lettre de Motivation</h2>
             <br>
             <form action="#" autocomplete="off" class="form-horizontal" method="POST"
@@ -260,14 +282,14 @@
         </div>
     </div>
     <div th:insert="layout/footer :: footer">&copy; 2016 The Static Templates</div>
-    <script crossorigin="anonymous"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script crossorigin="anonymous"
-            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script crossorigin="anonymous"
-            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
 </body>
 </html>
