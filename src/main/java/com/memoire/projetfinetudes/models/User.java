@@ -50,7 +50,7 @@ public class User {
     private String lastName;
 
     @Column(name = "active")
-    private Boolean active;
+    private boolean active;
 
     @Column(name = "pays")
     @NotEmpty(message = "*Please provide your country")
@@ -168,11 +168,11 @@ public class User {
         this.lastName = lastName;
     }
 
-    public Boolean getActive() {
+    public boolean getActive() {
         return active;
     }
 
-    public void setActive(Boolean active) {
+    public void setActive(boolean active) {
         this.active = active;
     }
 

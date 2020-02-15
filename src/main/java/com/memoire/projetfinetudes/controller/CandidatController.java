@@ -1,15 +1,18 @@
 package com.memoire.projetfinetudes.controller;
 
+import com.memoire.projetfinetudes.dto.PasswordDTO;
 import com.memoire.projetfinetudes.models.*;
 import com.memoire.projetfinetudes.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -36,6 +39,8 @@ public class CandidatController {
     private ConnaissanceLinguistiqueService connaissanceLinguistiqueService;
     @Autowired
     private ExperienceProfessionnelleService experienceProfessionnelleService;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @GetMapping(value = "/candidat/consulter_offre")
     public String consulterOffres(final Model model) {
@@ -111,7 +116,7 @@ public class CandidatController {
             ExperienceProfessionnelle experienceProfessionnelle = new ExperienceProfessionnelle();
             Formation formation = new Formation();
             ConnaissanceLinguistique connaissanceLinguistique = new ConnaissanceLinguistique();
-            LettreMotivation lettreMotivation = new LettreMotivation();
+            // LettreMotivation lettreMotivation = new LettreMotivation();
 
             List<ExperienceProfessionnelle> experienceProfessionnelles = experienceProfessionnelleService.findExperienceProfessionnellesByUserId(id).orElse(null);
             Long finalExperience = experience;
@@ -135,6 +140,8 @@ public class CandidatController {
             model.addAttribute("formation", formation);
             model.addAttribute("connaissanceLinguistique", connaissanceLinguistique);
             model.addAttribute("cv", cv.orElse(new Cv()));
+
+            LettreMotivation lettreMotivation = lettreMotivationService.findLettreMotivationByUserId(id).orElse(null);
             model.addAttribute("lettreMotivation", lettreMotivation);
 
             model.addAttribute("experienceProfessionnelles", experienceProfessionnelles);
@@ -236,6 +243,9 @@ public class CandidatController {
     @GetMapping(value = "/candidat/mon_profil")
     public String monProfil(Model model) {
         model.addAttribute("user", getCurrentUser());
+        model.addAttribute("userPassword", new PasswordDTO());
+        model.addAttribute("password", "");
+        model.addAttribute("typeMessage", "");
         return "/candidat/mon_profil";
     }
 
@@ -254,5 +264,25 @@ public class CandidatController {
 
         userService.saveUser(u);
         return "redirect:/candidat/mon_profil";
+    }
+    @PostMapping(value = "/candidat/modifypassword")
+    public String modifypassword(PasswordDTO user, Model model, RedirectAttributes redirectAttributes) {
+        User userFull = userService.findUserByUserName(getCurrentUser().getUserName());
+        if ((user.getNewPassword().equals(user.getConfirmPassword())) && (bCryptPasswordEncoder.matches(user.getCurrentPassword(), userFull.getPassword()))) {
+            userFull.setPassword(bCryptPasswordEncoder.encode(user.getNewPassword()));
+            userService.updatePasswordUser(userFull);
+            model.addAttribute("password", "Mot de passe modifié avec succes.");
+            model.addAttribute("typeMessage", "success");
+        } else {
+            if (!(user.getNewPassword().equals(user.getConfirmPassword()))) {
+                model.addAttribute("password", "Les mots de passe ne sont pas identiques.");
+            } else if (!(bCryptPasswordEncoder.matches(user.getCurrentPassword(), userFull.getPassword()))){
+                model.addAttribute("password", "Mot de passe courant est incorrect.");
+            }
+            model.addAttribute("typeMessage", "danger");
+        }
+        model.addAttribute("user", getCurrentUser());
+        model.addAttribute("userPassword", new PasswordDTO());
+        return "/candidat/mon_profil";
     }
 }

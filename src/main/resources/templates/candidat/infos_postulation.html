@@ -14,9 +14,10 @@
 
 <div th:insert="layout/navbar :: navbar"></div>
 <div class="container">
+    <br/>
     <h3>Liste offre postulée</h3>
-    <br>
-    <div class="card" th:if="${postulations != null}">
+    <br/>
+    <div class="card" th:if="${postulations.size() != 0}">
         <ul th:field="*{postulations}">
             <li class="list-group-item" th:each="postulation: ${postulations}" th:value="${postulation.id}">
                 <div><u>Région : </u><span th:text="${postulation.offreEmploi.getRegion()}"></span></div>
@@ -39,8 +40,13 @@
         </ul>
     </div>
 
-    <div class="card" th:if="${postulations == null}">
-        Vous n'avez pas postulé à aucun offre pour l'instant.
+    <div th:if="${postulations.size() == 0}">
+        <div class="alert alert-primary" role="alert">
+            <h4 class="alert-heading"><i class="far fa-frown"></i> Ouppps !!!</h4>
+            <p>Désolé, Vous n'avez pas postulé à aucun offre pour l'instant.</p>
+            <hr>
+            <p class="mb-0">Plusieurs offres sont disponibles.</p>
+        </div>
     </div>
 </div>
 <div th:insert="layout/footer :: footer">&copy; 2016 The Static Templates</div>

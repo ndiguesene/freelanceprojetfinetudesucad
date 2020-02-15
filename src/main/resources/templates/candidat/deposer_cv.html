@@ -266,7 +266,7 @@
             <form action="#" autocomplete="off" class="form-horizontal" method="POST"
                   role="form" th:action="@{/candidat/postuler/lettreMotivation}" th:object="${lettreMotivation}">
                 <div class="form-group">
-                    <div class="col-sm-9">
+                    <div class="col-sm-12">
                         <label class="validation-message" th:errors="*{texte}"
                                th:if="${#fields.hasErrors('texte')}"></label>
                         <textarea class="form-control" placeholder="Lettre de Motivation" rows="8" th:field="*{texte}"
@@ -274,7 +274,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-sm-9">
+                    <div class="col-sm-12">
                         <button class="btn btn-primary btn-block" type="submit">Enregistrer</button>
                     </div>
                 </div>

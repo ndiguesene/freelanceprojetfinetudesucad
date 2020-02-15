@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -27,6 +29,12 @@ public class UserService {
     public User findUserByEmail(String email) {
         return userRepository.findByEmailAndActiveIsTrue(email);
     }
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+    public Optional<User> findById(Long id) {
+        return userRepository.findById(id);
+    }
 
     public User findUserByUserName(String userName) {
         return userRepository.findByUserNameAndActiveIsTrue(userName);
@@ -37,6 +45,10 @@ public class UserService {
         user.setActive(true);
         Role userRole = roleRepository.findByRole(user.getRoles().iterator().next().getRole()).orElse(null);
         user.setRoles(new HashSet(Arrays.asList(userRole)));
+        return userRepository.saveAndFlush(user);
+    }
+    public User updatePasswordUser(User user) {
+        user.setPassword(user.getPassword());
         return userRepository.saveAndFlush(user);
     }
 

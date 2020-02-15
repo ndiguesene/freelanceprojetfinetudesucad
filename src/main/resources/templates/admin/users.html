@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Consulter Offres</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="../static/css/page.css" th:href="@{/css/page.css}"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+<div th:insert="layout/navbar :: navbar"></div>
+<br>
+<br>
+<div class="container">
+    <div class="row">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Prénom</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Email</th>
+                <th scope="col">Nom d'utilisateur</th>
+                <th scope="col">Sexe</th>
+                <th scope="col">Téléphone</th>
+                <th scope="col">Secteur D'activité</th>
+                <th scope="col">Fonction</th>
+                <th scope="col">Pays</th>
+                <th scope="col">Ville</th>
+                <th scope="col">Roles</th>
+                <th scope="col">Actif</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}" th:value="${user.id}">
+                <th scope="row" th:text="${user.id}"></th>
+                <td th:text="${user.name}"></td>
+                <td th:text="${user.lastName}"></td>
+                <td th:text="${user.email}"></td>
+                <td th:text="${user.userName}"></td>
+                <td th:text="${user.sexe}"></td>
+                <td th:text="${user.telephone}"></td>
+                <td th:text="${user.secteurActivite}"></td>
+                <td th:text="${user.titre_fonction}"></td>
+                <td th:text="${user.pays}"></td>
+                <td th:text="${user.ville}"></td>
+                <td>
+                    <ul th:each="role : ${user.roles}">
+                        <li th:text="${role.role}"></li>
+                    </ul>
+                </td>
+                <td>
+                    <a href="/admin/users" th:href="@{/admin/users(user=${user.id})}">
+                        <input type="checkbox" th:checked="${user.active}">
+                    </a>
+                </td>
+                <td>
+                    <a href="/admin/user/delete" th:href="@{/admin/user/delete(user=${user.id})}" onclick="confirm('Etes - vous sure de supprimer cet utilisateur')">
+                        <i class="fas fa-trash" style="color: red"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="/admin/user/edit" th:href="@{/admin/user/edit(user=${user.id})}">
+                        <i class="fas fa-user-edit" style="color: blue"></i>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div th:insert="layout/footer :: footer">&copy; 2016 The Static Templates</div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+</body>
+</html>

@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class LoginController {
@@ -57,7 +58,7 @@ public class LoginController {
         ModelAndView modelAndView = new ModelAndView();
         User user = new User();
         modelAndView.addObject("user", user);
-        List<Role> roleAll = roleService.getRoles();
+        List<Role> roleAll = roleService.getRoles().stream().filter(role -> !role.getRole().equals("ROLE_ADMIN")).collect(Collectors.toList());
         modelAndView.addObject("roleAll", roleAll);
         modelAndView.setViewName("registration");
         return modelAndView;
