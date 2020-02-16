@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -18,7 +19,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -98,6 +98,38 @@ public class CandidatController {
         } catch (Exception e) {
             return "/login";
         }
+    }
+
+    @GetMapping(value = "/recruteur/editerOffre")
+    public String modifierOffre(Model model, HttpServletRequest request) {
+        Long offreId = 0L;
+        if (request.getParameter("offre") != null && !request.getParameter("offre").isEmpty()) {
+            offreId = Long.parseLong(request.getParameter("offre"));
+        }
+        OffreEmploi offre = offreService.findOffreById(offreId).orElse(null);
+        model.addAttribute("offre", offre);
+        model.addAttribute("postes", Utils.getPoste());
+        model.addAttribute("typeOffres", Utils.getTypeOffre());
+
+        return "/recruteur/editerOffre";
+    }
+
+    @PostMapping(value = "/recruteur/editerOffre/{id}")
+    public String modifierOffrePost(OffreEmploi offre, @PathVariable String id) {
+        Optional<OffreEmploi> of = offreService.findOffreById(Long.parseLong(id));
+        if (of.isPresent()) {
+            OffreEmploi o = of.orElse(null);
+
+            o.setPoste(offre.getPoste());
+            o.setConnaissanceTechnique(offre.getConnaissanceTechnique());
+            o.setDescription(offre.getDescription());
+            o.setTypeOffre(offre.getTypeOffre());
+            o.setRegion(offre.getRegion());
+            o.setQualiteRequise(offre.getQualiteRequise());
+
+            offreService.saveOffreEmploi(o);
+        }
+        return "redirect:/recruteur/postuler_offre";
     }
 
     public User getCurrentUser() {
@@ -253,6 +285,7 @@ public class CandidatController {
         model.addAttribute("postulations", postulations);
         return "/candidat/infos_postulation";
     }
+
 
     @GetMapping(value = "/candidat/mon_profil")
     public String monProfil(Model model) {

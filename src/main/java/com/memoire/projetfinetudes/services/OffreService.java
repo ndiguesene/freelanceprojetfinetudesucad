@@ -5,6 +5,7 @@ import com.memoire.projetfinetudes.repositories.OffreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +16,11 @@ public class OffreService {
 
     public List<OffreEmploi> getAllOffres() {
         return offreRepository.findAll();
+    }
+
+    @Transactional
+    public void deleteOffre(Long id) {
+        offreRepository.deleteById(id);
     }
 
     public List<OffreEmploi> getOffresByUser(Long id) {

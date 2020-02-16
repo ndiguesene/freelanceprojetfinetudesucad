@@ -6,7 +6,7 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@Component
+// @Component
 public class CustomFilter implements Filter {
     @Override
     public void init(FilterConfig config) throws ServletException { }

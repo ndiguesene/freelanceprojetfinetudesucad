@@ -100,7 +100,7 @@
                          role="tabpanel">
                         <div class="row">
                             <div class="col-md-8">
-                                <h5 class="card-header">Ajout Expérience</h5>
+                                <h5 class="card-header"><i class="fas fa-plus"></i>Ajout Expérience</h5>
                                 <br>
                                 <form action="#" autocomplete="off" class="form-horizontal"
                                       method="POST"
@@ -122,23 +122,6 @@
                                         </div>
                                     </div>
 
-                                    <!--<div class="form-group">
-                                        <div class="col-sm-9">
-                                            <label class="validation-message"
-                                                   th:errors="*{secteurActivite}"
-                                                   th:if="${#fields.hasErrors('secteurActivite')}"></label>
-                                            <input class="form-control" placeholder="Secteur d'activité"
-                                                   th:field="*{secteurActivite}" type="text"/>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-sm-9">
-                                            <label class="validation-message" th:errors="*{poste}"
-                                                   th:if="${#fields.hasErrors('poste')}"></label>
-                                            <input class="form-control" placeholder="Poste" th:field="*{poste}"
-                                                   type="text"/>
-                                        </div>
-                                    </div>-->
                                     <div class="form-group">
                                         <div class="col-sm-9">
                                             <select class="form-control" th:field="*{secteurActivite}">

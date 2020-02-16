@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -57,6 +58,16 @@ public class RecruteurController {
         offreEmploi.setRecruteur(getCurrentUser());
         offreEmploi.setDateOffreEmploi(LocalDateTime.now());
         offreService.saveOffreEmploi(offreEmploi);
+        return "redirect:/recruteur/postuler_offre";
+    }
+
+    @GetMapping(value = "/recruteur/supprimerOffre")
+    public String supprimerOffre(HttpServletRequest request) {
+        Long offre = 0L;
+        if (request.getParameter("offre") != null && !request.getParameter("offre").isEmpty()) {
+            offre = Long.parseLong(request.getParameter("offre"));
+        }
+        offreService.deleteOffre(offre);
         return "redirect:/recruteur/postuler_offre";
     }
 
