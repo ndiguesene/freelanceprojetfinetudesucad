@@ -21,7 +21,7 @@
             <h2>Modifier un utilisateur</h2>
             <hr>
             <h5 class="card-title">Utilisateur</h5>
-            <form autocomplete="off" action="#" th:action="@{/admin/user/edit}" th:object="${userInit}"
+            <form autocomplete="off" action="#" th:action="@{/admin/user/edit}" th:object="${user}"
                   method="POST" class="form-horizontal" role="form">
                 <div class="form-row">
                     <div class="form-group col-md-6">
@@ -58,12 +58,12 @@
                     <div class="form-group">
                         <div class="custom-control custom-radio custom-control-inline">
                             <input type="radio" id="option1" name="option1" class="custom-control-input"
-                                   value="Masculin" th:field="*{sexe}">
+                                   value="Masculin" th:field="*{sexe}" th:checked="${user.sexe == 'Masculin'}">
                             <label class="custom-control-label" for="option1">Masculin</label>
                         </div>
                         <div class="custom-control custom-radio custom-control-inline">
                             <input type="radio" id="option2" name="option2" class="custom-control-input"
-                                   value="Feminin" th:field="*{sexe}">
+                                   value="Feminin" th:field="*{sexe}" th:checked="${user.sexe == 'Feminin'}">
                             <label class="custom-control-label" for="option2">Féminin</label>
                         </div>
                     </div>

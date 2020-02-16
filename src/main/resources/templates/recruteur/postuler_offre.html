@@ -30,11 +30,22 @@
             <form autocomplete="off" action="#" th:action="@{/recruteur/offre}" th:object="${offre}" method="POST"
                   class="form-horizontal" role="form">
                 <h3>Postuler nouveau offre</h3>
-                <div class="form-group">
+                <!--<div class="form-group">
                     <div class="col-sm-9">
                         <label th:if="${#fields.hasErrors('poste')}" th:errors="*{poste}"
                                class="validation-message"></label>
                         <input type="text" th:field="*{poste}" placeholder="Poste" class="form-control"/>
+                    </div>
+                </div>-->
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <select class="form-control" th:field="*{poste}">
+                            <option th:value="NULL">Poste</option>
+                            <option th:each="poste: ${postes}"
+                                    th:value="${poste}"
+                                    th:text="${poste}">
+                            </option>
+                        </select>
                     </div>
                 </div>
 
@@ -46,14 +57,27 @@
                                   placeholder="Description de l'offre"></textarea>
                     </div>
                 </div>
+
                 <div class="form-group">
+                    <div class="col-sm-9">
+                        <select class="form-control" th:field="*{typeOffre}">
+                            <option th:value="NULL">Type Offre</option>
+                            <option th:each="typeOffre: ${typeOffres}"
+                                    th:value="${typeOffre}"
+                                    th:text="${typeOffre}">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!--<div class="form-group">
                     <div class="col-sm-9">
                         <input type="text" th:field="*{typeOffre}" placeholder="Type Offre" class="form-control"/>
                         <label
                                 th:if="${#fields.hasErrors('typeOffre')}" th:errors="*{typeOffre}"
                                 class="validation-message"></label>
                     </div>
-                </div>
+                </div>-->
                 <div class="form-group">
                     <div class="col-sm-9">
                         <input type="text" th:field="*{qualiteRequise}" placeholder="Qualité Requise"

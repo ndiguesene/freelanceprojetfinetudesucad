@@ -125,13 +125,44 @@
                                                    type="text"/>
                                         </div>
                                     </div>
-                                    <div class="form-group">
+
+                                    <!--<div class="form-group">
                                         <div class="col-sm-9">
                                             <label class="validation-message"
                                                    th:errors="*{secteurActivite}"
                                                    th:if="${#fields.hasErrors('secteurActivite')}"></label>
                                             <input class="form-control" placeholder="Secteur d'activité"
                                                    th:field="*{secteurActivite}" type="text"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-9">
+                                            <label class="validation-message" th:errors="*{poste}"
+                                                   th:if="${#fields.hasErrors('poste')}"></label>
+                                            <input class="form-control" placeholder="Poste" th:field="*{poste}"
+                                                   type="text"/>
+                                        </div>
+                                    </div>-->
+                                    <div class="form-group">
+                                        <div class="col-sm-9">
+                                            <select class="form-control" th:field="*{secteurActivite}">
+                                                <option th:value="NULL">Secteur activité</option>
+                                                <option th:each="secteur: ${secteurActivites}"
+                                                        th:value="${secteur}"
+                                                        th:text="${secteur}">
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-9">
+                                            <select class="form-control" th:field="*{poste}">
+                                                <option th:value="NULL">Poste</option>
+                                                <option th:each="poste: ${postes}"
+                                                        th:value="${poste}"
+                                                        th:text="${poste}">
+                                                </option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -149,14 +180,6 @@
                                             <label class="validation-message" th:errors="*{region}"
                                                    th:if="${#fields.hasErrors('region')}"></label>
                                             <input class="form-control" placeholder="Région" th:field="*{region}"
-                                                   type="text"/>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-sm-9">
-                                            <label class="validation-message" th:errors="*{poste}"
-                                                   th:if="${#fields.hasErrors('poste')}"></label>
-                                            <input class="form-control" placeholder="Poste" th:field="*{poste}"
                                                    type="text"/>
                                         </div>
                                     </div>

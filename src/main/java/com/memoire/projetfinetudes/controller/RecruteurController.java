@@ -1,5 +1,6 @@
 package com.memoire.projetfinetudes.controller;
 
+import com.memoire.projetfinetudes.config.Utils;
 import com.memoire.projetfinetudes.models.OffreEmploi;
 import com.memoire.projetfinetudes.models.Postulation;
 import com.memoire.projetfinetudes.models.User;
@@ -39,7 +40,12 @@ public class RecruteurController {
         model.addAttribute("currentUser", getCurrentUser());
         model.addAttribute("offre", offreEmploi);
         List<OffreEmploi> offres = this.currentUser == null ? this.offreService.getOffresByUser(getCurrentUser().getId()) : this.offreService.getOffresByUser(this.currentUser.getId());
+        List<String> postes = Utils.getPoste();
+        List<String> typeOffres = Utils.getTypeOffre();
         model.addAttribute("offres", offres);
+        model.addAttribute("postes", postes);
+        model.addAttribute("typeOffres", typeOffres);
+
         return "recruteur/postuler_offre";
     }
 

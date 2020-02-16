@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -34,6 +35,11 @@ public class UserService {
     }
     public Optional<User> findById(Long id) {
         return userRepository.findById(id);
+    }
+
+    @Transactional
+    public void deleteById(Long id) {
+        userRepository.deleteById(id);
     }
 
     public User findUserByUserName(String userName) {

@@ -26,13 +26,13 @@ public class AdminController {
     }
     @GetMapping("/admin/user/delete")
     public String deleteUsers(@RequestParam(name = "user") String user, Model model) {
+        userService.deleteById(Long.parseLong(user));
         return "redirect:/admin/users";
     }
     @GetMapping("/admin/user/edit")
     public String editUser(@RequestParam(name = "user") String user, Model model) {
         Optional<User> userEdit = userService.findById(Long.parseLong(user));
         model.addAttribute("user", userEdit.orElse(null));
-        model.addAttribute("userInit", new User());
         return "/admin/editUser";
     }
     @PostMapping("/admin/user/edit")

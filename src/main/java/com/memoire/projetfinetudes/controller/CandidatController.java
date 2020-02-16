@@ -1,5 +1,6 @@
 package com.memoire.projetfinetudes.controller;
 
+import com.memoire.projetfinetudes.config.Utils;
 import com.memoire.projetfinetudes.dto.PasswordDTO;
 import com.memoire.projetfinetudes.models.*;
 import com.memoire.projetfinetudes.services.*;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -90,7 +92,7 @@ public class CandidatController {
             postulation.setCv(cv);
 
             postulationService.savePostulation(postulation);
-            model.addAttribute("successMessage", "Offre " + postulation.getOffreEmploi().getPoste()+ " postulé avec succes.");
+            model.addAttribute("successMessage", "Offre " + postulation.getOffreEmploi().getPoste() + " postulé avec succes.");
 
             return "redirect:/candidat/consulter_offre";
         } catch (Exception e) {
@@ -122,7 +124,7 @@ public class CandidatController {
             Long finalExperience = experience;
             Optional<ExperienceProfessionnelle> exPro = Optional.of(new ExperienceProfessionnelle());
             if (experienceProfessionnelles != null) {
-                 exPro = experienceProfessionnelles
+                exPro = experienceProfessionnelles
                         .stream()
                         .filter(ex -> ex.getId() == finalExperience)
                         .findFirst();
@@ -147,11 +149,13 @@ public class CandidatController {
             model.addAttribute("experienceProfessionnelles", experienceProfessionnelles);
             model.addAttribute("formations", formations);
             model.addAttribute("connaissanceLinguistiques", connaissanceLinguistiques);
+            List<String> secteurActivites = Utils.getSecteurActivite();
+            List<String> postes = Utils.getPoste();
+            model.addAttribute("secteurActivites", secteurActivites);
+            model.addAttribute("postes", postes);
 
             return "/candidat/deposer_cv";
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
             return "/login";
         }
     }
@@ -265,6 +269,7 @@ public class CandidatController {
         userService.saveUser(u);
         return "redirect:/candidat/mon_profil";
     }
+
     @PostMapping(value = "/candidat/modifypassword")
     public String modifypassword(PasswordDTO user, Model model, RedirectAttributes redirectAttributes) {
         User userFull = userService.findUserByUserName(getCurrentUser().getUserName());
@@ -276,7 +281,7 @@ public class CandidatController {
         } else {
             if (!(user.getNewPassword().equals(user.getConfirmPassword()))) {
                 model.addAttribute("password", "Les mots de passe ne sont pas identiques.");
-            } else if (!(bCryptPasswordEncoder.matches(user.getCurrentPassword(), userFull.getPassword()))){
+            } else if (!(bCryptPasswordEncoder.matches(user.getCurrentPassword(), userFull.getPassword()))) {
                 model.addAttribute("password", "Mot de passe courant est incorrect.");
             }
             model.addAttribute("typeMessage", "danger");
