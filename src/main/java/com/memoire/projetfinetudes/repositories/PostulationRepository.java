@@ -14,4 +14,5 @@ public interface PostulationRepository extends JpaRepository<Postulation, Long> 
     Optional<List<Postulation>> findPostulationsByOffreEmploiAndUserId(Long id);
     Optional<Postulation> findById(Long id);
     List<Postulation> findAllByUser_Id(Long id);
+    List<Postulation> deleteByIdAndUserId(Long id, Long userId);
 }

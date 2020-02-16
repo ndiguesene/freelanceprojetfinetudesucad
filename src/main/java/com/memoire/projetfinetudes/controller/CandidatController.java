@@ -237,6 +237,16 @@ public class CandidatController {
         return "/candidat/deposer_cv";
     }
 
+    @GetMapping(value = "/candidat/postulation/annulerPostulation")
+    public String infosPostulation(Model model, HttpServletRequest request) {
+        Long postulationId = 0L;
+        if (request.getParameter("postulation") != null && !request.getParameter("postulation").isEmpty()) {
+            postulationId = Long.parseLong(request.getParameter("postulation"));
+        }
+        postulationService.deleteByIdAndUserId(postulationId, getCurrentUser().getId());
+        return "redirect:/candidat/infos_postulation";
+    }
+
     @GetMapping(value = "/candidat/infos_postulation")
     public String infosPostulation(Model model) {
         List<Postulation> postulations = postulationService.findPostulationsByUser_Id(getCurrentUser().getId());
