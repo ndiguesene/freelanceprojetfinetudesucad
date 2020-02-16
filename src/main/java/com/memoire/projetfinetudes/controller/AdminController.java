@@ -48,7 +48,7 @@ public class AdminController {
         userForReset.setTitre_fonction(user.getTitre_fonction());
         userForReset.setTelephone(user.getTelephone());
 
-        userService.saveUser(userForReset);
+        userService.updatePasswordUser(userForReset);
         return "redirect:/admin/users";
     }
 }

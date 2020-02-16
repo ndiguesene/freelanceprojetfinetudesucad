@@ -36,8 +36,9 @@
 <br>
 <br>
 <div class="container">
+    <h4 class="">Utilisateurs inscritent</h4>
     <div class="row">
-        <table class="table table-hover">
+        <table class="table table-sm" style="width:100%">
             <thead>
             <tr>
                 <th scope="col">#</th>
@@ -53,14 +54,13 @@
                 <th scope="col">Ville</th>
                 <th scope="col">Roles</th>
                 <th scope="col">Actif</th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-                <th scope="col"></th>
+                <th scope="col">#</th>
+                <th scope="col">#</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="user : ${users}" th:value="${user.id}">
-                <th scope="row" th:text="${user.id}"></th>
+                <td th:text="${user.id}"></td>
                 <td th:text="${user.name}"></td>
                 <td th:text="${user.lastName}"></td>
                 <td th:text="${user.email}"></td>
