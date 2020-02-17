@@ -1,4 +1,10 @@
 package com.memoire.projetfinetudes.repositories;
 
-public class CandidatRepository {
+import com.memoire.projetfinetudes.models.Candidat;
+
+import javax.transaction.Transactional;
+
+@Transactional
+public interface CandidatRepository extends UserRepository<Candidat>{
+    Candidat findCandidatByUserName(String username);
 }

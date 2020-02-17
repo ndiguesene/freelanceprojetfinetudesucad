@@ -1,7 +1,11 @@
 package com.memoire.projetfinetudes.controller;
 
+import com.memoire.projetfinetudes.models.Candidat;
+import com.memoire.projetfinetudes.models.Recruteur;
 import com.memoire.projetfinetudes.models.Role;
 import com.memoire.projetfinetudes.models.User;
+import com.memoire.projetfinetudes.services.CandidatService;
+import com.memoire.projetfinetudes.services.RecruteurService;
 import com.memoire.projetfinetudes.services.RoleService;
 import com.memoire.projetfinetudes.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +28,10 @@ import java.util.stream.Collectors;
 public class LoginController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private RecruteurService recruteurService;
+    @Autowired
+    private CandidatService candidatService;
     @Autowired
     private RoleService roleService;
 
@@ -71,28 +77,48 @@ public class LoginController {
         return modelAndView;
     }
 
-    @PostMapping(value = "/registration")
-    public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
+    @PostMapping(value = "/registration/candidat")
+    public ModelAndView registrationCandidat(@Valid Candidat candidat, Model model, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
-        User userExists = userService.findUserByUserName(user.getUserName());
+        Candidat userExists = candidatService.findCandidatByUsername(candidat.getUserName());
         if (userExists != null) {
-            System.out.println("Error 1 " + user.toString());
             bindingResult.rejectValue("userName", "error.user", "There is already a user registered with the user name provided");
         }
         if (bindingResult.hasErrors()) {
             List<Role> roleAll = roleService.getRoles();
             modelAndView.addObject("roleAll", roleAll);
-            System.out.println("Error 2 " + user.toString());
             modelAndView.setViewName("registration");
         } else {
-            userService.saveUser(user);
+            userService.saveUser(candidat);
             modelAndView.addObject("successMessage", "Votre compte a été créé avec success, Connectez - vous à votre nouveau compte.");
-            modelAndView.addObject("user", user);
+            modelAndView.addObject("user", candidat);
             List<Role> roleAll = roleService.getRoles();
             modelAndView.addObject("roleAll", roleAll);
             modelAndView.setViewName("login");
         }
         return modelAndView;
+    }
+
+    @PostMapping(value = "/registration/candidat")
+    public String registrationRecruteur(@Valid Candidat candidat, Model model, BindingResult bindingResult) {
+        Candidat userExists = candidatService.findCandidatByUsername(candidat.getUserName());
+        if (userExists != null) {
+            bindingResult.rejectValue("userName", "error.user", "There is already a user registered with the user name provided");
+        }
+        candidatService.save(candidat);
+        model.addAttribute("successMessage", "Votre compte a été créé avec success, Connectez - vous à votre nouveau compte.");
+        return "login";
+    }
+
+    @PostMapping(value = "/registration/recruteur")
+    public String registrationRecruteur(@Valid Recruteur recruteur, Model model, BindingResult bindingResult) {
+        Recruteur userExists = recruteurService.findCandidatByUsername(recruteur.getUserName());
+        if (userExists != null) {
+            bindingResult.rejectValue("userName", "error.user", "There is already a user registered with the user name provided");
+        }
+        recruteurService.save(recruteur);
+        model.addAttribute("successMessage", "Votre compte a été créé avec success, Connectez - vous à votre nouveau compte.");
+        return "login";
     }
 
     @GetMapping("/access-denied")
