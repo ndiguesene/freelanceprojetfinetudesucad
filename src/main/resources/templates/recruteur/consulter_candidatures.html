@@ -14,6 +14,7 @@
             margin-bottom: 1.5rem;
             box-shadow: 0 1px 15px 1px rgba(52, 40, 104, .08);
         }
+
         .card {
             position: relative;
             display: -ms-flexbox;
@@ -37,10 +38,10 @@
 <div class="container">
     <div class="row">
         <div class="col-md-4 card" th:if="${postulations != null}">
-            <h4>Candidatures</h4>
+            <h4><i class="fas fa-users"></i> Candidatures</h4>
             <ul class="list-group list-group-flush" th:field="*{postulations}">
                 <li class="list-group-item" th:each="post: ${postulations}" th:value="${post.id}">
-                    <div><b><u>Offres</u></b> :<span th:text="${post.offreEmploi.getPoste()}"></span> / <span
+                    <div><b><u>Offre </u></b> :<span th:text="${post.offreEmploi.getPoste()}"></span> / <span
                             th:text="${post.offreEmploi.getTypeOffre()}"></span> / <span
                             th:text="${post.offreEmploi.getRegion()}"></span></div>
                     <div><b><u>Postulant</u></b> :
@@ -53,7 +54,7 @@
             </ul>
         </div>
         <div class="col-md-4" th:if="${postulations == null}">
-            <h4>Candidatures</h4>
+            <h4><i class="fas fa-users"></i> Candidatures</h4>
             <div class="alert alert-warning alert-dismissible fade show" role="alert" th:if="${postulation == null}">
                 <strong><i class="far fa-frown"></i> </strong> Pas encore d'offre à ce jour.
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -63,7 +64,7 @@
         </div>
 
         <div class="col-md-8">
-            <h4>Détails sur le candidat</h4>
+            <h4><i class="fas fa-info"></i> Détails sur le candidat</h4>
             <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${postulation == null}">
                 <strong>Hello !!! </strong> Veuillez sélectionner un candidat pour voir son CV et Lettre de motivation.
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">

@@ -247,6 +247,16 @@ public class CandidatController {
         return "redirect:/candidat/infos_postulation";
     }
 
+    @GetMapping(value = "/candidat/experience/supprimer")
+    public String supprimerExperience(Model model, HttpServletRequest request) {
+        Long experienceId = 0L;
+        if (request.getParameter("experience") != null && !request.getParameter("experience").isEmpty()) {
+            experienceId = Long.parseLong(request.getParameter("experience"));
+        }
+        experienceProfessionnelleService.deleteById(experienceId);
+        return "redirect:/candidat/deposer_cv";
+    }
+
     @GetMapping(value = "/candidat/infos_postulation")
     public String infosPostulation(Model model) {
         List<Postulation> postulations = postulationService.findPostulationsByUser_Id(getCurrentUser().getId());

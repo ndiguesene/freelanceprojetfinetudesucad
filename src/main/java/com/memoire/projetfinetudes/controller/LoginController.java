@@ -4,7 +4,6 @@ import com.memoire.projetfinetudes.models.Role;
 import com.memoire.projetfinetudes.models.User;
 import com.memoire.projetfinetudes.services.RoleService;
 import com.memoire.projetfinetudes.services.UserService;
-import com.memoire.projetfinetudes.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
@@ -31,7 +29,7 @@ public class LoginController {
     @Autowired
     private RoleService roleService;
 
-    @RequestMapping(value = {"/", "/login"}, method = RequestMethod.GET)
+    @GetMapping(value = {"/", "/login"})
     public String login(Model model, HttpServletRequest request) {
         SecurityContextHolder.getContext().setAuthentication(null);
         HttpSession httpSession = request.getSession();
@@ -45,7 +43,7 @@ public class LoginController {
         return "home";
     }
 
-    @RequestMapping(value = "/home", method = RequestMethod.GET)
+    @GetMapping(value = "/home")
     public String home(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserName(auth.getName());
@@ -59,7 +57,7 @@ public class LoginController {
         } else if (user.getRoles().parallelStream().anyMatch(p -> p.getRole().equals("ROLE_ADMIN"))) {
             return "redirect:/admin/users";
         }
-        return "home";
+        return "/login";
     }
 
     @GetMapping(value = "/registration")

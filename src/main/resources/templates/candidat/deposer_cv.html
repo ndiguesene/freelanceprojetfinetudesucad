@@ -51,7 +51,7 @@
             <h3 class="card-header">Formulaire de CV</h3>
             <br/>
             <div class="row">
-                <div aria-orientation="vertical" class="nav flex-column nav-pills col-md-3" id="v-pills-tab"
+                <div aria-orientation="vertical" class="nav flex-column nav-pills col-md-2" id="v-pills-tab"
                      role="tablist">
                     <a aria-controls="v-pills-home" aria-selected="true" class="nav-link active" data-toggle="pill"
                        href="#v-pills-home" id="v-pills-home-tab" role="tab">Objectif</a>
@@ -62,7 +62,7 @@
                     <a aria-controls="v-pills-linguistique" aria-selected="false" class="nav-link" data-toggle="pill"
                        href="#v-pills-linguistique" id="v-pills-linguistique-tab" role="tab">Linguistiques</a>
                 </div>
-                <div class="tab-content col-md-9" id="v-pills-tabContent">
+                <div class="tab-content col-md-10" id="v-pills-tabContent">
                     <div aria-labelledby="v-pills-home-tab" class="card tab-pane fade show active" id="v-pills-home"
                          role="tabpanel">
                         <div class="row">
@@ -91,7 +91,7 @@
                     <div aria-labelledby="v-pills-experience-tab" class="card tab-pane fade" id="v-pills-experience"
                          role="tabpanel">
                         <div class="row">
-                            <div class="col-md-8">
+                            <div class="col-md-7">
                                 <h5 class="card-header"><i class="fas fa-plus"></i>Ajout Expérience</h5>
                                 <br>
                                 <form action="#" autocomplete="off" class="form-horizontal"
@@ -99,13 +99,13 @@
                                       role="form" th:action="@{/candidat/postuler/experience}"
                                       th:object="${experienceProfessionnelle}">
                                     <div class="form-group">
-                                        <div class="col-sm-9" style="display: none;">
+                                        <div class="col-sm-12" style="display: none;">
                                             <input type="text" name="id" value="id"
                                                    th:value="${experienceProfessionnelle.id}"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <div class="col-sm-9">
+                                        <div class="col-sm-12">
                                             <label class="validation-message" th:errors="*{competence}"
                                                    th:if="${#fields.hasErrors('competence')}"></label>
                                             <input class="form-control" placeholder="Compétence"
@@ -115,7 +115,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <div class="col-sm-9">
+                                        <div class="col-sm-12">
                                             <select class="form-control" th:field="*{secteurActivite}">
                                                 <option th:value="NULL">Secteur activité</option>
                                                 <option th:each="secteur: ${secteurActivites}"
@@ -126,7 +126,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <div class="col-sm-9">
+                                        <div class="col-sm-12">
                                             <select class="form-control" th:field="*{poste}">
                                                 <option th:value="NULL">Poste</option>
                                                 <option th:each="poste: ${postes}"
@@ -137,7 +137,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <div class="col-sm-9">
+                                        <div class="col-sm-12">
                                             <label class="validation-message"
                                                    th:errors="*{nomEntreprise}"
                                                    th:if="${#fields.hasErrors('nomEntreprise')}"></label>
@@ -147,7 +147,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <div class="col-sm-9">
+                                        <div class="col-sm-12">
                                             <label class="validation-message" th:errors="*{region}"
                                                    th:if="${#fields.hasErrors('region')}"></label>
                                             <input class="form-control" placeholder="Région" th:field="*{region}"
@@ -156,13 +156,13 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <div class="col-sm-9">
+                                        <div class="col-sm-12">
                                             <button class="btn btn-primary btn-block" type="submit">Enregistrer</button>
                                         </div>
                                     </div>
                                 </form>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-5">
                                 <h5 class="card-header">Expériences</h5>
                                 <div
                                         th:field="*{experienceProfessionnelles}"
@@ -172,6 +172,10 @@
                                        th:href="@{/candidat/deposer_cv(experience=${exp.id})}">
                                         <i class="far fa-edit"></i> <span th:text="${exp.nomEntreprise}"></span> -
                                         <span th:text="${exp.poste}"></span>
+                                    </a>
+                                    <a href="#"
+                                       th:onclick="'javascript:supprimerOffre(' + ${exp.id} + ', \'/candidat/experience/supprimer?experience=\');'">
+                                        <i class="fas fa-trash"></i>
                                     </a>
                                 </div>
                             </div>
@@ -185,7 +189,7 @@
                               method="POST" role="form" th:action="@{/candidat/postuler/formation}"
                               th:object="${formation}">
                             <div class="form-group">
-                                <div class="col-sm-9">
+                                <div class="col-sm-12">
                                     <label class="validation-message" th:errors="*{etablissement}"
                                            th:if="${#fields.hasErrors('etablissement')}"></label>
                                     <input class="form-control" placeholder="Etablissement" th:field="*{etablissement}"
@@ -193,7 +197,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <div class="col-sm-9">
+                                <div class="col-sm-12">
                                     <label class="validation-message" th:errors="*{nomDiplome}"
                                            th:if="${#fields.hasErrors('nomDiplome')}"></label>
                                     <input class="form-control" placeholder="Nom diplome" th:field="*{nomDiplome}"
@@ -201,7 +205,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <div class="col-sm-9">
+                                <div class="col-sm-12">
                                     <label class="validation-message" th:errors="*{duree}"
                                            th:if="${#fields.hasErrors('duree')}"></label>
                                     <input class="form-control" placeholder="Durée Formation" th:field="*{duree}"
@@ -210,7 +214,7 @@
                             </div>
 
                             <div class="form-group">
-                                <div class="col-sm-9">
+                                <div class="col-sm-12">
                                     <button class="btn btn-primary btn-block" type="submit">Enregistrer</button>
                                 </div>
                             </div>
@@ -224,7 +228,7 @@
                               method="POST" role="form" th:action="@{/candidat/postuler/linguistiques}"
                               th:object="${connaissanceLinguistique}">
                             <div class="form-group">
-                                <div class="col-sm-9">
+                                <div class="col-sm-12">
                                     <label class="validation-message" th:errors="*{nomLangue}"
                                            th:if="${#fields.hasErrors('nomLangue')}"></label>
                                     <input class="form-control" placeholder="Nom Langue" th:field="*{nomLangue}"
@@ -232,7 +236,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <div class="col-sm-9">
+                                <div class="col-sm-12">
                                     <label class="validation-message" th:errors="*{niveauLangue}"
                                            th:if="${#fields.hasErrors('niveauLangue')}"></label>
                                     <input class="form-control" placeholder="Niveau" th:field="*{niveauLangue}"
@@ -241,7 +245,7 @@
                             </div>
 
                             <div class="form-group">
-                                <div class="col-sm-9">
+                                <div class="col-sm-12">
                                     <button class="btn btn-primary btn-block" type="submit">Enregistrer</button>
                                 </div>
                             </div>
@@ -283,5 +287,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
+<script src="../static/js/utils.js" th:src="@{/js/utils.js}"></script>
 </body>
 </html>
