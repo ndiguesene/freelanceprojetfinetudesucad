@@ -45,7 +45,8 @@
                             class="fas fa-edit"></i>
                         <span th:text="${offr.getPoste()}"></span> / <span th:text="${offr.getRegion()}"></span>
                     </a>
-                    <a href="/recruteur/supprimerOffre" th:href="@{/recruteur/supprimerOffre(offre=${offr.id})}" onclick="confirm('Etes - vous sure de supprimer cet offre.')">
+                    <!--                    <a href="/recruteur/supprimerOffre" th:href="@{/recruteur/supprimerOffre(offre=${offr.id})}"-->
+                    <a th:onclick="'javascript:supprimerOffre(' + ${offr.id} + ', \'/recruteur/supprimerOffre?offre=\');'">
                         <i class="fas fa-trash-restore float-right" style="color: red;"></i>
                     </a>
                 </li>
@@ -123,7 +124,7 @@
         </div>
     </div>
 </div>
-<div th:insert="layout/footer :: footer">&copy; 2016 The Static Templates</div>
+<div th:insert="layout/footer :: footer">&copy; 2020 Aplication de recrutement</div>
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
@@ -134,5 +135,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
+<script src="../static/js/utils.js" th:src="@{/js/utils.js}"></script>
 </body>
 </html>

@@ -1,6 +1,5 @@
 package com.memoire.projetfinetudes;
 
-import com.memoire.projetfinetudes.models.Recruteur;
 import com.memoire.projetfinetudes.models.Role;
 import com.memoire.projetfinetudes.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;

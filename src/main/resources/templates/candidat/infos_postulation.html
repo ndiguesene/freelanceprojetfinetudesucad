@@ -40,8 +40,11 @@
     <div class="card" th:if="${postulations.size() != 0}">
         <ul th:field="*{postulations}" class="list-group list-group-flush">
             <li class="list-group-item" th:each="postulation: ${postulations}" th:value="${postulation.id}">
-                <a href="/candidat/infos_postulation" th:href="@{/candidat/postulation/annulerPostulation(postulation=${postulation.id})}"
-                   class="btn btn-danger float-right">Annuler</a>
+                <a th:onclick="'javascript:supprimerOffre(' + ${postulation.id} + ', \'/candidat/postulation/annulerPostulation?postulation=\');'"
+                   class="btn btn-sm-danger float-right">Annuler</a>
+               <!-- <a href="/candidat/infos_postulation" th:href="@{/candidat/postulation/annulerPostulation(postulation=${postulation.id})}"
+                   class="btn btn-danger float-right">Annuler</a>-->
+
                 <div>Région : <span th:text="${postulation.offreEmploi.getRegion()}"></span></div>
                 <div>Poste : <span th:text="${postulation.offreEmploi.getPoste()}"></span></div>
                 <div>Type Offre : <span th:text="${postulation.offreEmploi.getTypeOffre()}"></span></div>
@@ -83,5 +86,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
+<script src="../static/js/utils.js" th:src="@{/js/utils.js}"></script>
 </body>
 </html>

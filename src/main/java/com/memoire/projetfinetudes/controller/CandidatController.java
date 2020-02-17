@@ -100,38 +100,6 @@ public class CandidatController {
         }
     }
 
-    @GetMapping(value = "/recruteur/editerOffre")
-    public String modifierOffre(Model model, HttpServletRequest request) {
-        Long offreId = 0L;
-        if (request.getParameter("offre") != null && !request.getParameter("offre").isEmpty()) {
-            offreId = Long.parseLong(request.getParameter("offre"));
-        }
-        OffreEmploi offre = offreService.findOffreById(offreId).orElse(null);
-        model.addAttribute("offre", offre);
-        model.addAttribute("postes", Utils.getPoste());
-        model.addAttribute("typeOffres", Utils.getTypeOffre());
-
-        return "/recruteur/editerOffre";
-    }
-
-    @PostMapping(value = "/recruteur/editerOffre/{id}")
-    public String modifierOffrePost(OffreEmploi offre, @PathVariable String id) {
-        Optional<OffreEmploi> of = offreService.findOffreById(Long.parseLong(id));
-        if (of.isPresent()) {
-            OffreEmploi o = of.orElse(null);
-
-            o.setPoste(offre.getPoste());
-            o.setConnaissanceTechnique(offre.getConnaissanceTechnique());
-            o.setDescription(offre.getDescription());
-            o.setTypeOffre(offre.getTypeOffre());
-            o.setRegion(offre.getRegion());
-            o.setQualiteRequise(offre.getQualiteRequise());
-
-            offreService.saveOffreEmploi(o);
-        }
-        return "redirect:/recruteur/postuler_offre";
-    }
-
     public User getCurrentUser() {
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         String userName = loggedInUser.getName();
@@ -175,12 +143,13 @@ public class CandidatController {
             model.addAttribute("connaissanceLinguistique", connaissanceLinguistique);
             model.addAttribute("cv", cv.orElse(new Cv()));
 
-            LettreMotivation lettreMotivation = lettreMotivationService.findLettreMotivationByUserId(id).orElse(null);
+            LettreMotivation lettreMotivation = lettreMotivationService.findLettreMotivationByUserId(id).orElse(new LettreMotivation());
             model.addAttribute("lettreMotivation", lettreMotivation);
 
             model.addAttribute("experienceProfessionnelles", experienceProfessionnelles);
             model.addAttribute("formations", formations);
             model.addAttribute("connaissanceLinguistiques", connaissanceLinguistiques);
+
             List<String> secteurActivites = Utils.getSecteurActivite();
             List<String> postes = Utils.getPoste();
             model.addAttribute("secteurActivites", secteurActivites);

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -38,16 +39,50 @@ public class RecruteurController {
 
     @GetMapping(value = "/recruteur/postuler_offre")
     public String consulterOffres(final Model model) {
-        model.addAttribute("currentUser", getCurrentUser());
-        model.addAttribute("offre", offreEmploi);
-        List<OffreEmploi> offres = this.currentUser == null ? this.offreService.getOffresByUser(getCurrentUser().getId()) : this.offreService.getOffresByUser(this.currentUser.getId());
-        List<String> postes = Utils.getPoste();
-        List<String> typeOffres = Utils.getTypeOffre();
-        model.addAttribute("offres", offres);
-        model.addAttribute("postes", postes);
-        model.addAttribute("typeOffres", typeOffres);
-
+        try {
+            model.addAttribute("currentUser", getCurrentUser());
+            model.addAttribute("offre", offreEmploi);
+            List<OffreEmploi> offres = this.currentUser == null ? this.offreService.getOffresByUser(getCurrentUser().getId()) : this.offreService.getOffresByUser(this.currentUser.getId());
+            List<String> postes = Utils.getPoste();
+            List<String> typeOffres = Utils.getTypeOffre();
+            model.addAttribute("offres", offres);
+            model.addAttribute("postes", postes);
+            model.addAttribute("typeOffres", typeOffres);
+        } catch (Exception e) {
+            return "redirect:/login";
+        }
         return "recruteur/postuler_offre";
+    }
+    @GetMapping(value = "/recruteur/editerOffre")
+    public String modifierOffre(Model model, HttpServletRequest request) {
+        Long offreId = 0L;
+        if (request.getParameter("offre") != null && !request.getParameter("offre").isEmpty()) {
+            offreId = Long.parseLong(request.getParameter("offre"));
+        }
+        OffreEmploi offre = offreService.findOffreById(offreId).orElse(null);
+        model.addAttribute("offre", offre);
+        model.addAttribute("postes", Utils.getPoste());
+        model.addAttribute("typeOffres", Utils.getTypeOffre());
+
+        return "/recruteur/editerOffre";
+    }
+
+    @PostMapping(value = "/recruteur/editerOffre/{id}")
+    public String modifierOffrePost(OffreEmploi offre, @PathVariable String id) {
+        Optional<OffreEmploi> of = offreService.findOffreById(Long.parseLong(id));
+        if (of.isPresent()) {
+            OffreEmploi o = of.orElse(null);
+
+            o.setPoste(offre.getPoste());
+            o.setConnaissanceTechnique(offre.getConnaissanceTechnique());
+            o.setDescription(offre.getDescription());
+            o.setTypeOffre(offre.getTypeOffre());
+            o.setRegion(offre.getRegion());
+            o.setQualiteRequise(offre.getQualiteRequise());
+
+            offreService.saveOffreEmploi(o);
+        }
+        return "redirect:/recruteur/postuler_offre";
     }
 
     @PostMapping(value = "/recruteur/offre")
