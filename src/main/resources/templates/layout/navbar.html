@@ -11,13 +11,13 @@
                 <a class="py-2 d-none d-md-inline-block" href="/candidat/consulter_offre" th:action="@{/candidat/consulter_offre}" sec:authorize="hasAnyRole('ROLE_CANDIDAT')">Offres</a>
                 <a class="py-2 d-none d-md-inline-block" href="/candidat/deposer_cv" th:action="@{/candidat/deposer_cv}" sec:authorize="hasAnyRole('ROLE_CANDIDAT')">Deposer CV</a>
                 <a class="py-2 d-none d-md-inline-block" href="/candidat/infos_postulation" th:action="@{/candidat/infos_postulation}" sec:authorize="hasAnyRole('ROLE_CANDIDAT')">Postulations</a>
-                <a class="py-2 d-none d-md-inline-block" href="/candidat/mon_profil" th:action="@{/candidat/mon_profil}" sec:authorize="hasAnyRole('ROLE_CANDIDAT')">Mon Profil</a>
-                <a class="py-2 d-none d-md-inline-block" href="/candidat/mon_profil" th:action="@{/candidat/mon_profil}" sec:authorize="hasAnyRole('ROLE_RECRUTEUR')">Mon Profil</a>
-                <a class="py-2 d-none d-md-inline-block" href="/candidat/mon_profil" th:action="@{/candidat/mon_profil}" sec:authorize="hasAnyRole('ROLE_ADMIN')">Mon Profil</a>
                 <a class="py-2 d-none d-md-inline-block" href="/recruteur/consulter_candidature" th:href="@{/recruteur/consulter_candidatures}" sec:authorize="hasAnyRole('ROLE_RECRUTEUR')">Candidatures</a>
                 <a class="py-2 d-none d-md-inline-block" href="/recruteur/postuler_offre" th:action="@{/recruteur/postuler_offre}" sec:authorize="hasAnyRole('ROLE_RECRUTEUR')">Offres</a>
                 <a class="py-2 d-none d-md-inline-block" href="/employe/" sec:authorize="hasAnyRole('ROLE_EMPLOYE')">Employe</a>
                 <a class="py-2 d-none d-md-inline-block" href="/admin/users" sec:authorize="hasAnyRole('ROLE_ADMIN')">Utilisateurs</a>
+                <a class="py-2 d-none d-md-inline-block" href="/candidat/mon_profil" th:action="@{/candidat/mon_profil}" sec:authorize="hasAnyRole('ROLE_ADMIN')">Mon Profil</a>
+                <a class="py-2 d-none d-md-inline-block" href="/candidat/mon_profil" th:action="@{/candidat/mon_profil}" sec:authorize="hasAnyRole('ROLE_RECRUTEUR')">Mon Profil</a>
+                <a class="py-2 d-none d-md-inline-block" href="/candidat/mon_profil" th:action="@{/candidat/mon_profil}" sec:authorize="hasAnyRole('ROLE_CANDIDAT')">Mon Profil</a>
                 <a class="py-2 d-none d-md-inline-block" href="/logout" th:action="@{/logout}"><span sec:authentication="name"></span> - Déconnexion</a>
             </div>
         </nav>

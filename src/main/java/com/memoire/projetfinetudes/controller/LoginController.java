@@ -4,6 +4,7 @@ import com.memoire.projetfinetudes.models.Role;
 import com.memoire.projetfinetudes.models.User;
 import com.memoire.projetfinetudes.services.RoleService;
 import com.memoire.projetfinetudes.services.UserService;
+import com.memoire.projetfinetudes.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
@@ -38,7 +40,7 @@ public class LoginController {
         return "/login";
     }
 
-    @RequestMapping(value = {"/", "/login"}, method = RequestMethod.POST)
+    @PostMapping(value = {"/", "/login"})
     public String loginPost() {
         return "home";
     }
@@ -50,6 +52,13 @@ public class LoginController {
         model.addAttribute("userName", "Welcome " + user.getUserName() + "/" + user.getEmail() + " " + user.getLastName() + " (" + user.getRoles() + ")");
         model.addAttribute("adminMessage", "Content Available Only for Users with Admin Role");
         model.addAttribute("user", user);
+        if (user.getRoles().parallelStream().anyMatch(p -> p.getRole().equals("ROLE_CANDIDAT"))) {
+            return "redirect:/candidat/consulter_offre";
+        } else if (user.getRoles().parallelStream().anyMatch(p -> p.getRole().equals("ROLE_RECRUTEUR"))) {
+            return "redirect:/recruteur/consulter_candidatures";
+        } else if (user.getRoles().parallelStream().anyMatch(p -> p.getRole().equals("ROLE_ADMIN"))) {
+            return "redirect:/admin/users";
+        }
         return "home";
     }
 

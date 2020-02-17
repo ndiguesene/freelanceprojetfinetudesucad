@@ -37,7 +37,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-4 card" th:if="${postulations != null}">
-            <h2>Candidatures</h2>
+            <h4>Candidatures</h4>
             <ul class="list-group list-group-flush" th:field="*{postulations}">
                 <li class="list-group-item" th:each="post: ${postulations}" th:value="${post.id}">
                     <div><b><u>Offres</u></b> :<span th:text="${post.offreEmploi.getPoste()}"></span> / <span
@@ -53,7 +53,7 @@
             </ul>
         </div>
         <div class="col-md-4" th:if="${postulations == null}">
-            <h2>Candidatures</h2>
+            <h4>Candidatures</h4>
             <div class="alert alert-warning alert-dismissible fade show" role="alert" th:if="${postulation == null}">
                 <strong><i class="far fa-frown"></i> </strong> Pas encore d'offre à ce jour.
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -63,7 +63,7 @@
         </div>
 
         <div class="col-md-8">
-            <h2>Détails sur le candidat</h2>
+            <h4>Détails sur le candidat</h4>
             <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${postulation == null}">
                 <strong>Hello !!! </strong> Veuillez sélectionner un candidat pour voir son CV et Lettre de motivation.
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -72,20 +72,20 @@
             </div>
             <div class="card" th:if="${postulation != null}">
                 <div class="card-body">
-                    <h5 class="list-group-item">
+                    <h6 class="list-group-item">
                         <i class='far fa-address-card'></i> <span th:text="${postulation.cv.user.name}"></span>
                         <span th:text="${postulation.getCv().getUser().lastName}"></span> -
                         <span th:text="${postulation.getCv().getUser().titre_fonction}"></span>
-                    </h5>
-                    <h5 class="list-group-item">
+                    </h6>
+                    <h6 class="list-group-item">
                         <i class="fas fa-mobile-alt"></i> Email: <span
                             th:text="${postulation.getCv().getUser().getEmail()}"></span> -
                         Mobile : <span th:text="${postulation.getCv().getUser().getTelephone()}"></span>
-                    </h5>
-                    <h5 class="list-group-item">
+                    </h6>
+                    <h6 class="list-group-item">
                         <i class="fas fa-city"></i> <span th:text="${postulation.getCv().getUser().getPays()}"></span> -
                         <span th:text="${postulation.getCv().getUser().getVille()}"></span>
-                    </h5>
+                    </h6>
                 </div>
             </div>
             <div id="accordion" th:if="${postulation != null}">
