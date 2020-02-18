@@ -164,20 +164,22 @@
                             </div>
                             <div class="col-md-5">
                                 <h5 class="card-header">Expériences</h5>
-                                <div
-                                        th:field="*{experienceProfessionnelles}"
-                                        th:each="exp: ${experienceProfessionnelles}"
-                                        th:value="${exp.id}">
-                                    <a href="/candidat/deposer_cv" role="button"
-                                       th:href="@{/candidat/deposer_cv(experience=${exp.id})}">
-                                        <i class="far fa-edit"></i> <span th:text="${exp.nomEntreprise}"></span> -
-                                        <span th:text="${exp.poste}"></span>
-                                    </a>
-                                    <a href="#"
-                                       th:onclick="'javascript:supprimerOffre(' + ${exp.id} + ', \'/candidat/experience/supprimer?experience=\');'">
-                                        <i class="fas fa-trash"></i>
-                                    </a>
-                                </div>
+                                <ul class="list-group list-group-flush"
+                                    th:field="*{experienceProfessionnelles}"
+                                    th:each="exp: ${experienceProfessionnelles}"
+                                    th:value="${exp.id}">
+                                    <li class="list-group-item">
+                                        <a href="/candidat/deposer_cv" role="button"
+                                           th:href="@{/candidat/deposer_cv(experience=${exp.id})}">
+                                            <i class="far fa-edit"></i> <span th:text="${exp.nomEntreprise}"></span> -
+                                            <span th:text="${exp.poste}"></span>
+                                        </a>
+                                        <a href="#" class="float-right" style="color: red;"
+                                           th:onclick="'javascript:supprimerOffre(' + ${exp.id} + ', \'/candidat/experience/supprimer?experience=\');'">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
