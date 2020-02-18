@@ -2,7 +2,6 @@ package com.memoire.projetfinetudes.controller;
 
 import com.memoire.projetfinetudes.models.Candidat;
 import com.memoire.projetfinetudes.models.Recruteur;
-import com.memoire.projetfinetudes.models.Role;
 import com.memoire.projetfinetudes.models.User;
 import com.memoire.projetfinetudes.services.CandidatService;
 import com.memoire.projetfinetudes.services.RecruteurService;
@@ -16,13 +15,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class LoginController {
@@ -32,8 +28,6 @@ public class LoginController {
     private RecruteurService recruteurService;
     @Autowired
     private CandidatService candidatService;
-    @Autowired
-    private RoleService roleService;
 
     @GetMapping(value = {"/", "/login"})
     public String login(Model model, HttpServletRequest request) {
@@ -53,6 +47,7 @@ public class LoginController {
     public String home(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserName(auth.getName());
+
         model.addAttribute("userName", "Welcome " + user.getUserName() + "/" + user.getEmail() + " " + user.getLastName() + " (" + user.getRoles() + ")");
         model.addAttribute("adminMessage", "Content Available Only for Users with Admin Role");
         model.addAttribute("user", user);
@@ -66,44 +61,31 @@ public class LoginController {
         return "/login";
     }
 
-    @GetMapping(value = "/registration")
-    public ModelAndView registration() {
-        ModelAndView modelAndView = new ModelAndView();
-        User user = new User();
-        modelAndView.addObject("user", user);
-        List<Role> roleAll = roleService.getRoles().stream().filter(role -> !role.getRole().equals("ROLE_ADMIN")).collect(Collectors.toList());
-        modelAndView.addObject("roleAll", roleAll);
-        modelAndView.setViewName("registration");
-        return modelAndView;
+    @GetMapping(value = "/registration/candidat")
+    public String registrationCandidat(Model model) {
+        Candidat candidat = new Candidat();
+        model.addAttribute("candidat", candidat);
+        return "registrationCandidat";
+    }
+    @GetMapping(value = "/registration/recruteur")
+    public String registrationRecruteur(Model model) {
+        Recruteur recruteur = new Recruteur();
+        model.addAttribute("recruteur", recruteur);
+        return "registrationRecruteur";
     }
 
     @PostMapping(value = "/registration/candidat")
-    public ModelAndView registrationCandidat(@Valid Candidat candidat, Model model, BindingResult bindingResult) {
-        ModelAndView modelAndView = new ModelAndView();
-        Candidat userExists = candidatService.findCandidatByUsername(candidat.getUserName());
+    public String registrationCandidat(@Valid Candidat candidat, Model model, BindingResult bindingResult) {
+        System.out.println(candidat.toString());
+        User userExists = userService.findUserByUserName(candidat.getUserName());
+        if (userExists == null) {
+            userExists = userService.findUserByEmail(candidat.getEmail());
+        }
         if (userExists != null) {
             bindingResult.rejectValue("userName", "error.user", "There is already a user registered with the user name provided");
         }
         if (bindingResult.hasErrors()) {
-            List<Role> roleAll = roleService.getRoles();
-            modelAndView.addObject("roleAll", roleAll);
-            modelAndView.setViewName("registration");
-        } else {
-            userService.saveUser(candidat);
-            modelAndView.addObject("successMessage", "Votre compte a été créé avec success, Connectez - vous à votre nouveau compte.");
-            modelAndView.addObject("user", candidat);
-            List<Role> roleAll = roleService.getRoles();
-            modelAndView.addObject("roleAll", roleAll);
-            modelAndView.setViewName("login");
-        }
-        return modelAndView;
-    }
-
-    @PostMapping(value = "/registration/candidat")
-    public String registrationRecruteur(@Valid Candidat candidat, Model model, BindingResult bindingResult) {
-        Candidat userExists = candidatService.findCandidatByUsername(candidat.getUserName());
-        if (userExists != null) {
-            bindingResult.rejectValue("userName", "error.user", "There is already a user registered with the user name provided");
+            return "redirect:/registration/candidat";
         }
         candidatService.save(candidat);
         model.addAttribute("successMessage", "Votre compte a été créé avec success, Connectez - vous à votre nouveau compte.");
@@ -112,9 +94,15 @@ public class LoginController {
 
     @PostMapping(value = "/registration/recruteur")
     public String registrationRecruteur(@Valid Recruteur recruteur, Model model, BindingResult bindingResult) {
-        Recruteur userExists = recruteurService.findCandidatByUsername(recruteur.getUserName());
+        User userExists = userService.findUserByUserName(recruteur.getUserName());
+        if (userExists == null) {
+            userExists = userService.findUserByEmail(recruteur.getEmail());
+        }
         if (userExists != null) {
             bindingResult.rejectValue("userName", "error.user", "There is already a user registered with the user name provided");
+        }
+        if (bindingResult.hasErrors()) {
+            return "redirect:/registration/recruteur";
         }
         recruteurService.save(recruteur);
         model.addAttribute("successMessage", "Votre compte a été créé avec success, Connectez - vous à votre nouveau compte.");

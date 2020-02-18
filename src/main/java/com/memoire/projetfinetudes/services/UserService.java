@@ -51,11 +51,11 @@ public class UserService {
         user.setActive(true);
         Role userRole = roleRepository.findByRole(user.getRoles().iterator().next().getRole()).orElse(null);
         user.setRoles(new HashSet(Arrays.asList(userRole)));
-        return userRepository.saveAndFlush(user);
+        return (User) userRepository.saveAndFlush(user);
     }
     public User updatePasswordUser(User user) {
         user.setPassword(user.getPassword());
-        return userRepository.saveAndFlush(user);
+        return (User) userRepository.saveAndFlush(user);
     }
 
 }
