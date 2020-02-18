@@ -5,7 +5,6 @@ import com.memoire.projetfinetudes.models.Recruteur;
 import com.memoire.projetfinetudes.models.User;
 import com.memoire.projetfinetudes.services.CandidatService;
 import com.memoire.projetfinetudes.services.RecruteurService;
-import com.memoire.projetfinetudes.services.RoleService;
 import com.memoire.projetfinetudes.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -48,9 +47,9 @@ public class LoginController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserName(auth.getName());
 
-        model.addAttribute("userName", "Welcome " + user.getUserName() + "/" + user.getEmail() + " " + user.getLastName() + " (" + user.getRoles() + ")");
+        /*model.addAttribute("userName", "Welcome " + user.getUserName() + "/" + user.getEmail() + " " + user.getLastName() + " (" + user.getRoles() + ")");
         model.addAttribute("adminMessage", "Content Available Only for Users with Admin Role");
-        model.addAttribute("user", user);
+        model.addAttribute("user", user);*/
         if (user.getRoles().parallelStream().anyMatch(p -> p.getRole().equals("ROLE_CANDIDAT"))) {
             return "redirect:/candidat/consulter_offre";
         } else if (user.getRoles().parallelStream().anyMatch(p -> p.getRole().equals("ROLE_RECRUTEUR"))) {
@@ -76,7 +75,6 @@ public class LoginController {
 
     @PostMapping(value = "/registration/candidat")
     public String registrationCandidat(@Valid Candidat candidat, Model model, BindingResult bindingResult) {
-        System.out.println(candidat.toString());
         User userExists = userService.findUserByUserName(candidat.getUserName());
         if (userExists == null) {
             userExists = userService.findUserByEmail(candidat.getEmail());

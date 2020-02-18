@@ -152,10 +152,10 @@
                                class="form-control"/>
                     </div>
                     <div align="center" th:if="${param.error}">
-                        <p style="font-size: 20; color: #FF1C19;">Nom utilisateur ou mot de passse incorrect.</p>
+                        <p style="font-size: 20px; color: #FF1C19;">Nom utilisateur ou mot de passse incorrect.</p>
                     </div>
-                    <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Connexion" type="Submit"
-                            th:text="Login"></button>
+                    <button class="btn btn-lg btn-primary btn-block" name="Submit" type="Submit"
+                            th:text="Login"><i class="fas fa-sign-in-alt"></i> Connexion</button>
                     <!--<button type="submit" class="btn btn-black">Connexion</button>
                     <button type="submit" class="btn btn-secondary">Inscription</button>-->
                 </form>
