@@ -65,6 +65,17 @@
                 <div class="tab-content col-md-10" id="v-pills-tabContent">
                     <div aria-labelledby="v-pills-home-tab" class="card tab-pane fade show active" id="v-pills-home"
                          role="tabpanel">
+                        <div class="row" id="message_objectif" th:if="${insertObjectifOk == 'insertObjectifOk'}">
+                            <div class="col-md-12">
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <strong><i class="far fa-smile"></i> </strong> Objectif ajouté a votre CV avec
+                                    succes.
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <h5 class="card-header">Objectifs</h5>
@@ -90,6 +101,17 @@
                     </div>
                     <div aria-labelledby="v-pills-experience-tab" class="card tab-pane fade" id="v-pills-experience"
                          role="tabpanel">
+                        <div class="row" id="message_exper" th:if="${insertExperOk == 'insertExperOk'}">
+                            <div class="col-md-12">
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <strong><i class="far fa-smile"></i> </strong> Expérience ajouté à votre CV avec
+                                    succes.
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-md-7">
                                 <h5 class="card-header"><i class="fas fa-plus"></i>Ajout Expérience</h5>
@@ -183,6 +205,17 @@
                     </div>
                     <div aria-labelledby="v-pills-formation-tab" class="card tab-pane fade" id="v-pills-formation"
                          role="tabpanel">
+                        <div class="row" id="message_forma" th:if="${insertFormationOk == 'insertFormationOk'}">
+                            <div class="col-md-12">
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <strong><i class="far fa-smile"></i> </strong> Formation ajoutée à votre CV avec
+                                    succes.
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                         <h5 class="card-header">Formations</h5>
                         <br>
                         <form action="#" autocomplete="off" class="form-horizontal"
@@ -222,6 +255,17 @@
                     </div>
                     <div aria-labelledby="v-pills-linguistique-tab" class="card tab-pane fade" id="v-pills-linguistique"
                          role="tabpanel">
+                        <div class="row" id="message_lingui" th:if="${insertLinguisOk == 'insertLinguisOk'}">
+                            <div class="col-md-12">
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <strong><i class="far fa-smile"></i> </strong> Langue ajoutée à votre CV avec
+                                    succes.
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                         <h5 class="card-header">Linguistiques</h5>
                         <br>
                         <form action="#" autocomplete="off" class="form-horizontal"
@@ -288,5 +332,16 @@
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
 <script src="../static/js/utils.js" th:src="@{/js/utils.js}"></script>
+<!--<script type="text/javascript">
+    $(document).ready(function(){
+        var myVar = setTimeout(function() {
+            message_objectif.style.display = 'none';
+            message_lingui.style.display = 'none';
+            message_exper.style.display = 'none';
+            message_forma.style.display = 'none';
+        }, 5000);
+        // clearTimeout(myVar);
+    });
+</script>-->
 </body>
 </html>

@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -46,10 +47,6 @@ public class LoginController {
     public String home(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserName(auth.getName());
-
-        /*model.addAttribute("userName", "Welcome " + user.getUserName() + "/" + user.getEmail() + " " + user.getLastName() + " (" + user.getRoles() + ")");
-        model.addAttribute("adminMessage", "Content Available Only for Users with Admin Role");
-        model.addAttribute("user", user);*/
         if (user.getRoles().parallelStream().anyMatch(p -> p.getRole().equals("ROLE_CANDIDAT"))) {
             return "redirect:/candidat/consulter_offre";
         } else if (user.getRoles().parallelStream().anyMatch(p -> p.getRole().equals("ROLE_RECRUTEUR"))) {
@@ -74,15 +71,18 @@ public class LoginController {
     }
 
     @PostMapping(value = "/registration/candidat")
-    public String registrationCandidat(@Valid Candidat candidat, Model model, BindingResult bindingResult) {
+    public String registrationCandidat(@Valid Candidat candidat, Model model, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         User userExists = userService.findUserByUserName(candidat.getUserName());
+        String errorValue = "username";
         if (userExists == null) {
             userExists = userService.findUserByEmail(candidat.getEmail());
+            errorValue = "Email";
         }
         if (userExists != null) {
             bindingResult.rejectValue("userName", "error.user", "There is already a user registered with the user name provided");
         }
         if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("usernameExist", "username existe déjà.");
             return "redirect:/registration/candidat";
         }
         candidatService.save(candidat);
@@ -91,15 +91,18 @@ public class LoginController {
     }
 
     @PostMapping(value = "/registration/recruteur")
-    public String registrationRecruteur(@Valid Recruteur recruteur, Model model, BindingResult bindingResult) {
+    public String registrationRecruteur(@Valid Recruteur recruteur, Model model, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         User userExists = userService.findUserByUserName(recruteur.getUserName());
+        String errorValue = "username";
         if (userExists == null) {
             userExists = userService.findUserByEmail(recruteur.getEmail());
+            errorValue = "Email";
         }
         if (userExists != null) {
             bindingResult.rejectValue("userName", "error.user", "There is already a user registered with the user name provided");
         }
         if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("usernameExist", errorValue + " existe déjà.");
             return "redirect:/registration/recruteur";
         }
         recruteurService.save(recruteur);
