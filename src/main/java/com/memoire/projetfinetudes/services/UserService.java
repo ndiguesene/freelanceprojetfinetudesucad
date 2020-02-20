@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class UserService {
     private UserRepository userRepository;
     private RoleRepository roleRepository;
@@ -37,7 +38,6 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    @Transactional
     public void deleteById(Long id) {
         userRepository.deleteById(id);
     }

@@ -2,17 +2,18 @@ package com.memoire.projetfinetudes.services;
 
 import com.memoire.projetfinetudes.models.Recruteur;
 import com.memoire.projetfinetudes.models.Role;
-import com.memoire.projetfinetudes.models.User;
 import com.memoire.projetfinetudes.repositories.RecruteurRepository;
 import com.memoire.projetfinetudes.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.HashSet;
 
 @Service
+@Transactional
 public class RecruteurService {
     @Autowired
     private RecruteurRepository recruteurRepository;
