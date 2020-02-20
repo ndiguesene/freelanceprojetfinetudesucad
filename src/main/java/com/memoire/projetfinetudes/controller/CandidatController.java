@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -154,6 +155,7 @@ public class CandidatController {
             model.addAttribute("secteurActivites", secteurActivites);
             model.addAttribute("postes", postes);
 
+
             return "/candidat/deposer_cv";
         } catch (Exception e) {
             return "/login";
@@ -161,7 +163,7 @@ public class CandidatController {
     }
 
     @PostMapping(value = "/candidat/postuler/resume")
-    public String deposerCvResume(@Valid Cv cv) {
+    public String deposerCvResume(@Valid Cv cv, RedirectAttributes redirectAttributes) {
         try {
             Cv cvUpdate = cvService.findCvByUserId(getCurrentUser().getId()).orElse(new Cv());
 
@@ -170,6 +172,7 @@ public class CandidatController {
             cvUpdate.setUser(getCurrentUser());
 
             cvService.saveCv(cvUpdate);
+            redirectAttributes.addFlashAttribute("insertObjectifOk", "insertObjectifOk");
             return "redirect:/candidat/deposer_cv";
         } catch (Exception e) {
             return "/login";
@@ -177,7 +180,7 @@ public class CandidatController {
     }
 
     @PostMapping(value = "/candidat/postuler/experience")
-    public String deposerCvExperience(@Valid ExperienceProfessionnelle experienceProfessionnelle) {
+    public String deposerCvExperience(@Valid ExperienceProfessionnelle experienceProfessionnelle, RedirectAttributes redirectAttributes) {
         try {
             Cv cvUpdate = cvService.findCvByUserId(getCurrentUser().getId()).orElse(new Cv());
             experienceProfessionnelle.setUser(getCurrentUser());
@@ -191,6 +194,7 @@ public class CandidatController {
             cvUpdate.setExperienceProfessionnelle(experList);
 
             cvService.saveCv(cvUpdate);
+            redirectAttributes.addFlashAttribute("insertExperOk", "insertExperOk");
             return "redirect:/candidat/deposer_cv";
         } catch (Exception z) {
             return "/login";
@@ -198,7 +202,7 @@ public class CandidatController {
     }
 
     @PostMapping(value = "/candidat/postuler/formation")
-    public String deposerCvFormation(@Valid Formation formation) {
+    public String deposerCvFormation(@Valid Formation formation, RedirectAttributes redirectAttributes) {
         Cv cvUpdate = cvService.findCvByUserId(getCurrentUser().getId()).orElse(new Cv());
         formation.setUser(getCurrentUser());
         List<Formation> formaList = cvUpdate.getFormation();
@@ -206,11 +210,12 @@ public class CandidatController {
         cvUpdate.setFormation(formaList);
 
         cvService.saveCv(cvUpdate);
+        redirectAttributes.addFlashAttribute("insertFormationOk", "insertFormationOk");
         return "redirect:/candidat/deposer_cv";
     }
 
     @PostMapping(value = "/candidat/postuler/linguistiques")
-    public String deposerCvFormation(@Valid ConnaissanceLinguistique connaissanceLinguistique) {
+    public String deposerCvFormation(@Valid ConnaissanceLinguistique connaissanceLinguistique, RedirectAttributes redirectAttributes) {
         connaissanceLinguistique.setUser(getCurrentUser());
         Cv cvUpdate = cvService.findCvByUserId(getCurrentUser().getId()).orElse(new Cv());
         connaissanceLinguistique.setUser(getCurrentUser());
@@ -219,6 +224,7 @@ public class CandidatController {
         cvUpdate.setConnaissanceLinguistique(connaiList);
 
         cvService.saveCv(cvUpdate);
+        redirectAttributes.addFlashAttribute("insertLinguisOk", "insertLinguisOk");
         return "redirect:/candidat/deposer_cv";
     }
 
@@ -260,7 +266,18 @@ public class CandidatController {
     @GetMapping(value = "/candidat/infos_postulation")
     public String infosPostulation(Model model) {
         List<Postulation> postulations = postulationService.findPostulationsByUser_Id(getCurrentUser().getId());
+        if (postulations.size() == 0) {
+            postulations = new ArrayList<>();
+        }
         model.addAttribute("postulations", postulations);
+        /*int size = 0;
+        if (postulations.size() > 4){
+            size = 4;
+        } else {
+            size = postulations.size();
+        }
+        System.out.println(size);
+        model.addAttribute("size", size);*/
         return "/candidat/infos_postulation";
     }
 
@@ -292,7 +309,7 @@ public class CandidatController {
     }
 
     @PostMapping(value = "/candidat/modifypassword")
-    public String modifypassword(PasswordDTO user, Model model, RedirectAttributes redirectAttributes) {
+    public String modifypassword(PasswordDTO user, Model model) {
         User userFull = userService.findUserByUserName(getCurrentUser().getUserName());
         if ((user.getNewPassword().equals(user.getConfirmPassword())) && (bCryptPasswordEncoder.matches(user.getCurrentPassword(), userFull.getPassword()))) {
             userFull.setPassword(bCryptPasswordEncoder.encode(user.getNewPassword()));

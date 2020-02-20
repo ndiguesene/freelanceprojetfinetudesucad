@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class ExperienceProfessionnelleService {
     @Autowired
     private ExperienceRepository experienceRepository;
 
-    @Transactional
     public void deleteById(Long id) {
         experienceRepository.deleteById(id);
     }

@@ -37,33 +37,82 @@
     <br/>
     <h3 class="card-header">Liste offre postulé</h3>
     <br/>
-    <div class="card" th:if="${postulations.size() != 0}">
-        <ul th:field="*{postulations}" class="list-group list-group-flush">
-            <li class="list-group-item" th:each="postulation: ${postulations}" th:value="${postulation.id}">
-                <a href="#" th:onclick="'javascript:supprimerOffre(' + ${postulation.id} + ', \'/candidat/postulation/annulerPostulation?postulation=\');'"
+    <div class="row" th:if="${postulations.size() != 0}">
+        <div class="card col-sm-6" th:each="postulation: ${postulations}" th:value="${postulation.id}">
+            <div class="card-body">
+                <a href="#"
+                   th:onclick="'javascript:supprimerOffre(' + ${postulation.id} + ', \'/candidat/postulation/annulerPostulation?postulation=\');'"
                    class="btn btn-danger btn-sm active float-right">Annuler</a>
-               <!-- <a href="/candidat/infos_postulation" th:href="@{/candidat/postulation/annulerPostulation(postulation=${postulation.id})}"
-                   class="btn btn-danger float-right">Annuler</a>-->
-
+                <h5 class="card-title">
+                    Poste : <span th:text="${postulation.offreEmploi.getPoste()}"></span>
+                </h5>
                 <div>Région : <span th:text="${postulation.offreEmploi.getRegion()}"></span></div>
-                <div>Poste : <span th:text="${postulation.offreEmploi.getPoste()}"></span></div>
                 <div>Type Offre : <span th:text="${postulation.offreEmploi.getTypeOffre()}"></span></div>
                 <div>Description : <span th:text="${postulation.offreEmploi.getDescription()}"></span></div>
                 <div>
                     Recruteur :
                     <ul class="list-group list-group-flush">
-                        <li  class="list-group-item" th:if="${postulation.offreEmploi.getRecruteur() != null}">Pays / Ville : <span
+                        <li class="list-group-item" th:if="${postulation.offreEmploi.getRecruteur() != null}">
+                            Pays /
+                            Ville : <span
                                 th:text="${postulation.offreEmploi.getRecruteur().getPays()}"></span> - <span
                                 th:text="${postulation.offreEmploi.getRecruteur().getVille()}"></span></li>
-                        <li class="list-group-item" th:if="${postulation.offreEmploi.getRecruteur() != null}">Secteur d'activités : <span
-                                th:text="${postulation.offreEmploi.getRecruteur().getSecteurActivite()}"></span></li>
-                        <!--                        <li th:if="${postulation.offreEmploi.getRecruteur() != null}">Societé : <span th:text="${postulation.offreEmploi.getRecruteur().getSocieteDescription}"></span></li>-->
-                        <!--                        <li th:if="${postulation.offreEmploi.getRecruteur() != null}">URL Societé : <span th:text="${postulation.offreEmploi.getRecruteur().getSocieteUrl()}"></span></li>-->
+                        <li class="list-group-item" th:if="${postulation.offreEmploi.getRecruteur() != null}">
+                            Secteur
+                            d'activités : <span
+                                th:text="${postulation.offreEmploi.getRecruteur().getSecteurActivite()}"></span>
+                        </li>
+                        <li class="list-group-item" th:if="${postulation.offreEmploi.getRecruteur() != null}">
+                            Societé :
+                            <span
+                                    th:text="${postulation.offreEmploi.getRecruteur().getSocieteDescription()}"></span>
+                        </li>
+                        <li class="list-group-item" th:if="${postulation.offreEmploi.getRecruteur() != null}">
+                            URL
+                            Societé : <span
+                                th:text="${postulation.offreEmploi.getRecruteur().getSocieteUrl()}"></span></li>
                     </ul>
                 </div>
-            </li>
-        </ul>
+            </div>
+            <div class="card-footer">
+                <small class="text-muted" th:text="${postulation.datePostulation}"></small>
+            </div>
+        </div>
+        <!--   </div>-->
     </div>
+
+
+    <!-- <ul th:field="*{postulations}" class="list-group list-group-flush">
+         <li class="list-group-item" th:each="postulation: ${postulations}" th:value="${postulation.id}">
+             <a href="#"
+                th:onclick="'javascript:supprimerOffre(' + ${postulation.id} + ', \'/candidat/postulation/annulerPostulation?postulation=\');'"
+                class="btn btn-danger btn-sm active float-right">Annuler</a>
+             <div>Région : <span th:text="${postulation.offreEmploi.getRegion()}"></span></div>
+             <div>Poste : <span th:text="${postulation.offreEmploi.getPoste()}"></span></div>
+             <div>Type Offre : <span th:text="${postulation.offreEmploi.getTypeOffre()}"></span></div>
+             <div>Description : <span th:text="${postulation.offreEmploi.getDescription()}"></span></div>
+             <div>
+                 Recruteur :
+                 <ul class="list-group list-group-flush">
+                     <li class="list-group-item" th:if="${postulation.offreEmploi.getRecruteur() != null}">Pays /
+                         Ville : <span
+                                 th:text="${postulation.offreEmploi.getRecruteur().getPays()}"></span> - <span
+                                 th:text="${postulation.offreEmploi.getRecruteur().getVille()}"></span></li>
+                     <li class="list-group-item" th:if="${postulation.offreEmploi.getRecruteur() != null}">Secteur
+                         d'activités : <span
+                                 th:text="${postulation.offreEmploi.getRecruteur().getSecteurActivite()}"></span>
+                     </li>
+                     <li class="list-group-item" th:if="${postulation.offreEmploi.getRecruteur() != null}">Societé :
+                         <span
+                                 th:text="${postulation.offreEmploi.getRecruteur().getSocieteDescription()}"></span>
+                     </li>
+                     <li class="list-group-item" th:if="${postulation.offreEmploi.getRecruteur() != null}">URL
+                         Societé : <span
+                                 th:text="${postulation.offreEmploi.getRecruteur().getSocieteUrl()}"></span></li>
+                 </ul>
+             </div>
+         </li>
+     </ul>-->
 
     <div th:if="${postulations.size() == 0}">
         <div class="alert alert-primary" role="alert">

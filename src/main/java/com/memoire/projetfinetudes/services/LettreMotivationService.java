@@ -5,9 +5,11 @@ import com.memoire.projetfinetudes.repositories.LettreMotivationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class LettreMotivationService {
     @Autowired
     private LettreMotivationRepository lettreMotivationRepository;

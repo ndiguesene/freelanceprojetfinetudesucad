@@ -74,8 +74,8 @@
             <div class="card" th:if="${postulation != null}">
                 <div class="card-body">
                     <h6 class="list-group-item">
-                        <i class='far fa-address-card'></i> <span th:text="${postulation.cv.user.name}"></span>
-                        <span th:text="${postulation.getCv().getUser().lastName}"></span> -
+                        <i class='far fa-address-card text-capitalize'></i> <span th:text="${postulation.cv.user.name}"></span>
+                        <span class="text-uppercase" th:text="${postulation.getCv().getUser().lastName}"></span> -
                         <span th:text="${postulation.getCv().getUser().titre_fonction}"></span>
                     </h6>
                     <h6 class="list-group-item">

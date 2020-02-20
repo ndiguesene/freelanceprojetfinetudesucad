@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class PostulationService {
 
     @Autowired
@@ -18,7 +19,7 @@ public class PostulationService {
     public Postulation savePostulation(Postulation postulation) {
         return postulationRepository.saveAndFlush(postulation);
     }
-    @Transactional
+
     public void deleteByIdAndUserId(Long postulation, Long userId) {
         postulationRepository.deleteByIdAndUserId(postulation, userId);
     }

@@ -1,8 +1,10 @@
 package com.memoire.projetfinetudes.controller;
 
-import com.memoire.projetfinetudes.models.Role;
+import com.memoire.projetfinetudes.models.Candidat;
+import com.memoire.projetfinetudes.models.Recruteur;
 import com.memoire.projetfinetudes.models.User;
-import com.memoire.projetfinetudes.services.RoleService;
+import com.memoire.projetfinetudes.services.CandidatService;
+import com.memoire.projetfinetudes.services.RecruteurService;
 import com.memoire.projetfinetudes.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -12,22 +14,20 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class LoginController {
     @Autowired
     private UserService userService;
     @Autowired
-    private RoleService roleService;
+    private RecruteurService recruteurService;
+    @Autowired
+    private CandidatService candidatService;
 
     @GetMapping(value = {"/", "/login"})
     public String login(Model model, HttpServletRequest request) {
@@ -47,9 +47,6 @@ public class LoginController {
     public String home(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserName(auth.getName());
-        model.addAttribute("userName", "Welcome " + user.getUserName() + "/" + user.getEmail() + " " + user.getLastName() + " (" + user.getRoles() + ")");
-        model.addAttribute("adminMessage", "Content Available Only for Users with Admin Role");
-        model.addAttribute("user", user);
         if (user.getRoles().parallelStream().anyMatch(p -> p.getRole().equals("ROLE_CANDIDAT"))) {
             return "redirect:/candidat/consulter_offre";
         } else if (user.getRoles().parallelStream().anyMatch(p -> p.getRole().equals("ROLE_RECRUTEUR"))) {
@@ -60,39 +57,57 @@ public class LoginController {
         return "/login";
     }
 
-    @GetMapping(value = "/registration")
-    public ModelAndView registration() {
-        ModelAndView modelAndView = new ModelAndView();
-        User user = new User();
-        modelAndView.addObject("user", user);
-        List<Role> roleAll = roleService.getRoles().stream().filter(role -> !role.getRole().equals("ROLE_ADMIN")).collect(Collectors.toList());
-        modelAndView.addObject("roleAll", roleAll);
-        modelAndView.setViewName("registration");
-        return modelAndView;
+    @GetMapping(value = "/registration/candidat")
+    public String registrationCandidat(Model model) {
+        Candidat candidat = new Candidat();
+        model.addAttribute("candidat", candidat);
+        return "registrationCandidat";
+    }
+    @GetMapping(value = "/registration/recruteur")
+    public String registrationRecruteur(Model model) {
+        Recruteur recruteur = new Recruteur();
+        model.addAttribute("recruteur", recruteur);
+        return "registrationRecruteur";
     }
 
-    @PostMapping(value = "/registration")
-    public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
-        ModelAndView modelAndView = new ModelAndView();
-        User userExists = userService.findUserByUserName(user.getUserName());
+    @PostMapping(value = "/registration/candidat")
+    public String registrationCandidat(@Valid Candidat candidat, Model model, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        User userExists = userService.findUserByUserName(candidat.getUserName());
+        String errorValue = "username";
+        if (userExists == null) {
+            userExists = userService.findUserByEmail(candidat.getEmail());
+            errorValue = "Email";
+        }
         if (userExists != null) {
-            System.out.println("Error 1 " + user.toString());
             bindingResult.rejectValue("userName", "error.user", "There is already a user registered with the user name provided");
         }
         if (bindingResult.hasErrors()) {
-            List<Role> roleAll = roleService.getRoles();
-            modelAndView.addObject("roleAll", roleAll);
-            System.out.println("Error 2 " + user.toString());
-            modelAndView.setViewName("registration");
-        } else {
-            userService.saveUser(user);
-            modelAndView.addObject("successMessage", "Votre compte a été créé avec success, Connectez - vous à votre nouveau compte.");
-            modelAndView.addObject("user", user);
-            List<Role> roleAll = roleService.getRoles();
-            modelAndView.addObject("roleAll", roleAll);
-            modelAndView.setViewName("login");
+            redirectAttributes.addFlashAttribute("usernameExist", "username existe déjà.");
+            return "redirect:/registration/candidat";
         }
-        return modelAndView;
+        candidatService.save(candidat);
+        model.addAttribute("successMessage", "Votre compte a été créé avec success, Connectez - vous à votre nouveau compte.");
+        return "login";
+    }
+
+    @PostMapping(value = "/registration/recruteur")
+    public String registrationRecruteur(@Valid Recruteur recruteur, Model model, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        User userExists = userService.findUserByUserName(recruteur.getUserName());
+        String errorValue = "username";
+        if (userExists == null) {
+            userExists = userService.findUserByEmail(recruteur.getEmail());
+            errorValue = "Email";
+        }
+        if (userExists != null) {
+            bindingResult.rejectValue("userName", "error.user", "There is already a user registered with the user name provided");
+        }
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("usernameExist", errorValue + " existe déjà.");
+            return "redirect:/registration/recruteur";
+        }
+        recruteurService.save(recruteur);
+        model.addAttribute("successMessage", "Votre compte a été créé avec success, Connectez - vous à votre nouveau compte.");
+        return "login";
     }
 
     @GetMapping("/access-denied")

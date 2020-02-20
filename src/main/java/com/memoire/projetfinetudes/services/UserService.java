@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class UserService {
     private UserRepository userRepository;
     private RoleRepository roleRepository;
@@ -37,7 +38,6 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    @Transactional
     public void deleteById(Long id) {
         userRepository.deleteById(id);
     }
@@ -51,11 +51,11 @@ public class UserService {
         user.setActive(true);
         Role userRole = roleRepository.findByRole(user.getRoles().iterator().next().getRole()).orElse(null);
         user.setRoles(new HashSet(Arrays.asList(userRole)));
-        return userRepository.saveAndFlush(user);
+        return (User) userRepository.saveAndFlush(user);
     }
     public User updatePasswordUser(User user) {
         user.setPassword(user.getPassword());
-        return userRepository.saveAndFlush(user);
+        return (User) userRepository.saveAndFlush(user);
     }
 
 }
