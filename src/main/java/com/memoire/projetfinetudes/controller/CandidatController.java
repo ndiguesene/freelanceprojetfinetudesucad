@@ -52,22 +52,23 @@ public class CandidatController {
             User user = userService.findUserByUserName(userName);
             Optional<List<Postulation>> postulations = Optional.ofNullable(postulationService.findPostulationsByUser_Id(user.getId()));
 
-            List<OffreEmploi> offreEmplois = offreService.getAllOffres();
+            Optional<List<OffreEmploi>> offreEmplois = Optional.ofNullable(offreService.getAllOffres());
             List<OffreEmploi> offres = null;
 
             if (!postulations.isPresent()) {
-                offres = offreEmplois;
+                offres = offreEmplois.orElse(null);
             } else {
                 List<OffreEmploi> offrePostuler = postulations.orElse(null).stream()
                         .map(p -> p.getOffreEmploi())
                         .distinct().collect(Collectors.toList());
-                offres = offreEmplois.stream().filter(it -> !offrePostuler.contains(it)).collect(Collectors.toList());
+                offres = offreEmplois.orElse(null).stream().filter(it -> !offrePostuler.contains(it)).collect(Collectors.toList());
             }
             model.addAttribute("offres", offres);
             model.addAttribute("currentUser", user);
             model.addAttribute("successMessage", "");
             return "candidat/consulter_offre";
         } catch (Exception e) {
+            e.printStackTrace();
             return "/login";
         }
     }

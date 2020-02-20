@@ -263,17 +263,17 @@
                     </div>
                     <div class="form-group">
                         <div class="col-sm-12">
-                            <input type="text" th:field="*{societeDescription}" placeholder="Description Societe"
+                            <input type="text" th:field="*{societeUrl}" placeholder="URL Societe"
                                    class="form-control"/> <label
-                                th:if="${#fields.hasErrors('societeDescription')}" th:errors="*{societeDescription}"
+                                th:if="${#fields.hasErrors('societeUrl')}" th:errors="*{societeUrl}"
                                 class="validation-message"></label>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-12">
-                            <input type="text" th:field="*{societeUrl}" placeholder="URL Societe"
-                                   class="form-control"/> <label
-                                th:if="${#fields.hasErrors('societeUrl')}" th:errors="*{societeUrl}"
+                            <textarea  th:field="*{societeDescription}" placeholder="Description Societe"
+                                   class="form-control" rows="5" maxlength="1000"/> <label
+                                th:if="${#fields.hasErrors('societeDescription')}" th:errors="*{societeDescription}"
                                 class="validation-message"></label>
                         </div>
                     </div>
