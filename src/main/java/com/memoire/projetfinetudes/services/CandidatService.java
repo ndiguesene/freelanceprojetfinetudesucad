@@ -20,7 +20,7 @@ public class CandidatService {
     @Autowired
     private RoleRepository roleRepository;
     @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    public BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public Candidat findCandidatByUsername(String username) {
         return candidatRepository.findCandidatByUserName(username);

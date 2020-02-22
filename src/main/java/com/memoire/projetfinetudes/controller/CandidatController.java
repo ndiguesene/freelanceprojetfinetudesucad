@@ -156,7 +156,6 @@ public class CandidatController {
             model.addAttribute("secteurActivites", secteurActivites);
             model.addAttribute("postes", postes);
 
-
             return "/candidat/deposer_cv";
         } catch (Exception e) {
             return "/login";
@@ -271,14 +270,6 @@ public class CandidatController {
             postulations = new ArrayList<>();
         }
         model.addAttribute("postulations", postulations);
-        /*int size = 0;
-        if (postulations.size() > 4){
-            size = 4;
-        } else {
-            size = postulations.size();
-        }
-        System.out.println(size);
-        model.addAttribute("size", size);*/
         return "/candidat/infos_postulation";
     }
 
