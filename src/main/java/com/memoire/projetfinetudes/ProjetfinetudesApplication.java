@@ -54,6 +54,8 @@ public class ProjetfinetudesApplication implements CommandLineRunner {
         admin.setSecteurActivite("Informatique");
         admin.setTitre_fonction("informaticien");
 
-        adminService.save(admin);
+        if (adminService.findAdminByUserNameOrEmail(admin.getUserName(), admin.getEmail()) == null) {
+            adminService.save(admin);
+        }
     }
 }

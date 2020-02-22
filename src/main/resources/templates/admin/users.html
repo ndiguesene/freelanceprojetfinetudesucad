@@ -18,7 +18,7 @@
 <div class="container">
     <h4 class="">Utilisateurs inscritent</h4>
     <div class="row">
-        <table class="table table-sm" style="width:100%">
+        <table class="table table-sm table-striped" style="width:100%">
             <thead>
             <tr>
                 <th scope="col">#</th>
@@ -57,12 +57,17 @@
                     </ul>
                 </td>
                 <td>
-                    <a href="/admin/users" th:href="@{/admin/users(user=${user.id})}">
-                        <input type="checkbox" th:checked="${user.active}">
-                    </a>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="setUser" th:name="${user.id}" th:value="${user.id}" title="Cliquer ici pour activer ou désactiver l'utilisateur."
+                               th:checked="${user.active}">
+                        <label class="form-check-label" for="setUser" th:if="${user.active} == true" style="color: blue;">Oui</label>
+                        <label class="form-check-label" for="setUser" th:if="${user.active} == false" style="color: red;">Non</label>
+                    </div>
+
                 </td>
                 <td>
-                    <a href="/admin/user/delete" th:href="@{/admin/user/delete(user=${user.id})}" onclick="confirm('Etes - vous sure de supprimer cet utilisateur')">
+                    <a href="#"
+                       th:onclick="'javascript:supprimerOffre(' + ${user.id} + ', \'/admin/user/delete?user=\');'">
                         <i class="fas fa-trash" style="color: red"></i>
                     </a>
                 </td>
@@ -87,5 +92,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
+<script src="../static/js/utils.js" th:src="@{/js/utils.js}"></script>
 </body>
 </html>

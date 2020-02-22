@@ -57,5 +57,8 @@ public class UserService {
         user.setPassword(user.getPassword());
         return (User) userRepository.saveAndFlush(user);
     }
+    public User updateUser(User user) {
+        return (User) userRepository.saveAndFlush(user);
+    }
 
 }

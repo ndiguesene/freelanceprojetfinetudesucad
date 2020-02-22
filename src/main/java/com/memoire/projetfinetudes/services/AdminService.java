@@ -22,4 +22,7 @@ public class AdminService {
         admin.setPassword(bCryptPasswordEncoder.encode(admin.getPassword()));
         return adminRepository.save(admin);
     }
+    public Admin findAdminByUserNameOrEmail(String username, String email) {
+        return adminRepository.findAdminByUserNameOrEmail(username, email);
+    }
 }

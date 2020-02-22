@@ -1,10 +1,12 @@
 function supprimerOffre(idOffre, url) {
     if (confirm('Etes - vous sure de supprimer cet offre.') === true) {
-        console.log("/recruteur/supprimerOffre?offre=" + idOffre);
         window.location.href = url + idOffre;
-    } else {
-        console.log("RIEN " + idOffre + ' URL = ' + url);
     }
 }
 
-// "/recruteur/supprimerOffre?offre="
+let overall = document.querySelector('input[id="setUser"]');
+overall.addEventListener('click', function(e) {
+    e.preventDefault();
+    let url = "/admin/user/setstatususer?user=" + e.target.name
+    window.location.href = url;
+});
