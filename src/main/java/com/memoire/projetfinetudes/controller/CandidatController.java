@@ -34,6 +34,8 @@ public class CandidatController {
     @Autowired
     private CvService cvService;
     @Autowired
+    private CandidatService candidatService;
+    @Autowired
     private LettreMotivationService lettreMotivationService;
     @Autowired
     private FormationServicce formationServicce;
@@ -49,7 +51,7 @@ public class CandidatController {
         try {
             Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
             String userName = loggedInUser.getName();
-            User user = userService.findUserByUserName(userName);
+            Candidat user = candidatService.findCandidatByUsername(userName);
             Optional<List<Postulation>> postulations = Optional.ofNullable(postulationService.findPostulationsByUser_Id(user.getId()));
 
             Optional<List<OffreEmploi>> offreEmplois = Optional.ofNullable(offreService.getAllOffres());
@@ -85,7 +87,7 @@ public class CandidatController {
             Cv cv = cvService.findCvByUserId(getCurrentUser().getId()).orElse(null);
             if (cv == null) {
                 model.addAttribute("cvIsNull", true);
-                model.addAttribute("currentUser", userService.findUserByUserName(getCurrentUser().getName()));
+                model.addAttribute("currentUser", candidatService.findCandidatByUsername(getCurrentUser().getName()));
                 model.addAttribute("offres", offreService.getAllOffres());
                 return "/candidat/consulter_offre";
             }
