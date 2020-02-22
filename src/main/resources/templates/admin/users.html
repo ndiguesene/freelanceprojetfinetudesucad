@@ -58,10 +58,14 @@
                 </td>
                 <td>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="setUser" th:name="${user.id}" th:value="${user.id}" title="Cliquer ici pour activer ou désactiver l'utilisateur."
+                        <input class="form-check-input" type="checkbox" th:id="'setUser' + ${user.id}"
+                               th:name="${user.id}"
+                               th:value="${user.id}" title="Cliquer ici pour activer ou désactiver l'utilisateur."
                                th:checked="${user.active}">
-                        <label class="form-check-label" for="setUser" th:if="${user.active} == true" style="color: blue;">Oui</label>
-                        <label class="form-check-label" for="setUser" th:if="${user.active} == false" style="color: red;">Non</label>
+                        <label class="form-check-label" th:for="'setUser' + ${user.id}" th:if="${user.active} == true"
+                               style="color: blue;">Oui</label>
+                        <label class="form-check-label" th:for="'setUser' + ${user.id}" th:if="${user.active} == false"
+                               style="color: red;">Non</label>
                     </div>
 
                 </td>
