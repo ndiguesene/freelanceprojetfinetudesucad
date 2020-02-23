@@ -29,6 +29,13 @@ public class AdminController {
         userService.deleteById(Long.parseLong(user));
         return "redirect:/admin/users";
     }
+    @GetMapping("/admin/user/setstatususer")
+    public String setUserUsers(@RequestParam(name = "user") String user) {
+        User u = userService.findById(Long.parseLong(user)).orElse(null);
+        u.setActive(!u.getActive());
+        userService.updateUser(u);
+        return "redirect:/admin/users";
+    }
     @GetMapping("/admin/user/edit")
     public String editUser(@RequestParam(name = "user") String user, Model model) {
         Optional<User> userEdit = userService.findById(Long.parseLong(user));

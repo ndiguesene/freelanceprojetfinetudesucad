@@ -35,4 +35,7 @@ public class OffreService {
     public Optional<OffreEmploi> findOffreById(Long id) {
         return offreRepository.findById(id);
     }
+    public List<OffreEmploi> findByPosteContainingOrRegionOrderByPosteAsc(String poste, String region) {
+        return offreRepository.findByPosteContainingOrRegionOrderByPosteAsc(poste, region);
+    }
 }

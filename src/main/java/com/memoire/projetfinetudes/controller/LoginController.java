@@ -1,5 +1,6 @@
 package com.memoire.projetfinetudes.controller;
 
+import com.memoire.projetfinetudes.dto.SearchDTO;
 import com.memoire.projetfinetudes.models.Candidat;
 import com.memoire.projetfinetudes.models.Recruteur;
 import com.memoire.projetfinetudes.models.User;
@@ -47,14 +48,17 @@ public class LoginController {
     public String home(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserName(auth.getName());
-        if (user.getRoles().parallelStream().anyMatch(p -> p.getRole().equals("ROLE_CANDIDAT"))) {
+        /*if (user.getRoles().parallelStream().anyMatch(p -> p.getRole().equals("ROLE_CANDIDAT"))) {
             return "redirect:/candidat/consulter_offre";
-        } else if (user.getRoles().parallelStream().anyMatch(p -> p.getRole().equals("ROLE_RECRUTEUR"))) {
+        } else
+        */
+        if (user.getRoles().parallelStream().anyMatch(p -> p.getRole().equals("ROLE_RECRUTEUR"))) {
             return "redirect:/recruteur/consulter_candidatures";
         } else if (user.getRoles().parallelStream().anyMatch(p -> p.getRole().equals("ROLE_ADMIN"))) {
             return "redirect:/admin/users";
         }
-        return "/login";
+        model.addAttribute("searchDTO", new SearchDTO());
+        return "/home";
     }
 
     @GetMapping(value = "/registration/candidat")

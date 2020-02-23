@@ -13,4 +13,5 @@ import java.util.List;
 public interface OffreRepository extends JpaRepository<OffreEmploi, Long> {
     @Query("SELECT offre FROM OffreEmploi offre WHERE offre.user.id = :id")
     List<OffreEmploi> findOffreEmploisByUser(@Param("id") Long id);
+    List<OffreEmploi> findByPosteContainingOrRegionOrderByPosteAsc(String poste, String region);
 }

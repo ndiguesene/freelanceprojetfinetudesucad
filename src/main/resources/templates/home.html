@@ -4,56 +4,62 @@
     <title>Page Accueil</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <style>
-        .card {
-            margin-bottom: 1.5rem;
-            box-shadow: 0 1px 15px 1px rgba(52, 40, 104, .08);
-        }
-
-        .card {
-            position: relative;
-            display: -ms-flexbox;
-            display: flex;
-            -ms-flex-direction: column;
-            flex-direction: column;
-            min-width: 0;
-            word-wrap: break-word;
-            background-color: #fff;
-            background-clip: border-box;
-            border: 1px solid #e5e9f2;
-            border-radius: .2rem;
-        }
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
-    </style>
     <link rel="stylesheet" type="text/css" href="../static/css/page.css" th:href="@{/css/page.css}"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <body>
 
 <div th:insert="layout/navbar :: navbar"></div>
-<div class="container">
-    <div class="hero-unit">
-        <p>
-            <span th:text="${userName}">Field</span>
-            <span th:text="${adminMessage}">Field</span>
-        </p>
+<section class="jobguru-banner-area">
+    <div class="banner-slider owl-carousel">
+        <div class="banner-single-slider slider-item-1">
+            <div class="slider-offset"></div>
+        </div>
+        <div class="banner-single-slider slider-item-2">
+            <div class="slider-offset"></div>
+        </div>
     </div>
-    <div th:insert="layout/footer :: footer">&copy; 2016 The Static Templates</div>
-</div>
+    <div class="banner-text">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="banner-search">
+                        <h2>Hello, ravis de vous revoir.</h2>
+                        <h4>Nous avons plusieurs offres pour vous ! </h4>
+                        <form autocomplete="off" action="#" th:action="@{/candidat/search/offre}"
+                              th:object="${searchDTO}" method="POST" role="form">
+                            <div class="banner-form-box">
+                                <div class="banner-form-input">
+                                    <input type="text" placeholder="Offres ..." th:field="*{poste}">
+                                </div>
+                                <div class="banner-form-input">
+                                    <input type="text" placeholder="Ville, Région ..." th:field="*{region}">
+                                </div>
+                                <!--<div class="banner-form-input">
+                                    <select class="banner-select">
+                                        <option selected>Type Offre</option>
+                                        <option value="CDI">CDI</option>
+                                        <option value="CDD">CDD</option>
+                                        <option value="STAGE">STAGE</option>
+                                    </select>
+                                </div>-->
+                                <div class="banner-form-input">
+                                    <button type="submit"><i class="fa fa-search"></i></button>
+                                </div>
+                            </div>
+                        </
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div th:insert="layout/footer :: footer">&copy; 2016 The Static Templates</div>
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
