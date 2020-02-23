@@ -54,13 +54,23 @@ public class CandidatController {
             String userName = loggedInUser.getName();
             Candidat user = candidatService.findCandidatByUsername(userName);
             List<OffreEmploi> of = (List<OffreEmploi>) model.getAttribute("offresSearch");
+            Optional<List<Postulation>> postulations = Optional.ofNullable(postulationService.findPostulationsByUser_Id(user.getId()));
             if (of != null) {
-                model.addAttribute("offres", of);
-                model.addAttribute("currentUser", user);
-                model.addAttribute("successMessage", "Votre recherche a abouti à " + of.size() + " résultat(s)");
-            } else {
-                Optional<List<Postulation>> postulations = Optional.ofNullable(postulationService.findPostulationsByUser_Id(user.getId()));
+                List<OffreEmploi> offreEmplois = of;
+                List<OffreEmploi> offres = null;
 
+                if (!postulations.isPresent()) {
+                    offres = offreEmplois;
+                } else {
+                    List<OffreEmploi> offrePostuler = postulations.orElse(null).stream()
+                            .map(p -> p.getOffreEmploi())
+                            .distinct().collect(Collectors.toList());
+                    offres = offreEmplois.stream().filter(it -> !offrePostuler.contains(it)).collect(Collectors.toList());
+                }
+                model.addAttribute("offres", offres);
+                model.addAttribute("currentUser", user);
+                model.addAttribute("successMessage", "Votre recherche a abouti à " + offres.size() + " résultat(s)");
+            } else {
                 Optional<List<OffreEmploi>> offreEmplois = Optional.ofNullable(offreService.getAllOffres());
                 List<OffreEmploi> offres = null;
 
@@ -85,10 +95,6 @@ public class CandidatController {
 
     @PostMapping(value = "/candidat/search/offre")
     public String searchOffre(SearchDTO searchDTO, RedirectAttributes redirectAttributes) {
-        System.out.println(searchDTO.toString());
-        offreService.findByPosteContainingOrRegionOrderByPosteAsc(searchDTO.getPoste(), searchDTO.getRegion()).forEach(p-> {
-            System.out.println(p.getPoste() + " - " + p.getRegion());
-        });
         redirectAttributes.addFlashAttribute("offresSearch", offreService.findByPosteContainingOrRegionOrderByPosteAsc(searchDTO.getPoste(), searchDTO.getRegion()));
         return "redirect:/candidat/consulter_offre";
     }
