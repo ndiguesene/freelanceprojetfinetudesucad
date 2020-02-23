@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
     <head>
+        <title>Inscription</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" type="text/css" href="../static/css/page.css" th:href="@{/css/page.css}"/>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
               integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
               crossorigin="anonymous">
@@ -24,13 +25,11 @@
                     </svg>
                 </a>
                 <div class="form-check form-check-inline">
-                    <a class="offset-md-4" href="/registration/candidat"
-                       th:href="@{/registration/candidat}">
-                        <i class="far fa-user-tie"></i> Inscription Candidat
+                    <a class="offset-md-4" href="/registration/candidat" th:href="@{/registration/candidat}">
+                        <i class="fas fa-user-circle"></i> Candidat
                     </a>
-                    <a class="offset-md-4" href="/registration/recruteur"
-                       th:href="@{/registration/recruteur}">
-                        <i class="far fa-user"></i> Inscription Recruteur
+                    <a class="offset-md-4" href="/registration/recruteur" th:href="@{/registration/recruteur}">
+                        <i class="fas fa-user-circle"></i> Recruteur
                     </a>
                 </div>
             </div>

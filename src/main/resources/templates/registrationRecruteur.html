@@ -5,37 +5,12 @@
     <title>Inscription</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+          crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <style>
-        .card {
-            margin-bottom: 1.5rem;
-            box-shadow: 0 1px 15px 1px rgba(52, 40, 104, .08);
-        }
-
-        .card {
-            position: relative;
-            display: -ms-flexbox;
-            display: flex;
-            -ms-flex-direction: column;
-            flex-direction: column;
-            min-width: 0;
-            word-wrap: break-word;
-            background-color: #fff;
-            background-clip: border-box;
-            border: 1px solid #e5e9f2;
-            border-radius: .2rem;
-        }
-
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-
         @media (min-width: 768px) {
             .bd-placeholder-img-lg {
                 font-size: 3.5rem;
@@ -47,17 +22,16 @@
             font-family: "Lato", sans-serif;
         }
 
-        .main-head {
-            height: 150px;
-            background: #FFF;
-
-        }
-
         .sidenav {
             height: 100%;
             background-color: #000;
             overflow-x: hidden;
             padding-top: 20px;
+
+            background-image: url(./../images/photo1.jpg);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
         }
 
         .main {
@@ -67,6 +41,11 @@
         @media screen and (max-height: 450px) {
             .sidenav {
                 padding-top: 5px;
+
+                background-image: url(./../images/photo1.jpg);
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: cover;
             }
         }
 
@@ -91,6 +70,11 @@
                 z-index: 1;
                 top: 0;
                 left: 0;
+
+                background-image: url(./../images/photo1.jpg);
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: cover;
             }
 
             .login-form {
@@ -119,8 +103,6 @@
         }
     </style>
     <link rel="stylesheet" type="text/css" href="../static/css/page.css" th:href="@{/css/page.css}"/>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
 <div>
@@ -134,18 +116,19 @@
                     <path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"/>
                 </svg>
             </a>
-            <form th:action="@{/}" method="GET">
-                <a class="py-2 d-none d-md-inline-block" href="/">Connexion</a>
-            </form>
-
+            <a class="py-2 d-none d-md-inline-block" href="/" th:action="@{/}"><i class="fas fa-sign-in-alt"></i> Connexion</a>
+            <a class="py-2 d-none d-md-inline-block" href="/registration/candidat"
+               th:href="@{/registration/candidat}">
+                <i class="fas fa-user-circle"></i> Candidat
+            </a>
         </div>
     </nav>
 </div>
 <div class="container">
     <div class="sidenav">
         <div class="login-main-text">
-            <h2>Application<br> Login Page</h2>
-            <p>Login or register from here to access.</p>
+            <!--<h2>Application<br> Login Page</h2>
+            <p>Login or register from here to access.</p>-->
         </div>
     </div>
     <div class="main">
@@ -162,7 +145,8 @@
                 <!--<h4 th:if="${successMessage}">
                     <span th:text="${successMessage}"></span>
                 </h4>-->
-                <form autocomplete="off" action="#" th:action="@{/registration/recruteur}" th:object="${recruteur}" method="POST"
+                <form autocomplete="off" action="#" th:action="@{/registration/recruteur}" th:object="${recruteur}"
+                      method="POST"
                       class="form-horizontal" role="form">
                     <h2>Inscription</h2>
                     <hr>
@@ -271,8 +255,8 @@
                     </div>
                     <div class="form-group">
                         <div class="col-sm-12">
-                            <textarea  th:field="*{societeDescription}" placeholder="Description Societe"
-                                   class="form-control" rows="5" maxlength="1000"/> <label
+                            <textarea th:field="*{societeDescription}" placeholder="Description Societe"
+                                      class="form-control" rows="5" maxlength="1000"/> <label
                                 th:if="${#fields.hasErrors('societeDescription')}" th:errors="*{societeDescription}"
                                 class="validation-message"></label>
                         </div>
@@ -284,7 +268,7 @@
                         </div>
                     </div>
 
- <!--                   <h2><span class="text-success" th:utext="${successMessage}"></span></h2>-->
+                    <!--                   <h2><span class="text-success" th:utext="${successMessage}"></span></h2>-->
 
                 </form>
             </div>

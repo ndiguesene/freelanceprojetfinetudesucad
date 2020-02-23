@@ -10,35 +10,17 @@
         body {
             font-family: "Lato", sans-serif;
         }
-        .card {
-            margin-bottom: 1.5rem;
-            box-shadow: 0 1px 15px 1px rgba(52, 40, 104, .08);
-        }
-
-        .card {
-            position: relative;
-            display: -ms-flexbox;
-            display: flex;
-            -ms-flex-direction: column;
-            flex-direction: column;
-            min-width: 0;
-            word-wrap: break-word;
-            background-color: #fff;
-            background-clip: border-box;
-            border: 1px solid #e5e9f2;
-            border-radius: .2rem;
-        }
-        .main-head {
-            height: 150px;
-            background: #FFF;
-
-        }
 
         .sidenav {
             height: 100%;
             background-color: #000;
             overflow-x: hidden;
             padding-top: 10px;
+
+            background-image: url(./images/photo1.jpg);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
         }
 
         .main {
@@ -87,6 +69,7 @@
             margin-top: 10%;
             padding: 60px;
             color: #fff;
+            color: white;
         }
 
         .login-main-text h2 {
@@ -98,22 +81,6 @@
             color: #fff;
         }
     </style>
-    <!-- <style>
-         .bd-placeholder-img {
-             font-size: 1.125rem;
-             text-anchor: middle;
-             -webkit-user-select: none;
-             -moz-user-select: none;
-             -ms-user-select: none;
-             user-select: none;
-         }
-
-         @media (min-width: 768px) {
-             .bd-placeholder-img-lg {
-                 font-size: 3.5rem;
-             }
-         }
-     </style>-->
     <link rel="stylesheet" type="text/css" href="../static/css/page.css" th:href="@{/css/page.css}"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -125,13 +92,12 @@
 <div class="container">
     <div class="sidenav">
         <div class="login-main-text">
-            <h2>Application<br> Login Page</h2>
-            <p>Login or register from here to access.</p>
+            <!--<h2>Application<br> Login Page</h2>
+            <p>Login or register from here to access.</p>-->
         </div>
     </div>
     <div class="main">
         <div class="col-md-12 col-sm-12">
-            <!--                <h3 class="form-signin-heading" th:text="Bienvenue"></h3>-->
             <div class="login-form">
                 <h2>Connectez - vous</h2>
                 <hr>
@@ -141,13 +107,11 @@
                 <form th:action="@{/login}" method="POST" class="card-body">
                     <div class="form-group">
                         <label>Nom d'utilisateur</label>
-                        <!--                            <input type="text" class="form-control" placeholder="User Name">-->
                         <input type="text" id="user_name" name="user_name" placeholder="Mot de passe"
                                class="form-control" autofocus="autofocus"/>
                     </div>
                     <div class="form-group">
                         <label>Mot de passe</label>
-                        <!--                            <input type="password" class="form-control" placeholder="Password">-->
                         <input type="password" placeholder="Mot de passe" id="password" name="password"
                                class="form-control"/>
                     </div>
@@ -155,31 +119,12 @@
                         <p style="font-size: 20px; color: #FF1C19;">Nom utilisateur ou mot de passse incorrect.</p>
                     </div>
                     <button class="btn btn-lg btn-primary btn-block" name="Submit" type="Submit"
-                            th:text="Login"><i class="fas fa-sign-in-alt"></i> Connexion</button>
-                    <!--<button type="submit" class="btn btn-black">Connexion</button>
-                    <button type="submit" class="btn btn-secondary">Inscription</button>-->
+                            th:text="Login"><i class="fas fa-sign-in-alt"></i> Connexion
+                    </button>
                 </form>
             </div>
         </div>
     </div>
-    <!--<img th:src="@{/images/login.jpg}" class="img-responsive center-block" width="300" height="300" alt="Logo"/>
-    <form th:action="@{/login}" method="POST" class="form-signin">
-        <h3 class="form-signin-heading" th:text="Bienvenue"></h3>
-        <br>
-        <h4 th:if="${successMessage}">
-            <span th:text="${successMessage}"></span>
-        </h4>
-
-        <br/>
-
-        <input type="text" id="user_name" name="user_name" placeholder="User Name" class="form-control" autofocus="autofocus"/> <br/>
-        <input type="password" th:placeholder="Password" id="password" name="password" class="form-control"/> <br/>
-
-        <div align="center" th:if="${param.error}">
-            <p style="font-size: 20; color: #FF1C19;">User Name or Password incorrect.</p>
-        </div>
-        <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Login" type="Submit" th:text="Login"></button>
-    </form>-->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
             integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
             crossorigin="anonymous"></script>

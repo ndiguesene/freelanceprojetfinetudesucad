@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-    <head>
-    </head>
+    <head></head>
     <body>
         <nav class="site-header sticky-top py-1" th:fragment="navbar">
             <div class="container d-flex flex-column flex-md-row justify-content-between">
@@ -23,7 +22,7 @@
                 <a class="py-2 d-none d-md-inline-block" href="/candidat/deposer_cv" th:action="@{/candidat/deposer_cv}"
                    sec:authorize="hasAnyRole('ROLE_CANDIDAT')">
                     <i class="fas fa-file-upload"></i>
-                    Deposer CV
+                    Déposer CV
                 </a>
                 <a class="py-2 d-none d-md-inline-block" href="/candidat/infos_postulation"
                    th:action="@{/candidat/infos_postulation}" sec:authorize="hasAnyRole('ROLE_CANDIDAT')">
@@ -42,7 +41,7 @@
                 </a>
                 <a class="py-2 d-none d-md-inline-block" href="/employe/" sec:authorize="hasAnyRole('ROLE_EMPLOYE')">
                     <i class="fas fa-user"></i>
-                    Employe
+                    Employé
                 </a>
                 <a class="py-2 d-none d-md-inline-block" href="/admin/users" sec:authorize="hasAnyRole('ROLE_ADMIN')">
                     <i class="fas fa-users"></i>
@@ -70,6 +69,5 @@
                 </a>
             </div>
         </nav>
-
     </body>
 </html>
