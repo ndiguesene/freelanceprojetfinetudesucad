@@ -1,6 +1,7 @@
 package com.memoire.projetfinetudes.services;
 
 import com.memoire.projetfinetudes.models.Candidat;
+import com.memoire.projetfinetudes.models.OffreEmploi;
 import com.memoire.projetfinetudes.models.Role;
 import com.memoire.projetfinetudes.repositories.CandidatRepository;
 import com.memoire.projetfinetudes.repositories.RoleRepository;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 
 @Service
 @Transactional

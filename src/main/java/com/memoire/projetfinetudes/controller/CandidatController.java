@@ -2,6 +2,7 @@ package com.memoire.projetfinetudes.controller;
 
 import com.memoire.projetfinetudes.config.Utils;
 import com.memoire.projetfinetudes.dto.PasswordDTO;
+import com.memoire.projetfinetudes.dto.SearchDTO;
 import com.memoire.projetfinetudes.models.*;
 import com.memoire.projetfinetudes.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,22 +53,29 @@ public class CandidatController {
             Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
             String userName = loggedInUser.getName();
             Candidat user = candidatService.findCandidatByUsername(userName);
-            Optional<List<Postulation>> postulations = Optional.ofNullable(postulationService.findPostulationsByUser_Id(user.getId()));
-
-            Optional<List<OffreEmploi>> offreEmplois = Optional.ofNullable(offreService.getAllOffres());
-            List<OffreEmploi> offres = null;
-
-            if (!postulations.isPresent()) {
-                offres = offreEmplois.orElse(null);
+            List<OffreEmploi> of = (List<OffreEmploi>) model.getAttribute("offresSearch");
+            if (of != null) {
+                model.addAttribute("offres", of);
+                model.addAttribute("currentUser", user);
+                model.addAttribute("successMessage", "Votre recherche a abouti à " + of.size() + " résultat(s)");
             } else {
-                List<OffreEmploi> offrePostuler = postulations.orElse(null).stream()
-                        .map(p -> p.getOffreEmploi())
-                        .distinct().collect(Collectors.toList());
-                offres = offreEmplois.orElse(null).stream().filter(it -> !offrePostuler.contains(it)).collect(Collectors.toList());
+                Optional<List<Postulation>> postulations = Optional.ofNullable(postulationService.findPostulationsByUser_Id(user.getId()));
+
+                Optional<List<OffreEmploi>> offreEmplois = Optional.ofNullable(offreService.getAllOffres());
+                List<OffreEmploi> offres = null;
+
+                if (!postulations.isPresent()) {
+                    offres = offreEmplois.orElse(null);
+                } else {
+                    List<OffreEmploi> offrePostuler = postulations.orElse(null).stream()
+                            .map(p -> p.getOffreEmploi())
+                            .distinct().collect(Collectors.toList());
+                    offres = offreEmplois.orElse(null).stream().filter(it -> !offrePostuler.contains(it)).collect(Collectors.toList());
+                }
+                model.addAttribute("offres", offres);
+                model.addAttribute("currentUser", user);
+                model.addAttribute("successMessage", "");
             }
-            model.addAttribute("offres", offres);
-            model.addAttribute("currentUser", user);
-            model.addAttribute("successMessage", "");
             return "candidat/consulter_offre";
         } catch (Exception e) {
             e.printStackTrace();
@@ -75,6 +83,15 @@ public class CandidatController {
         }
     }
 
+    @PostMapping(value = "/candidat/search/offre")
+    public String searchOffre(SearchDTO searchDTO, RedirectAttributes redirectAttributes) {
+        System.out.println(searchDTO.toString());
+        offreService.findByPosteContainingOrRegionOrderByPosteAsc(searchDTO.getPoste(), searchDTO.getRegion()).forEach(p-> {
+            System.out.println(p.getPoste() + " - " + p.getRegion());
+        });
+        redirectAttributes.addFlashAttribute("offresSearch", offreService.findByPosteContainingOrRegionOrderByPosteAsc(searchDTO.getPoste(), searchDTO.getRegion()));
+        return "redirect:/candidat/consulter_offre";
+    }
     @GetMapping(value = "/candidat/postuler")
     public String postulerOffre(@RequestParam("offre") Long offreId, Model model) {
         try {
