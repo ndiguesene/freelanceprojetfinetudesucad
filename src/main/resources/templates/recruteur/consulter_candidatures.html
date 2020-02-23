@@ -64,7 +64,7 @@
         </div>
 
         <div class="col-md-8">
-            <h4><i class="fas fa-info"></i> Détails sur le candidat</h4>
+            <h4  th:if="${postulation != null}"><i class="fas fa-info"></i> Détails du candidat sur l'offre "<u><span th:text="${postulation.getOffreEmploi().getPoste()}"></span></u>"</h4>
             <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${postulation == null}">
                 <strong>Hello !!! </strong> Veuillez sélectionner un candidat pour voir son CV et Lettre de motivation.
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
