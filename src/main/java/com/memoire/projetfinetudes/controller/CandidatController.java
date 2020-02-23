@@ -98,6 +98,7 @@ public class CandidatController {
         redirectAttributes.addFlashAttribute("offresSearch", offreService.findByPosteContainingOrRegionOrderByPosteAsc(searchDTO.getPoste(), searchDTO.getRegion()));
         return "redirect:/candidat/consulter_offre";
     }
+
     @GetMapping(value = "/candidat/postuler")
     public String postulerOffre(@RequestParam("offre") Long offreId, Model model) {
         try {

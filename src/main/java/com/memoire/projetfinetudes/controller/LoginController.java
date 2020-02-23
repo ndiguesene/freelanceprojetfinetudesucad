@@ -67,6 +67,7 @@ public class LoginController {
         model.addAttribute("candidat", candidat);
         return "registrationCandidat";
     }
+
     @GetMapping(value = "/registration/recruteur")
     public String registrationRecruteur(Model model) {
         Recruteur recruteur = new Recruteur();

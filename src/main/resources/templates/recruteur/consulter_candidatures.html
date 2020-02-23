@@ -64,7 +64,8 @@
         </div>
 
         <div class="col-md-8">
-            <h4  th:if="${postulation != null}"><i class="fas fa-info"></i> Détails du candidat sur l'offre "<u><span th:text="${postulation.getOffreEmploi().getPoste()}"></span></u>"</h4>
+            <h4 th:if="${postulation != null}"><i class="fas fa-info"></i> Détails du candidat sur l'offre "<u><span
+                    th:text="${postulation.getOffreEmploi().getPoste()}"></span></u>"</h4>
             <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${postulation == null}">
                 <strong>Hello !!! </strong> Veuillez sélectionner un candidat pour voir son CV et Lettre de motivation.
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -74,7 +75,8 @@
             <div class="card" th:if="${postulation != null}">
                 <div class="card-body">
                     <h6 class="list-group-item">
-                        <i class='far fa-address-card text-capitalize'></i> <span th:text="${postulation.cv.user.name}"></span>
+                        <i class='far fa-address-card text-capitalize'></i> <span
+                            th:text="${postulation.cv.user.name}"></span>
                         <span class="text-uppercase" th:text="${postulation.getCv().getUser().lastName}"></span> -
                         <span th:text="${postulation.getCv().getUser().titre_fonction}"></span>
                     </h6>
