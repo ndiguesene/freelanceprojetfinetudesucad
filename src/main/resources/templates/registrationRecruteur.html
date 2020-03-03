@@ -148,7 +148,7 @@
                 <form autocomplete="off" action="#" th:action="@{/registration/recruteur}" th:object="${recruteur}"
                       method="POST"
                       class="form-horizontal" role="form">
-                    <h2>Inscription</h2>
+                    <h2>Inscription Recruteur</h2>
                     <hr>
                     <div class="form-group">
                         <div class="col-sm-12">
@@ -256,7 +256,7 @@
                     <div class="form-group">
                         <div class="col-sm-12">
                             <textarea th:field="*{societeDescription}" placeholder="Description Societe"
-                                      class="form-control" rows="5" maxlength="1000"/> <label
+                                      class="form-control" rows="2" maxlength="1000"/> <label
                                 th:if="${#fields.hasErrors('societeDescription')}" th:errors="*{societeDescription}"
                                 class="validation-message"></label>
                         </div>
